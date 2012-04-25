@@ -17,6 +17,8 @@
 package org.axonframework.sample.app.command;
 
 import org.axonframework.commandhandling.annotation.CommandHandler;
+import org.axonframework.domain.AggregateIdentifier;
+import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.repository.Repository;
 import org.axonframework.sample.app.api.Address;
 import org.axonframework.sample.app.api.ChangeContactNameCommand;
@@ -96,9 +98,9 @@ public class ContactCommandHandler {
 
         if (contactNameRepository.claimContactName(command.getNewContactName())) {
             registerUnitOfWorkListenerToCancelClaimingName(command.getNewContactName(), unitOfWork);
-            String contactId = command.getContactId();
+            AggregateIdentifier contactId = command.getContactId();
             if (contactId == null) {
-                contactId = UUID.randomUUID().toString();
+                contactId = new UUIDAggregateIdentifier();
             }
             Contact contact = new Contact(contactId, command.getNewContactName());
             repository.add(contact);
@@ -176,7 +178,7 @@ public class ContactCommandHandler {
         contact.removeAddress(command.getAddressType());
     }
 
-    private void cancelClaimedContactName(String contactIdentifier, UnitOfWork unitOfWork) {
+    private void cancelClaimedContactName(AggregateIdentifier contactIdentifier, UnitOfWork unitOfWork) {
         final ContactEntry contactEntry = contactRepository.loadContactDetails(contactIdentifier);
         unitOfWork.registerListener(new UnitOfWorkListenerAdapter() {
             @Override

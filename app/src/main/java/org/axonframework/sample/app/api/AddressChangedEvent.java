@@ -16,12 +16,14 @@
 
 package org.axonframework.sample.app.api;
 
+import org.axonframework.domain.AggregateIdentifier;
+
 /**
  * @author Allard Buijze
  */
 public class AddressChangedEvent extends AddressRegisteredEvent {
 
-    public AddressChangedEvent(String contactId, AddressType type, Address address) {
+    public AddressChangedEvent(AggregateIdentifier contactId, AddressType type, Address address) {
         super(contactId, type, address);
     }
 }

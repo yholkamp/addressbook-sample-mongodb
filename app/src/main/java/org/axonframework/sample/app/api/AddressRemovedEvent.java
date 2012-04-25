@@ -16,17 +16,18 @@
 
 package org.axonframework.sample.app.api;
 
-import java.io.Serializable;
+import org.axonframework.domain.AggregateIdentifier;
+import org.axonframework.domain.DomainEvent;
 
 /**
  * @author Allard Buijze
  */
-public class AddressRemovedEvent implements Serializable {
+public class AddressRemovedEvent extends DomainEvent{
 
-    private final String contactId;
+    private final AggregateIdentifier contactId;
     private final AddressType type;
 
-    public AddressRemovedEvent(String contactId, AddressType type) {
+    public AddressRemovedEvent(AggregateIdentifier contactId, AddressType type) {
         this.contactId = contactId;
         this.type = type;
     }
@@ -35,7 +36,7 @@ public class AddressRemovedEvent implements Serializable {
         return type;
     }
 
-    public String getContactId() {
+    public AggregateIdentifier getContactId() {
         return contactId;
     }
 }

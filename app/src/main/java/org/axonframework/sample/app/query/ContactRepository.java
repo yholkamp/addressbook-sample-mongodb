@@ -17,6 +17,7 @@
 package org.axonframework.sample.app.query;
 
 import java.util.List;
+import org.axonframework.domain.AggregateIdentifier;
 
 /**
  * <p>Specification for the query repository implementations. The repository should make it possible to find all
@@ -39,7 +40,7 @@ public interface ContactRepository {
      * @param contactId UUID of the contact to find addresses for
      * @return List of found addresses for the contact
      */
-    List<AddressEntry> findAllAddressesForContact(String contactId);
+    List<AddressEntry> findAllAddressesForContact(AggregateIdentifier contactId);
 
     /**
      * Returns a list of addresses for the specified city and or contact name. If one of the provided parameters is
@@ -57,5 +58,5 @@ public interface ContactRepository {
      * @param contactId UUID required field containing the contact identifier
      * @return Contact belonging to the provided identifier
      */
-    ContactEntry loadContactDetails(String contactId);
+    ContactEntry loadContactDetails(AggregateIdentifier contactId);
 }

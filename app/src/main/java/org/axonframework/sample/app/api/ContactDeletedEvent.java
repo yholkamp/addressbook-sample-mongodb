@@ -18,18 +18,21 @@ package org.axonframework.sample.app.api;
 
 import java.io.Serializable;
 
+import org.axonframework.domain.AggregateIdentifier;
+import org.axonframework.domain.DomainEvent;
+
 /**
  * @author Allard Buijze
  */
-public class ContactDeletedEvent implements Serializable {
+public class ContactDeletedEvent extends DomainEvent {
 
-    private final String contactId;
+	private final AggregateIdentifier contactId;
 
-    public ContactDeletedEvent(String contactId) {
-        this.contactId = contactId;
-    }
+	public ContactDeletedEvent(AggregateIdentifier contactId) {
+		this.contactId = contactId;
+	}
 
-    public String getContactId() {
-        return contactId;
-    }
+	public AggregateIdentifier getContactId() {
+		return contactId;
+	}
 }

@@ -18,15 +18,18 @@ package org.axonframework.sample.app.api;
 
 import java.io.Serializable;
 
+import org.axonframework.domain.AggregateIdentifier;
+import org.axonframework.domain.DomainEvent;
+
 /**
  * @author Allard Buijze
  */
-public class ContactNameChangedEvent implements Serializable {
+public class ContactNameChangedEvent extends DomainEvent {
 
-    private final String contactId;
+    private final AggregateIdentifier contactId;
     private final String newName;
 
-    public ContactNameChangedEvent(String contactId, String newName) {
+    public ContactNameChangedEvent(AggregateIdentifier contactId, String newName) {
         this.contactId = contactId;
         this.newName = newName;
     }
@@ -35,7 +38,7 @@ public class ContactNameChangedEvent implements Serializable {
         return newName;
     }
 
-    public String getContactId() {
+    public AggregateIdentifier getContactId() {
         return contactId;
     }
 }

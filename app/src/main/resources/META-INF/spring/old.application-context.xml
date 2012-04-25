@@ -104,6 +104,10 @@
         <axon:snapshotter-trigger event-count-threshold="5" snapshotter-ref="snapshotter"/>
     </axon:event-sourcing-repository>
 
+    <bean id="eventStore" class="org.axonframework.eventstore.mongo.MongoEventStore">
+        <constructor-arg ref="mongoTemplate"/>
+    </bean>
+
     <!--
     <bean id="snapshotter"
           class="org.axonframework.eventsourcing.SpringAggregateSnapshotter">

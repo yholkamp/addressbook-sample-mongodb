@@ -16,19 +16,21 @@
 
 package org.axonframework.sample.app.api;
 
+import org.axonframework.domain.AggregateIdentifier;
+
 /**
  * <p>Parent class for all contact related commands</p>
  *
  * @author Jettro Coenradie
  */
 public abstract class AbstractOrderCommand {
-    private String contactId;
+    private AggregateIdentifier contactId;
 
-    public String getContactId() {
+    public AggregateIdentifier getContactId() {
         return contactId;
     }
 
-    public void setContactId(String contactId) {
+    public void setContactId(AggregateIdentifier contactId) {
         this.contactId = contactId;
     }
 

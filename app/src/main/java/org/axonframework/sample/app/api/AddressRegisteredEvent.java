@@ -18,16 +18,19 @@ package org.axonframework.sample.app.api;
 
 import java.io.Serializable;
 
+import org.axonframework.domain.AggregateIdentifier;
+import org.axonframework.domain.DomainEvent;
+
 /**
  * @author Allard Buijze
  */
-public abstract class AddressRegisteredEvent implements Serializable {
+public abstract class AddressRegisteredEvent extends DomainEvent {
 
-    private final String contactId;
+    private final AggregateIdentifier contactId;
     private final AddressType type;
     private final Address address;
 
-    protected AddressRegisteredEvent(String contactId, AddressType type, Address address) {
+    protected AddressRegisteredEvent(AggregateIdentifier contactId, AddressType type, Address address) {
         this.contactId = contactId;
         this.type = type;
         this.address = address;
@@ -41,7 +44,7 @@ public abstract class AddressRegisteredEvent implements Serializable {
         return address;
     }
 
-    public String getContactId() {
+    public AggregateIdentifier getContactId() {
         return contactId;
     }
 }

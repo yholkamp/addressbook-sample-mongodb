@@ -1,5 +1,7 @@
 package org.axonframework.sample.app.command;
 
+import org.axonframework.domain.AggregateIdentifier;
+import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.repository.Repository;
 import org.axonframework.sample.app.api.ChangeContactNameCommand;
 import org.axonframework.sample.app.api.ContactNameAlreadyTakenException;
@@ -48,7 +50,7 @@ public class ContactCommandHandlerTest {
     @Test
     public void testHandleCreateContactCommand_doubleName() throws Exception {
         CreateContactCommand command = new CreateContactCommand();
-        command.setContactId(UUID.randomUUID().toString());
+        command.setContactId(new UUIDAggregateIdentifier());
         command.setNewContactName("Double name");
 
         when(mockContactNameRepository.claimContactName("Double name")).thenReturn(false);
@@ -66,7 +68,7 @@ public class ContactCommandHandlerTest {
     @Test
     public void testHandleCreateContactCommand_otherProblemWithTransaction() throws Exception {
         CreateContactCommand command = new CreateContactCommand();
-        command.setContactId(UUID.randomUUID().toString());
+        command.setContactId(new UUIDAggregateIdentifier());
         command.setNewContactName("Good name");
 
         when(mockContactNameRepository.claimContactName("Good name")).thenReturn(true);
@@ -86,7 +88,7 @@ public class ContactCommandHandlerTest {
     @Test
     public void testHandleChangeNameContactCommand_doubleName() {
         ChangeContactNameCommand command = new ChangeContactNameCommand();
-        command.setContactId(UUID.randomUUID().toString());
+        command.setContactId(new UUIDAggregateIdentifier());
         command.setContactNewName("Double New Name");
 
         Contact contact = mock(Contact.class);
@@ -107,14 +109,14 @@ public class ContactCommandHandlerTest {
     @Test
     public void testHandleChangeNameContactCommand_happypath() {
         ChangeContactNameCommand command = new ChangeContactNameCommand();
-        command.setContactId(UUID.randomUUID().toString());
+        command.setContactId(new UUIDAggregateIdentifier());
         command.setContactNewName("Good New Name");
 
         ContactEntry mockContactEntry = mock(ContactEntry.class);
 
         when(mockContactNameRepository.claimContactName("Good New Name"))
                 .thenReturn(true);
-        when(mockRepository.load(isA(String.class)))
+        when(mockRepository.load(isA(AggregateIdentifier.class)))
                 .thenReturn(mockContact);
         when(mockContactRepository.loadContactDetails(command.getContactId()))
                 .thenReturn(mockContactEntry);
@@ -138,11 +140,11 @@ public class ContactCommandHandlerTest {
     @Test
     public void testHandleChangeNameContactCommand_otherProblemWithTransaction() throws Exception {
         ChangeContactNameCommand command = new ChangeContactNameCommand();
-        command.setContactId(UUID.randomUUID().toString());
+        command.setContactId(new UUIDAggregateIdentifier());
         command.setContactNewName("Good New Name");
 
         when(mockContactNameRepository.claimContactName("Good New Name")).thenReturn(true);
-        when(mockRepository.load(isA(String.class))).thenReturn(mockContact);
+        when(mockRepository.load(isA(AggregateIdentifier.class))).thenReturn(mockContact);
 
         contactCommandHandler.handle(command, mockUnitOfWork);
 

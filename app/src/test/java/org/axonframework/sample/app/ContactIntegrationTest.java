@@ -31,10 +31,11 @@ import static org.junit.Assert.*;
 
 /**
  * @author Allard Buijze
+ * Modified by Yorick
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/META-INF/spring/application-context.xml",
-        "classpath:/META-INF/spring/database-context.xml"})
+@ContextConfiguration(locations = {"classpath:/META-INF/spring/configuration-context.xml",
+		"classpath:/META-INF/spring/cqrs-infrastructure-context.xml", "classpath:/META-INF/spring/persistence-infrastructure-context.xml"})
 public class ContactIntegrationTest {
 
     @Autowired
