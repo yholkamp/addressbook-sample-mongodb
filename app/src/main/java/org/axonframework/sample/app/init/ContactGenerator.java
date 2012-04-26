@@ -17,7 +17,9 @@
 package org.axonframework.sample.app.init;
 
 import org.axonframework.commandhandling.CommandBus;
-import org.axonframework.commandhandling.GenericCommandMessage;
+import org.axonframework.commandhandling.callbacks.FutureCallback;
+import org.axonframework.domain.AggregateIdentifier;
+import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.sample.app.api.AddressType;
 import org.axonframework.sample.app.api.CreateContactCommand;
 import org.axonframework.sample.app.api.RegisterAddressCommand;
@@ -47,20 +49,11 @@ public class ContactGenerator implements ApplicationListener {
             initializeData();
         }
     }
-
+    
     public void initializeData() {
         if (initialized.compareAndSet(false, true)) {
-            CreateContactCommand commandAllard = new CreateContactCommand();
-            commandAllard.setNewContactName("Allard");
-            String uuidAllard = UUID.randomUUID().toString();
-            commandAllard.setContactId(uuidAllard);
-            commandBus.dispatch(new GenericCommandMessage<Object>(commandAllard));
-
-            CreateContactCommand commandJettro = new CreateContactCommand();
-            commandJettro.setNewContactName("Jettro");
-            String uuidJettro = UUID.randomUUID().toString();
-            commandJettro.setContactId(uuidJettro);
-            commandBus.dispatch(new GenericCommandMessage<Object>(commandJettro));
+        	AggregateIdentifier uuidAllard = createContact("Allard");
+        	AggregateIdentifier uuidJettro = createContact("Jettro");
 
             RegisterAddressCommand registerPrivateAddressCommand = new RegisterAddressCommand();
             registerPrivateAddressCommand.setAddressType(AddressType.PRIVATE);
@@ -68,7 +61,7 @@ public class ContactGenerator implements ApplicationListener {
             registerPrivateAddressCommand.setContactId(uuidAllard);
             registerPrivateAddressCommand.setStreetAndNumber("AxonBoulevard 1");
             registerPrivateAddressCommand.setZipCode("1234AB");
-            commandBus.dispatch(new GenericCommandMessage<Object>(registerPrivateAddressCommand));
+            dispatchRegisterAddress(registerPrivateAddressCommand);
 
             RegisterAddressCommand registerWorkAddressCommand = new RegisterAddressCommand();
             registerWorkAddressCommand.setAddressType(AddressType.WORK);
@@ -76,7 +69,7 @@ public class ContactGenerator implements ApplicationListener {
             registerWorkAddressCommand.setContactId(uuidAllard);
             registerWorkAddressCommand.setStreetAndNumber("JTeam avenue");
             registerWorkAddressCommand.setZipCode("1234AB");
-            commandBus.dispatch(new GenericCommandMessage<Object>(registerWorkAddressCommand));
+            dispatchRegisterAddress(registerWorkAddressCommand);
 
             RegisterAddressCommand registerJettroAddressCommand = new RegisterAddressCommand();
             registerJettroAddressCommand.setAddressType(AddressType.PRIVATE);
@@ -84,7 +77,39 @@ public class ContactGenerator implements ApplicationListener {
             registerJettroAddressCommand.setContactId(uuidJettro);
             registerJettroAddressCommand.setStreetAndNumber("Feyenoordlaan 010");
             registerJettroAddressCommand.setZipCode("3000AA");
-            commandBus.dispatch(new GenericCommandMessage<Object>(registerJettroAddressCommand));
+            dispatchRegisterAddress(registerJettroAddressCommand);
         }
+    }
+    
+    private AggregateIdentifier createContact(String longName) {
+    	CreateContactCommand createContact = new CreateContactCommand();
+        createContact.setNewContactName(longName);
+        AggregateIdentifier uuidAllard = new UUIDAggregateIdentifier();
+        createContact.setContactId(uuidAllard);
+        commandBus.dispatch(createContact);
+        
+        FutureCallback<AggregateIdentifier> createContactCallback =
+                new FutureCallback<AggregateIdentifier>();
+        commandBus.dispatch(createContact, createContactCallback);
+        AggregateIdentifier userIdentifier;
+        try {
+            userIdentifier = createContactCallback.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return userIdentifier;
+    }
+    
+    private AggregateIdentifier dispatchRegisterAddress(RegisterAddressCommand registerAddress) {
+        FutureCallback<AggregateIdentifier> createContactCallback =
+                new FutureCallback<AggregateIdentifier>();
+        commandBus.dispatch(registerAddress, createContactCallback);
+        AggregateIdentifier addressIdentifier;
+        try {
+            addressIdentifier = createContactCallback.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return addressIdentifier;
     }
 }

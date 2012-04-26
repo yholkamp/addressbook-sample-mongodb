@@ -23,6 +23,7 @@ import javax.persistence.Id;
  * <p>Entity used for maintaining the contact names that have already been taken</p>
  *
  * @author Jettro Coenradie
+ * Modified by Yorick
  */
 @Entity
 public class ClaimedContactName {
@@ -36,11 +37,5 @@ public class ClaimedContactName {
 
     public String getContactName() {
         return contactName;
-    }
-
-    /**
-     * Required for jpa
-     */
-    public ClaimedContactName() {
     }
 }

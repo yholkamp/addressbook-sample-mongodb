@@ -7,7 +7,7 @@ import org.axonframework.sample.app.api.ChangeContactNameCommand;
 import org.axonframework.sample.app.api.ContactNameAlreadyTakenException;
 import org.axonframework.sample.app.api.CreateContactCommand;
 import org.axonframework.sample.app.query.ContactEntry;
-import org.axonframework.sample.app.query.ContactRepository;
+import org.axonframework.sample.app.query.repositories.ContactRepository;
 import org.axonframework.unitofwork.UnitOfWork;
 import org.axonframework.unitofwork.UnitOfWorkListener;
 import org.junit.Before;
@@ -118,7 +118,7 @@ public class ContactCommandHandlerTest {
                 .thenReturn(true);
         when(mockRepository.load(isA(AggregateIdentifier.class)))
                 .thenReturn(mockContact);
-        when(mockContactRepository.loadContactDetails(command.getContactId()))
+        when(mockContactRepository.findOne(command.getContactId().asString()))
                 .thenReturn(mockContactEntry);
         when(mockContactEntry.getName()).thenReturn("Good Old Name");
 

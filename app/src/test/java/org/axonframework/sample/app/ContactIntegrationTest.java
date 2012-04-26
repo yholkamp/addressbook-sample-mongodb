@@ -19,7 +19,7 @@ package org.axonframework.sample.app;
 import org.axonframework.eventstore.EventStore;
 import org.axonframework.repository.Repository;
 import org.axonframework.sample.app.command.ContactCommandHandler;
-import org.axonframework.sample.app.query.ContactRepository;
+import org.axonframework.sample.app.query.repositories.ContactRepository;
 import org.junit.*;
 import org.junit.runner.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,36 +30,38 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static org.junit.Assert.*;
 
 /**
- * @author Allard Buijze
- * Modified by Yorick
+ * @author Allard Buijze Modified by Yorick
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/META-INF/spring/configuration-context.xml",
-		"classpath:/META-INF/spring/cqrs-infrastructure-context.xml", "classpath:/META-INF/spring/persistence-infrastructure-context.xml"})
+@ContextConfiguration(locations = {
+		"classpath:/META-INF/spring/configuration-context.xml",
+		"classpath:/META-INF/spring/cqrs-infrastructure-context.xml",
+		"classpath:/META-INF/spring/persistence-infrastructure-context.xml" })
 public class ContactIntegrationTest {
 
-    @Autowired
-    private ContactCommandHandler commandHandler;
+	@Autowired
+	private ContactCommandHandler commandHandler;
 
-    @Autowired
-    private EventStore eventStore;
+	@Autowired
+	private EventStore eventStore;
 
-    @Autowired
-    private ThreadPoolTaskExecutor taskExecutor;
+	@Autowired
+	private ThreadPoolTaskExecutor taskExecutor;
 
-    @Autowired
-    private ContactRepository contactRepository;
+	@Autowired
+	private ContactRepository contactRepository;
 
-    @Autowired
-    private Repository commandRepository;
+	// Yorick: Does not appear to be used anywhere except for this integration test
+	// @Autowired
+	// private Repository commandRepository;
 
-    @Test(timeout = 10000)
-    public void testApplicationContext() throws InterruptedException {
-        assertNotNull(commandHandler);
-        assertNotNull(eventStore);
-        assertNotNull(taskExecutor);
-        assertNotNull(contactRepository);
-        assertNotNull(commandRepository);
-    }
+	@Test(timeout = 10000)
+	public void testApplicationContext() throws InterruptedException {
+		assertNotNull(commandHandler);
+		assertNotNull(eventStore);
+		assertNotNull(taskExecutor);
+		assertNotNull(contactRepository);
+		// assertNotNull(commandRepository);
+	}
 
 }

@@ -28,14 +28,13 @@ import org.axonframework.sample.app.api.RegisterAddressCommand;
 import org.axonframework.sample.app.api.RemoveAddressCommand;
 import org.axonframework.sample.app.api.RemoveContactCommand;
 import org.axonframework.sample.app.query.ContactEntry;
-import org.axonframework.sample.app.query.ContactRepository;
+import org.axonframework.sample.app.query.repositories.ContactRepository;
 import org.axonframework.unitofwork.UnitOfWork;
 import org.axonframework.unitofwork.UnitOfWorkListenerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-
-import java.util.UUID;
 
 /**
  * <p>Command handler that can be used to create and update Contacts. It can also be used to register and remove
@@ -44,6 +43,7 @@ import java.util.UUID;
  *
  * @author Allard Buijze
  */
+@Component
 public class ContactCommandHandler {
 
     private final static Logger logger = LoggerFactory.getLogger(ContactCommandHandler.class);
@@ -179,7 +179,7 @@ public class ContactCommandHandler {
     }
 
     private void cancelClaimedContactName(AggregateIdentifier contactIdentifier, UnitOfWork unitOfWork) {
-        final ContactEntry contactEntry = contactRepository.loadContactDetails(contactIdentifier);
+        final ContactEntry contactEntry = contactRepository.findOne(contactIdentifier.asString());
         unitOfWork.registerListener(new UnitOfWorkListenerAdapter() {
             @Override
             public void afterCommit() {

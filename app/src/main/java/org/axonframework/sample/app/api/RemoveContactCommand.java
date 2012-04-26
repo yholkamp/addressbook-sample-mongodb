@@ -16,6 +16,7 @@
 
 package org.axonframework.sample.app.api;
 
+import org.axonframework.domain.AggregateIdentifier;
 import org.springframework.util.Assert;
 
 /**
@@ -24,14 +25,14 @@ import org.springframework.util.Assert;
  * @author Jettro Coenradie
  */
 public class RemoveContactCommand extends AbstractOrderCommand {
-    private String contactId;
+    private AggregateIdentifier contactId;
 
-    public String getContactId() {
+    public AggregateIdentifier getContactId() {
         return contactId;
     }
 
-    public void setContactId(String contactId) {
-        Assert.hasText(contactId, "Cannot remove a contact with an empty id");
+    public void setContactId(AggregateIdentifier contactId) {
+        Assert.notNull(contactId, "Cannot remove a contact with an empty id");
         this.contactId = contactId;
     }
 }

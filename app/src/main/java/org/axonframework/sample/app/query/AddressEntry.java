@@ -16,54 +16,34 @@
 
 package org.axonframework.sample.app.query;
 
+import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.sample.app.api.AddressType;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import org.springframework.data.annotation.Id;
 
 /**
  * @author Allard Buijze
  */
-@Entity
 public class AddressEntry {
 
     @Id
-    @GeneratedValue
-    private Long db_identifier;
+    private AggregateIdentifier identifier;
 
-    @Basic
-    @Column(length = 36)
-    private String identifier;
-
-    @Basic
     private String name;
 
-    @NotNull
-    @Basic
-    @Enumerated(EnumType.STRING)
     private AddressType addressType;
 
-    @NotNull
-    @Size(min = 5)
-    @Basic
     private String streetAndNumber;
 
-    @NotNull
-    @Size(min = 4)
-    @Basic
     private String zipCode;
 
-    @NotNull
-    @Size(min = 2)
-    @Basic
     private String city;
 
-    public String getIdentifier() {
+    public AggregateIdentifier getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(String identifier) {
+    public void setIdentifier(AggregateIdentifier identifier) {
         this.identifier = identifier;
     }
 
