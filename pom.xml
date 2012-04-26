@@ -21,8 +21,8 @@
 	<modules>
 		<module>app</module>
 		<module>web-ui</module>
-		<module>vaadin-ui</module>
-		<module>rest-ui</module>
+		<!-- <module>vaadin-ui</module> -->
+		<!-- <module>rest-ui</module> -->
 	</modules>
 
 	<properties>
