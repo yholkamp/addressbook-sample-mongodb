@@ -44,22 +44,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Jettro Coenradie
  */
 @Controller
-@RequestMapping(value = "/contacts")
+@RequestMapping("/contacts")
 public class ContactsController {
     private final static Logger logger = LoggerFactory.getLogger(ContactsController.class);
 
-    @Autowired
-    private ContactRepository repository;
-
-    @Autowired
+    private ContactRepository contactRepository;
     private ContactNameRepository contactNameRepository;
-
-    @Autowired
     private CommandBus commandBus;
+    
+    @Autowired
+    public ContactsController(ContactRepository contactRepository, ContactNameRepository contactNameRepository, CommandBus commandBus) {
+    	this.contactRepository = contactRepository;
+    	this.contactNameRepository = contactNameRepository;
+    	this.commandBus = commandBus;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
-        model.addAttribute("contacts", repository.findAll());
+        model.addAttribute("contacts", contactRepository.findAll());
         return "contacts/list";
     }
 
@@ -80,7 +82,7 @@ public class ContactsController {
 
     @RequestMapping(value = "{identifier}/edit", method = RequestMethod.GET)
     public String formEdit(@PathVariable String identifier, Model model) {
-        ContactEntry contactEntry = repository.findOne(identifier);
+        ContactEntry contactEntry = contactRepository.findOne(identifier);
         model.addAttribute("contact", contactEntry);
         return "contacts/edit";
     }
@@ -133,7 +135,7 @@ public class ContactsController {
 
     @RequestMapping(value = "{identifier}/delete", method = RequestMethod.GET)
     public String formDelete(@PathVariable String identifier, Model model) {
-        ContactEntry contactEntry = repository.findOne(identifier);
+        ContactEntry contactEntry = contactRepository.findOne(identifier);
         model.addAttribute("contact", contactEntry);
         return "contacts/delete";
     }
@@ -153,7 +155,7 @@ public class ContactsController {
 
     @RequestMapping(value = "{identifier}/address/new", method = RequestMethod.GET)
     public String formNewAddress(@PathVariable String identifier, Model model) {
-        ContactEntry contactEntry = repository.findOne(identifier);
+        ContactEntry contactEntry = contactRepository.findOne(identifier);
         AddressEntry addressEntry = new AddressEntry();
         addressEntry.setIdentifier(contactEntry.getIdentifier());
         addressEntry.setName(contactEntry.getName());
@@ -179,7 +181,7 @@ public class ContactsController {
 
     @RequestMapping(value = "{identifier}/address/delete/{addressType}", method = RequestMethod.GET)
     public String formDeleteAddress(@PathVariable String identifier, @PathVariable AddressType addressType, Model model) {
-        ContactEntry contactEntry = repository.findOne(identifier);
+        ContactEntry contactEntry = contactRepository.findOne(identifier);
         AddressEntry addressEntry = new AddressEntry();
         addressEntry.setIdentifier(contactEntry.getIdentifier());
         addressEntry.setName(contactEntry.getName());

@@ -15,7 +15,7 @@ import java.util.List;
  * @author Jettro Coenradie
  */
 @Controller
-@RequestMapping(value = "/db")
+@RequestMapping("/db")
 public class ViewDatabaseController {
 	private ContactNameRepository claimedNameRepository;
 

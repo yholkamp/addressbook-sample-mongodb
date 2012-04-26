@@ -18,6 +18,7 @@ package org.axonframework.sample.app.query.repositories;
 
 import org.axonframework.sample.app.query.ContactEntry;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>Specification for the query repository implementations. The repository should make it possible to find all
@@ -26,6 +27,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  * @author Allard Buijze
  * Modified by Yorick
  */
+@Repository
 public interface ContactRepository extends PagingAndSortingRepository<ContactEntry, String> {
 
 }
