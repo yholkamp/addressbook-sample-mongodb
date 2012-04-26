@@ -16,8 +16,7 @@
 
 package org.axonframework.sample.app.command;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 
 /**
  * <p>Entity used for maintaining the contact names that have already been taken</p>
@@ -25,10 +24,8 @@ import javax.persistence.Id;
  * @author Jettro Coenradie
  * Modified by Yorick
  */
-@Entity
-public class ClaimedContactName {
+public class ClaimedContactName extends AbstractAnnotatedAggregateRoot {
 
-    @Id
     private String contactName;
 
     public ClaimedContactName(String contactName) {

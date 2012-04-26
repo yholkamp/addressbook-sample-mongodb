@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-package org.axonframework.sample.app.command;
+package org.axonframework.sample.app.query.repositories;
+
+import org.axonframework.sample.app.query.ContactEntry;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * <p>Repository used to manage unique contact names</p>
  *
  * @author Jettro Coenradie
  */
-public interface ContactNameRepository {
+public interface ContactNameRepository extends PagingAndSortingRepository<ContactEntry, String> {
 
     /**
      * Claims the provided contact name, if the name is not available anymore false is returned

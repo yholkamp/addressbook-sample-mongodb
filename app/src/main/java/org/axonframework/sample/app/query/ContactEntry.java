@@ -17,7 +17,6 @@
 package org.axonframework.sample.app.query;
 
 import org.springframework.data.annotation.Id;
-
 import org.axonframework.domain.AggregateIdentifier;
 
 /**

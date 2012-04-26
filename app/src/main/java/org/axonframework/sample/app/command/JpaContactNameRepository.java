@@ -16,63 +16,53 @@
 
 package org.axonframework.sample.app.command;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceContext;
-
 /**
  * <p>Jpa implementation for the contact claim repository</p>
  *
  * @author Jettro Coenradie
  */
-@Repository
-@Transactional(propagation = Propagation.REQUIRES_NEW)
-public class JpaContactNameRepository implements ContactNameRepository {
-    private static final Logger logger = LoggerFactory.getLogger(JpaContactNameRepository.class);
-
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean claimContactName(String contactName) {
-        try {
-            entityManager.persist(new ClaimedContactName(contactName));
-            entityManager.flush();
-            return true;
-        } catch (RuntimeException e) {
-            logger.warn("Unable to claim contact name.", e);
-            return false;
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void cancelContactName(String contactName) {
-        try {
-            ClaimedContactName claimedContactName = entityManager.getReference(ClaimedContactName.class, contactName);
-            entityManager.remove(claimedContactName);
-        } catch (EntityNotFoundException e) {
-            logger.warn("Could not obtain reference to the claimed contact name {}", contactName);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean vacantContactName(String contactName) {
-        ClaimedContactName claimedContactName = entityManager.find(ClaimedContactName.class, contactName);
-        return claimedContactName == null;
-    }
-}
+//@Repository
+//@Transactional(propagation = Propagation.REQUIRES_NEW)
+//public class JpaContactNameRepository implements ContactNameRepository {
+//    private static final Logger logger = LoggerFactory.getLogger(JpaContactNameRepository.class);
+//
+//    @PersistenceContext
+//    private EntityManager entityManager;
+//
+//    /**
+//     * {@inheritDoc}
+//     */
+//    @Override
+//    public boolean claimContactName(String contactName) {
+//        try {
+//            entityManager.persist(new ClaimedContactName(contactName));
+//            entityManager.flush();
+//            return true;
+//        } catch (RuntimeException e) {
+//            logger.warn("Unable to claim contact name.", e);
+//            return false;
+//        }
+//    }
+//
+//    /**
+//     * {@inheritDoc}
+//     */
+//    @Override
+//    public void cancelContactName(String contactName) {
+//        try {
+//            ClaimedContactName claimedContactName = entityManager.getReference(ClaimedContactName.class, contactName);
+//            entityManager.remove(claimedContactName);
+//        } catch (EntityNotFoundException e) {
+//            logger.warn("Could not obtain reference to the claimed contact name {}", contactName);
+//        }
+//    }
+//
+//    /**
+//     * {@inheritDoc}
+//     */
+//    @Override
+//    public boolean vacantContactName(String contactName) {
+//        ClaimedContactName claimedContactName = entityManager.find(ClaimedContactName.class, contactName);
+//        return claimedContactName == null;
+//    }
+//}

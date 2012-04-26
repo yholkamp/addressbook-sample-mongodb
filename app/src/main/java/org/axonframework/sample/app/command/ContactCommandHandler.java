@@ -28,6 +28,7 @@ import org.axonframework.sample.app.api.RegisterAddressCommand;
 import org.axonframework.sample.app.api.RemoveAddressCommand;
 import org.axonframework.sample.app.api.RemoveContactCommand;
 import org.axonframework.sample.app.query.ContactEntry;
+import org.axonframework.sample.app.query.repositories.ContactNameRepository;
 import org.axonframework.sample.app.query.repositories.ContactRepository;
 import org.axonframework.unitofwork.UnitOfWork;
 import org.axonframework.unitofwork.UnitOfWorkListenerAdapter;

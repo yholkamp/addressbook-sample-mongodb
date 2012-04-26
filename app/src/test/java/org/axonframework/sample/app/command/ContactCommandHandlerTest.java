@@ -7,6 +7,7 @@ import org.axonframework.sample.app.api.ChangeContactNameCommand;
 import org.axonframework.sample.app.api.ContactNameAlreadyTakenException;
 import org.axonframework.sample.app.api.CreateContactCommand;
 import org.axonframework.sample.app.query.ContactEntry;
+import org.axonframework.sample.app.query.repositories.ContactNameRepository;
 import org.axonframework.sample.app.query.repositories.ContactRepository;
 import org.axonframework.unitofwork.UnitOfWork;
 import org.axonframework.unitofwork.UnitOfWorkListener;

@@ -141,8 +141,8 @@
     </display>  
   </class>  
   <interface id="16" corner="BOTTOM_RIGHT" language="java" 
-    name="org.axonframework.sample.app.command.ContactNameRepository" project="axon-addressbook-app" 
-    file="/axon-addressbook-app/src/main/java/org/axonframework/sample/app/command/ContactNameRepository.java" 
+    name="org.axonframework.sample.app.query.repositories.ContactNameRepository" project="axon-addressbook-app" 
+    file="/axon-addressbook-app/src/main/java/org/axonframework/sample/app/query/repositories/ContactNameRepository.java" 
     binary="false">    
     <position height="-1" width="-1" x="1726" y="512"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
@@ -160,9 +160,10 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <interface id="18" corner="BOTTOM_RIGHT" language="java" name="org.axonframework.sample.app.query.ContactRepository" 
-    project="axon-addressbook-app" 
-    file="/axon-addressbook-app/src/main/java/org/axonframework/sample/app/query/ContactRepository.java" binary="false">    
+  <interface id="18" corner="BOTTOM_RIGHT" language="java" 
+    name="org.axonframework.sample.app.query.repositories.ContactRepository" project="axon-addressbook-app" 
+    file="/axon-addressbook-app/src/main/java/org/axonframework/sample/app/query/repositories/ContactRepository.java" 
+    binary="false">    
     <position height="-1" width="-1" x="2037" y="520"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      

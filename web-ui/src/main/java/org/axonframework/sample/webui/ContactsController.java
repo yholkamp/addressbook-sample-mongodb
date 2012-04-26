@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.axonframework.examples.addressbook.web;
+package org.axonframework.sample.webui;
 
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.sample.app.api.AddressType;
@@ -23,9 +23,9 @@ import org.axonframework.sample.app.api.CreateContactCommand;
 import org.axonframework.sample.app.api.RegisterAddressCommand;
 import org.axonframework.sample.app.api.RemoveAddressCommand;
 import org.axonframework.sample.app.api.RemoveContactCommand;
-import org.axonframework.sample.app.command.ContactNameRepository;
 import org.axonframework.sample.app.query.AddressEntry;
 import org.axonframework.sample.app.query.ContactEntry;
+import org.axonframework.sample.app.query.repositories.ContactNameRepository;
 import org.axonframework.sample.app.query.repositories.ContactRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,9 +39,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.List;
-import javax.validation.Valid;
 
 /**
  * @author Jettro Coenradie
@@ -89,7 +86,7 @@ public class ContactsController {
     }
 
     @RequestMapping(value = "{identifier}/edit", method = RequestMethod.POST)
-    public String formEditSubmit(@ModelAttribute("contact") @Valid ContactEntry contact, BindingResult bindingResult) {
+    public String formEditSubmit(/*@ModelAttribute("contact") @Valid*/ ContactEntry contact, BindingResult bindingResult) {
         // beware, we cannot support other updates since that would always give an error when the name is not changed
         if (contactHasErrors(contact, bindingResult)) {
             return "contacts/edit";
@@ -121,7 +118,7 @@ public class ContactsController {
      * @return String representing the name of the view to present.
      */
     @RequestMapping(value = "new", method = RequestMethod.POST)
-    public String formNewSubmit(@ModelAttribute("contact") @Valid ContactEntry contact, BindingResult bindingResult) {
+    public String formNewSubmit(/*@ModelAttribute("contact") @Valid*/ ContactEntry contact, BindingResult bindingResult) {
         if (contactHasErrors(contact, bindingResult)) {
             return "contacts/new";
         }
@@ -165,7 +162,7 @@ public class ContactsController {
     }
 
     @RequestMapping(value = "{identifier}/address/new", method = RequestMethod.POST)
-    public String formNewAddressSubmit(@ModelAttribute("address") @Valid AddressEntry address, BindingResult bindingResult) {
+    public String formNewAddressSubmit(/*@ModelAttribute("address") @Valid*/ AddressEntry address, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             RegisterAddressCommand command = new RegisterAddressCommand();
             command.setAddressType(address.getAddressType());
