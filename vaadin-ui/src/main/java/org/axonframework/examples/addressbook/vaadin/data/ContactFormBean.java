@@ -18,29 +18,31 @@ package org.axonframework.examples.addressbook.vaadin.data;
 
 import java.io.Serializable;
 
+import org.axonframework.domain.AggregateIdentifier;
+
 /**
  * <p>Data bean to support the Contact Form</p>
  *
  * @author Jettro Coenradie
  */
 public class ContactFormBean implements Serializable {
-    private String identifier;
+    private AggregateIdentifier identifier;
     private String name;
 
     public ContactFormBean() {
         this(null, null);
     }
 
-    public ContactFormBean(String identifier, String name) {
+    public ContactFormBean(AggregateIdentifier identifier, String name) {
         this.identifier = identifier;
         this.name = name;
     }
 
-    public String getIdentifier() {
+    public AggregateIdentifier getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(String identifier) {
+    public void setIdentifier(AggregateIdentifier identifier) {
         this.identifier = identifier;
     }
 

@@ -21,7 +21,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.*;
 import org.axonframework.commandhandling.CommandBus;
-import org.axonframework.commandhandling.GenericCommandMessage;
+import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.examples.addressbook.vaadin.data.ContactFormBean;
 import org.axonframework.sample.app.api.AbstractOrderCommand;
 import org.axonframework.sample.app.api.ChangeContactNameCommand;
@@ -48,10 +48,10 @@ public class ContactForm extends Form implements Button.ClickListener {
 
     public ContactForm(CommandBus commandBus) {
         this.commandBus = commandBus;
-        save.setIcon(new ThemeResource(Theme.save));
-        cancel.setIcon(new ThemeResource(Theme.cancel));
-        edit.setIcon(new ThemeResource(Theme.documentEdit));
-        delete.setIcon(new ThemeResource(Theme.documentDelete));
+        save.setIcon(new ThemeResource(VaadinTheme.save));
+        cancel.setIcon(new ThemeResource(VaadinTheme.cancel));
+        edit.setIcon(new ThemeResource(VaadinTheme.documentEdit));
+        delete.setIcon(new ThemeResource(VaadinTheme.documentDelete));
 
         createAndSetFooter();
     }
@@ -106,7 +106,7 @@ public class ContactForm extends Form implements Button.ClickListener {
         ContactFormBean contact = obtainContactFormBeanFromDatasource();
         RemoveContactCommand command = new RemoveContactCommand();
         command.setContactId(contact.getIdentifier());
-        commandBus.dispatch(new GenericCommandMessage<Object>(command));
+        commandBus.dispatch((command));
         String message = "Removed the contact with name " + contact.getName();
         fireEvent(new FormIsSuccessfullyCommittedEvent(this));
         getApplication().getMainWindow().showNotification(message, Window.Notification.TYPE_TRAY_NOTIFICATION);
@@ -144,7 +144,7 @@ public class ContactForm extends Form implements Button.ClickListener {
             command = changeCommand;
             message = "Changed name of contact into " + contact.getName();
         }
-        commandBus.dispatch(new GenericCommandMessage<Object>(command));
+        commandBus.dispatch((command));
         fireEvent(new FormIsSuccessfullyCommittedEvent(this));
         setReadOnly(true);
         getApplication().getMainWindow().showNotification(message, Window.Notification.TYPE_TRAY_NOTIFICATION);
@@ -173,7 +173,7 @@ public class ContactForm extends Form implements Button.ClickListener {
      */
     public class FormIsSuccessfullyCommittedEvent extends Component.Event {
         private String name;
-        private String identifier;
+        private AggregateIdentifier identifier;
 
         /**
          * Constructs a new event with the specified source component.
@@ -187,7 +187,7 @@ public class ContactForm extends Form implements Button.ClickListener {
             identifier = contactFormBean.getIdentifier();
         }
 
-        public String getIdentifier() {
+        public AggregateIdentifier getIdentifier() {
             return identifier;
         }
 

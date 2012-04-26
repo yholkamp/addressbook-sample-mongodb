@@ -19,7 +19,7 @@ package org.axonframework.examples.addressbook.vaadin.ui;
 /**
  * @author Jettro Coenradie
  */
-public interface Theme {
+public interface VaadinTheme {
     String smallIcons = "../runo/icons/16/";
 
     String search = smallIcons + "globe.png";

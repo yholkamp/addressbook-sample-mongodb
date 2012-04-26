@@ -18,11 +18,12 @@ package org.axonframework.examples.addressbook.vaadin.data;
 
 import com.vaadin.data.util.BeanItemContainer;
 import org.axonframework.sample.app.query.ContactEntry;
-import org.axonframework.sample.app.query.ContactRepository;
+import org.axonframework.sample.app.query.repositories.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -41,9 +42,9 @@ public class ContactContainer extends BeanItemContainer<ContactEntry> implements
     }
 
     public void refreshContent() {
-        List<ContactEntry> allContacts = contactRepository.findAllContacts();
+        Iterable<ContactEntry> allContacts = contactRepository.findAll();
         removeAllItems();
-        addAll(allContacts);
+        addAll((Collection<? extends ContactEntry>) allContacts);
     }
 
 

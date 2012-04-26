@@ -26,7 +26,13 @@ import com.vaadin.ui.themes.Runo;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.examples.addressbook.vaadin.data.ContactContainer;
 import org.axonframework.examples.addressbook.vaadin.data.ContactFormBean;
-import org.axonframework.examples.addressbook.vaadin.ui.*;
+import org.axonframework.examples.addressbook.vaadin.ui.ContactForm;
+import org.axonframework.examples.addressbook.vaadin.ui.ContactList;
+import org.axonframework.examples.addressbook.vaadin.ui.HelpWindow;
+import org.axonframework.examples.addressbook.vaadin.ui.ListView;
+import org.axonframework.examples.addressbook.vaadin.ui.NavigationTree;
+import org.axonframework.examples.addressbook.vaadin.ui.SearchView;
+import org.axonframework.examples.addressbook.vaadin.ui.VaadinTheme;
 import org.axonframework.sample.app.query.ContactEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -60,9 +66,9 @@ public class AddressbookApplication extends Application
     public void init() {
         setTheme(Runo.themeName());
         buildMainLayout();
-        newContact.setIcon(new ThemeResource(Theme.documentAdd));
-        search.setIcon(new ThemeResource(Theme.search));
-        help.setIcon(new ThemeResource(Theme.help));
+        newContact.setIcon(new ThemeResource(VaadinTheme.documentAdd));
+        search.setIcon(new ThemeResource(VaadinTheme.search));
+        help.setIcon(new ThemeResource(VaadinTheme.help));
     }
 
     private void buildMainLayout() {
