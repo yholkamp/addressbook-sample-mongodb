@@ -23,7 +23,7 @@ import org.axonframework.sample.app.api.AddressRegisteredEvent;
 import org.axonframework.sample.app.api.AddressRemovedEvent;
 import org.axonframework.sample.app.query.AddressEntry;
 import org.axonframework.sample.app.query.ContactEntry;
-import org.axonframework.sample.app.query.ContactRepository;
+import org.axonframework.sample.app.query.repositories.ContactRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
