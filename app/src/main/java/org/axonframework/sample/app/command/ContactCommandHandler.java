@@ -34,8 +34,10 @@ import org.axonframework.unitofwork.UnitOfWork;
 import org.axonframework.unitofwork.UnitOfWorkListenerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * <p>Command handler that can be used to create and update Contacts. It can also be used to register and remove
@@ -57,6 +59,8 @@ public class ContactCommandHandler {
      *
      * @param repository the contact repository
      */
+    @Autowired
+    @Qualifier("contactRepository")
     public void setRepository(Repository<Contact> repository) {
         this.repository = repository;
     }
@@ -66,6 +70,7 @@ public class ContactCommandHandler {
      *
      * @param contactNameRepository the contact name repository
      */
+    @Autowired
     public void setContactNameRepository(ContactNameRepository contactNameRepository) {
         this.contactNameRepository = contactNameRepository;
     }
@@ -75,6 +80,7 @@ public class ContactCommandHandler {
      *
      * @param contactRepository for the query database
      */
+    @Autowired
     public void setContactRepository(ContactRepository contactRepository) {
         this.contactRepository = contactRepository;
     }
@@ -97,17 +103,17 @@ public class ContactCommandHandler {
         logger.debug("Received a command for a new contact with name : {}", command.getNewContactName());
         Assert.notNull(command.getNewContactName(), "Name may not be null");
 
-        if (contactNameRepository.claimContactName(command.getNewContactName())) {
-            registerUnitOfWorkListenerToCancelClaimingName(command.getNewContactName(), unitOfWork);
-            AggregateIdentifier contactId = command.getContactId();
-            if (contactId == null) {
-                contactId = new UUIDAggregateIdentifier();
-            }
-            Contact contact = new Contact(contactId, command.getNewContactName());
-            repository.add(contact);
-        } else {
-            throw new ContactNameAlreadyTakenException(command.getNewContactName());
-        }
+//        if (contactNameRepository.claimContactName(command.getNewContactName())) {
+//            registerUnitOfWorkListenerToCancelClaimingName(command.getNewContactName(), unitOfWork);
+//            AggregateIdentifier contactId = command.getContactId();
+//            if (contactId == null) {
+//                contactId = new UUIDAggregateIdentifier();
+//            }
+//            Contact contact = new Contact(contactId, command.getNewContactName());
+//            repository.add(contact);
+//        } else {
+//            throw new ContactNameAlreadyTakenException(command.getNewContactName());
+//        }
     }
 
     /**
@@ -122,15 +128,15 @@ public class ContactCommandHandler {
     public void handle(final ChangeContactNameCommand command, UnitOfWork unitOfWork) {
         Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
         Assert.notNull(command.getContactNewName(), "Name may not be null");
-        if (contactNameRepository.claimContactName(command.getContactNewName())) {
-            registerUnitOfWorkListenerToCancelClaimingName(command.getContactNewName(), unitOfWork);
-            Contact contact = repository.load(command.getContactId());
-            contact.changeName(command.getContactNewName());
-
-            cancelClaimedContactName(command.getContactId(), unitOfWork);
-        } else {
-            throw new ContactNameAlreadyTakenException(command.getContactNewName());
-        }
+//        if (contactNameRepository.claimContactName(command.getContactNewName())) {
+//            registerUnitOfWorkListenerToCancelClaimingName(command.getContactNewName(), unitOfWork);
+//            Contact contact = repository.load(command.getContactId());
+//            contact.changeName(command.getContactNewName());
+//
+//            cancelClaimedContactName(command.getContactId(), unitOfWork);
+//        } else {
+//            throw new ContactNameAlreadyTakenException(command.getContactNewName());
+//        }
     }
 
     /**
@@ -185,7 +191,7 @@ public class ContactCommandHandler {
             @Override
             public void afterCommit() {
                 logger.debug("About to cancel the name {}", contactEntry.getName());
-                contactNameRepository.cancelContactName(contactEntry.getName());
+//                contactNameRepository.cancelContactName(contactEntry.getName());
             }
         });
     }
@@ -194,7 +200,7 @@ public class ContactCommandHandler {
         unitOfWork.registerListener(new UnitOfWorkListenerAdapter() {
             @Override
             public void onRollback(Throwable failureCause) {
-                contactNameRepository.cancelContactName(name);
+//                contactNameRepository.cancelContactName(name);
             }
         });
     }

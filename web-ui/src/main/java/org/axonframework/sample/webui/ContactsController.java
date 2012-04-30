@@ -25,7 +25,7 @@ import org.axonframework.sample.app.api.RemoveAddressCommand;
 import org.axonframework.sample.app.api.RemoveContactCommand;
 import org.axonframework.sample.app.query.AddressEntry;
 import org.axonframework.sample.app.query.ContactEntry;
-import org.axonframework.sample.app.query.repositories.ContactNameRepository;
+//import org.axonframework.sample.app.query.repositories.ContactNameRepository;
 import org.axonframework.sample.app.query.repositories.ContactRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +33,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,13 +47,13 @@ public class ContactsController {
     private final static Logger logger = LoggerFactory.getLogger(ContactsController.class);
 
     private ContactRepository contactRepository;
-    private ContactNameRepository contactNameRepository;
+//    private ContactNameRepository contactNameRepository;
     private CommandBus commandBus;
     
     @Autowired
-    public ContactsController(ContactRepository contactRepository, ContactNameRepository contactNameRepository, CommandBus commandBus) {
+    public ContactsController(ContactRepository contactRepository, /*ContactNameRepository contactNameRepository, */CommandBus commandBus) {
     	this.contactRepository = contactRepository;
-    	this.contactNameRepository = contactNameRepository;
+//    	this.contactNameRepository = contactNameRepository;
     	this.commandBus = commandBus;
     }
 
@@ -212,12 +210,13 @@ public class ContactsController {
      * @return true if the contact has errors, false otherwise
      */
     private boolean contactHasErrors(ContactEntry contact, BindingResult bindingResult) {
-        if (bindingResult.hasErrors() || !contactNameRepository.vacantContactName(contact.getName())) {
-            ObjectError error = new FieldError("contact", "name",
-                    "The provided name \'" + contact.getName() + "\' already exists");
-            bindingResult.addError(error);
-            return true;
-        }
-        return false;
+//        if (bindingResult.hasErrors() || !contactNameRepository.vacantContactName(contact.getName())) {
+//            ObjectError error = new FieldError("contact", "name",
+//                    "The provided name \'" + contact.getName() + "\' already exists");
+//            bindingResult.addError(error);
+//            return true;
+//        }
+//        return false;
+        return true;
     }
 }

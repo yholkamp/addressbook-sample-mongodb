@@ -50,6 +50,11 @@ class Contact extends AbstractAnnotatedAggregateRoot {
         apply(new ContactCreatedEvent(identifier, name));
     }
 
+    @SuppressWarnings({"UnusedDeclaration"})
+    public Contact(AggregateIdentifier identifier) {
+        super(identifier);
+    }
+
     /**
      * Register the provided address with the provided type. If a contact already has an address of the provided type,
      * that address is changed.

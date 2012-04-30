@@ -26,9 +26,10 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath*:configuration-context.xml,
-            classpath*:cqrs-infrastructure-context.xml,
-            classpath*:persistence-infrastructure-context.xml
+            classpath:META-INF/spring/configuration-context.xml,
+            classpath:META-INF/spring/cqrs-infrastructure-context.xml,
+            classpath:META-INF/spring/persistence-infrastructure-context.xml
+            classpath:META-INF/spring/contacts-context.xml
         </param-value>
     </context-param>
 
