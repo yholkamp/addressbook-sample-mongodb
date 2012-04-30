@@ -1,16 +1,14 @@
-# IDE mumbo jumbo
-/.idea
+# used to ignore certain files by git
+# mac osx files
+.DS_Store
+#gradle build files
+.gradle
+build
+# intellij files
+.idea/*
+*.ipr
+*.iws
 *.iml
 target/
-.classpath
-.project
-.settings
-*~
-
-# Java artifacts
-*.class
-
-# Package Files #
-*.jar
-*.war
-*.ear
+out/*
+rebel.xml

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2010. Axon Framework
+  ~ Copyright (c) 2010-2012. Axon Framework
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
   ~ You may obtain a copy of the License at
   ~
-  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~     http://www.apache.org/licenses/LICENSE-2.0
   ~
   ~ Unless required by applicable law or agreed to in writing, software
   ~ distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,19 +17,29 @@
 
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          id="WebApp_ID" version="2.5">
 
-    <display-name>Axon framework Address book sample</display-name>
+    <display-name>Axon framework Trader sample</display-name>
+
+    <context-param>
+        <param-name>contextInitializerClasses</param-name>
+        <param-value>org.axonframework.samples.trader.webui.init.CloudApplicationContextInitializer</param-value>
+    </context-param>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath:META-INF/spring/configuration-context.xml,
             classpath:META-INF/spring/cqrs-infrastructure-context.xml,
-            classpath:META-INF/spring/persistence-infrastructure-context.xml
-            classpath:META-INF/spring/contacts-context.xml
+            classpath:META-INF/spring/persistence-infrastructure-context.xml,
+            classpath:META-INF/spring/query-context.xml,
+            classpath:META-INF/spring/users-query-context.xml,
+            classpath:META-INF/spring/orders-context.xml,
+            classpath:META-INF/spring/trade-engine-context.xml,
+            classpath:META-INF/spring/users-context.xml,
+            classpath:META-INF/spring/companies-context.xml,
+            classpath:META-INF/spring/configuration-context.xml,
+            classpath:META-INF/spring/security-context.xml
         </param-value>
     </context-param>
 
@@ -58,15 +68,29 @@
     <!--                             Filters                                    -->
     <!-- ====================================================================== -->
     <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+    <filter>
         <filter-name>sitemesh</filter-name>
         <filter-class>com.opensymphony.module.sitemesh.filter.PageFilter</filter-class>
     </filter>
 
     <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>*</url-pattern>
+        <!--<url-pattern>/company/*</url-pattern>-->
+        <!--<url-pattern>/orderbook/*</url-pattern>-->
+        <!--<url-pattern>/spring_security_login</url-pattern>-->
+        <!--<url-pattern>/j_spring_security_check</url-pattern>-->
+        <!--<url-pattern>/j_spring_security_logout</url-pattern>-->
+    </filter-mapping>
+
+    <filter-mapping>
         <filter-name>sitemesh</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
 
     <!-- ====================================================================== -->
     <!--                             Servlets                                   -->
@@ -80,7 +104,6 @@
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
-        <!--<url-pattern>/index.html</url-pattern>-->
     </servlet-mapping>
 
     <welcome-file-list>

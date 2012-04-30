@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+  <name>axon-trader-query</name>
+  <comment>NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
+  <projects>
+    <project>axon-trader-orders-api</project>
+    <project>axon-trader-trade-engine-api</project>
+    <project>axon-trader-users-api</project>
+    <project>axon-trader-users-query</project>
+    <project>axon-trader-companies-api</project>
+    <project>axon-trader-infrastructure</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+  </natures>
+</projectDescription>
