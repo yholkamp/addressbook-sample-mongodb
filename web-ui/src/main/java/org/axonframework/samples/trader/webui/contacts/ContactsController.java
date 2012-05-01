@@ -64,35 +64,35 @@ public class ContactsController {
     @RequestMapping(value = "{identifier}", method = RequestMethod.GET)
     public String details(@PathVariable String identifier, Model model) {
 //        List<AddressEntry> addressesForContact = contactRepository.findAllAddresses(identifier);
-//        String name;
+        String name;
 //        if (addressesForContact.size() > 0) {
 //            name = addressesForContact.get(0).getName();
 //        } else {
-//            name = contactRepository.findOne(identifier).getName();
+            name = contactRepository.findOne(identifier).getName();
 //        }
 //        model.addAttribute("addresses", addressesForContact);
-//        model.addAttribute("identifier", identifier);
-//        model.addAttribute("name", name);
+        model.addAttribute("identifier", identifier);
+        model.addAttribute("name", name);
         return "contacts/details";
     }
 
     @RequestMapping(value = "{identifier}/edit", method = RequestMethod.GET)
     public String formEdit(@PathVariable String identifier, Model model) {
-        ContactEntry contactEntry = contactRepository.findOne(identifier);
-        model.addAttribute("contact", contactEntry);
+        ContactEntry contact = contactRepository.findOne(identifier);
+        model.addAttribute("contact", contact);
         return "contacts/edit";
     }
 
     @RequestMapping(value = "{identifier}/edit", method = RequestMethod.POST)
-    public String formEditSubmit(@ModelAttribute("contact") @Valid ContactEntry contact, BindingResult bindingResult) {
+    public String formEditSubmit(@ModelAttribute("contact") @Valid ContactEntry contactEntry, BindingResult bindingResult) {
         // beware, we cannot support other updates since that would always give an error when the name is not changed
-        if (contactHasErrors(contact, bindingResult)) {
+        if (contactHasErrors(contactEntry, bindingResult)) {
             return "contacts/edit";
         }
 
         ChangeContactNameCommand command = new ChangeContactNameCommand();
-        command.setContactNewName(contact.getName());
-        command.setContactId(contact.getIdentifier());
+        command.setContactNewName(contactEntry.getName());
+        command.setContactId(contactEntry.getIdentifier());
 
         commandBus.dispatch(command);
         logger.debug("Dispatching command with name : {}", command.toString());

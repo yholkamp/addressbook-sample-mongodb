@@ -16,8 +16,7 @@
   ~ limitations under the License.
   --%>
 
-<c:set var="ctx" value="${pageContext.request.contextPath}"/>
-
+<%@include file="../include.jsp" %>
 <table id="hor-minimalist-b">
     <thead>
     <tr>

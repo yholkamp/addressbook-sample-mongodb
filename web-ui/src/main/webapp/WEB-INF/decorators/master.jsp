@@ -42,25 +42,8 @@
             <a class="brand" href="${ctx}/">Axon Trader</a>
             <ul class="nav">
                 <li><a href="${ctx}/">Home</a></li>
-                <li><a href="${ctx}/dashboard">Dashboard</a></li>
-                <li><a href="${ctx}/company">Companies</a></li>
-                <li><a href="${ctx}/data/collections">Data</a></li>
-                <li><a href="${ctx}/admin/portfolio">Portfolio</a></li>
+                <li><a href="${ctx}/contacts">Contacts</a></li>
             </ul>
-            <sec:authorize access="isAuthenticated()">
-                <p class="pull-right credentials">
-                    <sec:authentication property="principal.fullName"/>
-                    &nbsp;&nbsp;<a href="${ctx}/j_spring_security_logout">logout</a>
-                </p>
-            </sec:authorize>
-            <sec:authorize access="isAnonymous()">
-                <form action="<c:url value='j_spring_security_check'/>" class="pull-right" method="POST">
-                    <input class="input-small" type="text" placeholder="Username" name='j_username'
-                           value='<c:if test="${not empty param.login_error}"><c:out value="${SPRING_SECURITY_LAST_USERNAME}"/></c:if>'/>
-                    <input class="input-small" type="password" placeholder="Password" name='j_password'/>
-                    <button class="btn" type="submit">Sign in</button>
-                </form>
-            </sec:authorize>
         </div>
     </div>
 </div>

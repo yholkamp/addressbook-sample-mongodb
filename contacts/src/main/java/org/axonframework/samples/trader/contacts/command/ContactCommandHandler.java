@@ -83,7 +83,7 @@ public class ContactCommandHandler {
      * @param unitOfWork Unit of work for the current running thread
      */
     @CommandHandler
-    public void handle(final ChangeContactNameCommand command, UnitOfWork unitOfWork) {
+    public void handleChangeContactName(final ChangeContactNameCommand command, UnitOfWork unitOfWork) {
         Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
         Assert.notNull(command.getContactNewName(), "Name may not be null");
 //        if (contactNameRepository.claimContactName(command.getContactNewName())) {
@@ -115,7 +115,7 @@ public class ContactCommandHandler {
         logger.debug("Received a command for a new contact with name : {}", command.getNewContactName());
         Assert.notNull(command.getNewContactName(), "Name may not be null");
 
-//        if (contactNameRepository.claimContactName(command.getNewContactName())) {
+//        if (contactNameRepository.claimWontactName(command.getNewContactName())) {
 //            registerUnitOfWorkListenerToCancelClaimingName(command.getNewContactName(), unitOfWork);
             Contact contact = new Contact(new UUIDAggregateIdentifier(), command.getNewContactName());
             repository.add(contact);
@@ -132,7 +132,7 @@ public class ContactCommandHandler {
      * @param command RegisterAddressCommand that contains all required data
      */
     @CommandHandler
-    public void handle(RegisterAddressCommand command) {
+    public void handleRegisterAddress(RegisterAddressCommand command) {
         Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
         Assert.notNull(command.getAddressType(), "AddressType may not be null");
         Address address = new Address(command.getStreetAndNumber(), command.getZipCode(), command.getCity());
@@ -148,7 +148,7 @@ public class ContactCommandHandler {
      * @param command RemoveAddressCommand that contains all required data to remove an address from a contact
      */
     @CommandHandler
-    public void handle(RemoveAddressCommand command) {
+    public void handleRemoveAddress(RemoveAddressCommand command) {
         Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
         Assert.notNull(command.getAddressType(), "AddressType may not be null");
         Contact contact = repository.load(command.getContactId());
@@ -162,7 +162,7 @@ public class ContactCommandHandler {
      * @param unitOfWork Unit of work for the current running thread
      */
     @CommandHandler
-    public void handle(RemoveContactCommand command, UnitOfWork unitOfWork) {
+    public void handleRemoveContact(RemoveContactCommand command, UnitOfWork unitOfWork) {
         Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
         Contact contact = repository.load(command.getContactId());
         contact.delete();

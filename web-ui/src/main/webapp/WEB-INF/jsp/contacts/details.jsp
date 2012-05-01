@@ -1,3 +1,4 @@
+<%@include file="../include.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%--
   ~ Copyright (c) 2010. Axon Framework
@@ -14,8 +15,6 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   --%>
-
-<c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
 <p>Addresses for : <c:out value='${name}'/></p>
 
