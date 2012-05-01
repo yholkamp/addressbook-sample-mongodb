@@ -33,10 +33,8 @@ public class ContactListener {
     @EventHandler
     public void handleContactCreated(ContactCreatedEvent event) {
         ContactEntry contactEntry = new ContactEntry();
-        contactEntry.setIdentifier(event.getContactIdentifier().asString());
+        contactEntry.setIdentifier(event.getContactId());
         contactEntry.setName(event.getName());
-        contactEntry.setContactname(event.getContactname());
-        contactEntry.setPassword(event.getPassword());
 
         contactRepository.save(contactEntry);
     }

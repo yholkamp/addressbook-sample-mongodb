@@ -19,10 +19,7 @@ package org.axonframework.samples.trader.contacts.command;
 import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
-import org.axonframework.samples.trader.contacts.api.AddressType;
-import org.axonframework.samples.trader.contacts.api.Address;
-import org.axonframework.samples.trader.contacts.api.AddressAddedEvent;
-import org.axonframework.samples.trader.contacts.api.AddressChangedEvent;
+import org.axonframework.samples.trader.contacts.api.*;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -27,6 +27,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+import org.axonframework.samples.trader.query.contacts.repositories.ContactQueryRepository;
+import org.axonframework.samples.trader.contacts.api.CreateContactCommand;
+import org.axonframework.samples.trader.contacts.api.RemoveContactCommand;
+import org.axonframework.samples.trader.contacts.api.ChangeContactNameCommand;
+import org.axonframework.samples.trader.contacts.api.Address;
+import org.axonframework.samples.trader.contacts.api.RegisterAddressCommand;
+import org.axonframework.samples.trader.contacts.api.RemoveAddressCommand;
+import org.axonframework.samples.trader.query.contacts.ContactEntry;
 
 /**
  * <p>Command handler that can be used to create and update Contacts. It can also be used to register and remove
@@ -41,7 +49,7 @@ public class ContactCommandHandler {
     private final static Logger logger = LoggerFactory.getLogger(ContactCommandHandler.class);
     private Repository<Contact> repository;
 //    private ContactNameRepository contactNameRepository;
-    private ContactRepository contactRepository;
+    private ContactQueryRepository contactRepository;
 
     /**
      * Sets the contact domain event repository.
@@ -70,7 +78,7 @@ public class ContactCommandHandler {
      * @param contactRepository for the query database
      */
     @Autowired
-    public void setContactRepository(ContactRepository contactRepository) {
+    public void setContactQueryRepository(ContactQueryRepository contactRepository) {
         this.contactRepository = contactRepository;
     }
 
