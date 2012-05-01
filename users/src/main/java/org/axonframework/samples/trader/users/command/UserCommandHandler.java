@@ -21,7 +21,7 @@ import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.domain.StringAggregateIdentifier;
 import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.repository.Repository;
-import org.axonframework.samples.trader.query.contacts.repositories.UserQueryRepository;
+import org.axonframework.samples.trader.query.users.repositories.UserQueryRepository;
 import org.axonframework.samples.trader.users.api.AuthenticateUserCommand;
 import org.axonframework.samples.trader.users.api.CreateUserCommand;
 import org.axonframework.samples.trader.users.api.UserAccount;
@@ -40,14 +40,6 @@ public class UserCommandHandler {
     private UserQueryRepository userQueryRepository;
 
     @CommandHandler
-    public AggregateIdentifier handleCreateUser(CreateUserCommand command) {
-        AggregateIdentifier identifier = new UUIDAggregateIdentifier();
-        User user = new User(identifier, command.getUsername(), command.getName(), command.getPassword());
-        repository.add(user);
-        return identifier;
-    }
-
-    @CommandHandler
     public UserAccount handleAuthenticateUser(AuthenticateUserCommand command) {
         UserAccount account = userQueryRepository.findByUsername(command.getUserName());
         if (account == null) {
@@ -55,6 +47,14 @@ public class UserCommandHandler {
         }
         boolean success = onUser(account.getUserId()).authenticate(command.getPassword());
         return success ? account : null;
+    }
+
+    @CommandHandler
+    public AggregateIdentifier handleCreateUser(CreateUserCommand command) {
+        AggregateIdentifier identifier = new UUIDAggregateIdentifier();
+        User user = new User(identifier, command.getUsername(), command.getName(), command.getPassword());
+        repository.add(user);
+        return identifier;
     }
 
     private User onUser(String userId) {

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package org.axonframework.samples.trader.query.contacts;
+package org.axonframework.samples.trader.query.users;
 
 import org.axonframework.eventhandling.annotation.EventHandler;
-import org.axonframework.samples.trader.query.contacts.repositories.UserQueryRepository;
+import org.axonframework.samples.trader.query.users.repositories.UserQueryRepository;
 import org.axonframework.samples.trader.users.api.UserCreatedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

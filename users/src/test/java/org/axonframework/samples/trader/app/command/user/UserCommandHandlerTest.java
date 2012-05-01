@@ -16,8 +16,8 @@
 
 package org.axonframework.samples.trader.app.command.user;
 
-import org.axonframework.samples.trader.query.contacts.UserEntry;
-import org.axonframework.samples.trader.query.contacts.repositories.UserQueryRepository;
+import org.axonframework.samples.trader.query.users.UserEntry;
+import org.axonframework.samples.trader.query.users.repositories.UserQueryRepository;
 import org.axonframework.samples.trader.users.api.AuthenticateUserCommand;
 import org.axonframework.samples.trader.users.api.CreateUserCommand;
 import org.axonframework.samples.trader.users.api.UserAuthenticatedEvent;

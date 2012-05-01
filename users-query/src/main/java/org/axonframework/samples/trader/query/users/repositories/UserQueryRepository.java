@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package org.axonframework.samples.trader.query.contacts.repositories;
+package org.axonframework.samples.trader.query.users.repositories;
 
-import org.axonframework.samples.trader.query.contacts.UserEntry;
+import org.axonframework.samples.trader.query.users.UserEntry;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**

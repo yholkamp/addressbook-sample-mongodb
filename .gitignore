@@ -12,3 +12,6 @@ build
 target/
 out/*
 rebel.xml
+.settings
+.project
+.classpath

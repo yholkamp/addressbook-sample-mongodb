@@ -24,4 +24,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  */
 public interface ContactQueryRepository extends PagingAndSortingRepository<ContactEntry, String> {
 
+//	List<AddressEntry> findAllAddresses(String identifier);
+
 }

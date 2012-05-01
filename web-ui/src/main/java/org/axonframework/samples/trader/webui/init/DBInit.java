@@ -35,7 +35,7 @@ import org.axonframework.samples.trader.query.portfolio.PortfolioEntry;
 import org.axonframework.samples.trader.query.portfolio.repositories.PortfolioQueryRepository;
 import org.axonframework.samples.trader.query.tradeexecuted.TradeExecutedEntry;
 import org.axonframework.samples.trader.query.transaction.TransactionEntry;
-import org.axonframework.samples.trader.query.contacts.UserEntry;
+import org.axonframework.samples.trader.query.users.UserEntry;
 import org.axonframework.samples.trader.tradeengine.api.order.CreateOrderBookCommand;
 import org.axonframework.samples.trader.users.api.CreateUserCommand;
 import org.springframework.beans.factory.annotation.Autowired;

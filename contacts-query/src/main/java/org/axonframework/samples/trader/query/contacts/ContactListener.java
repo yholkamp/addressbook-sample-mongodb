@@ -16,6 +16,7 @@
 
 package org.axonframework.samples.trader.query.contacts;
 
+import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.samples.trader.query.contacts.repositories.ContactQueryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class ContactListener {
     @EventHandler
     public void handleContactCreated(ContactCreatedEvent event) {
         ContactEntry contactEntry = new ContactEntry();
-        contactEntry.setIdentifier(event.getContactId());
+        contactEntry.setIdentifier((UUIDAggregateIdentifier) event.getContactId());
         contactEntry.setName(event.getName());
 
         contactRepository.save(contactEntry);

@@ -16,7 +16,7 @@
 
 package org.axonframework.samples.trader.webui.security;
 
-import org.axonframework.samples.trader.query.contacts.repositories.UserQueryRepository;
+import org.axonframework.samples.trader.query.users.repositories.UserQueryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

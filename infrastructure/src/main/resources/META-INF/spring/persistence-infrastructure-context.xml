@@ -42,8 +42,4 @@
         <mongo:db-factory id="mongoDbFactory" dbname="axontrader" host="127.0.0.1" port="27017"/>
     </beans>
 
-    <beans profile="cloud">
-        <cloud:mongo-db-factory id="mongoDbFactory"/>
-    </beans>
-
 </beans>

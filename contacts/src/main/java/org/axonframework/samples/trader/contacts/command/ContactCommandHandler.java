@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010. Axon Framework
+  * Copyright (c) 2010. Axon Framework
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package org.axonframework.samples.trader.contacts.command;
 
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.domain.AggregateIdentifier;
+import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.repository.Repository;
 import org.axonframework.unitofwork.UnitOfWork;
 import org.axonframework.unitofwork.UnitOfWorkListenerAdapter;
@@ -47,19 +48,20 @@ import org.axonframework.samples.trader.query.contacts.ContactEntry;
 public class ContactCommandHandler {
 
     private final static Logger logger = LoggerFactory.getLogger(ContactCommandHandler.class);
+    
     private Repository<Contact> repository;
 //    private ContactNameRepository contactNameRepository;
-    private ContactQueryRepository contactRepository;
+    private ContactQueryRepository contactQueryRepository;
 
-    /**
-     * Sets the contact domain event repository.
-     *
-     * @param repository the contact repository
-     */
-    @Autowired
-    @Qualifier("contactRepository")
-    public void setRepository(Repository<Contact> repository) {
-        this.repository = repository;
+    private void cancelClaimedContactName(AggregateIdentifier contactIdentifier, UnitOfWork unitOfWork) {
+        final ContactEntry contactEntry = contactQueryRepository.findOne(contactIdentifier.asString());
+        unitOfWork.registerListener(new UnitOfWorkListenerAdapter() {
+            @Override
+            public void afterCommit() {
+                logger.debug("About to cancel the name {}", contactEntry.getName());
+//                contactNameRepository.cancelContactName(contactEntry.getName());
+            }
+        });
     }
 
     /**
@@ -73,13 +75,26 @@ public class ContactCommandHandler {
 //    }
 
     /**
-     * Sets the query repository for users
+     * Changes the provided data for the contact found based on the provided identifier
+     * <p/>
+     * An {@code AggregateNotFoundException} is thrown if the identifier does not represent a valid contact.
      *
-     * @param contactRepository for the query database
+     * @param command    ChangeContactNameCommand that contains the identifier and the data to be updated
+     * @param unitOfWork Unit of work for the current running thread
      */
-    @Autowired
-    public void setContactQueryRepository(ContactQueryRepository contactRepository) {
-        this.contactRepository = contactRepository;
+    @CommandHandler
+    public void handle(final ChangeContactNameCommand command, UnitOfWork unitOfWork) {
+        Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
+        Assert.notNull(command.getContactNewName(), "Name may not be null");
+//        if (contactNameRepository.claimContactName(command.getContactNewName())) {
+            registerUnitOfWorkListenerToCancelClaimingName(command.getContactNewName(), unitOfWork);
+            Contact contact = repository.load(command.getContactId());
+            contact.changeName(command.getContactNewName());
+//
+//            cancelClaimedContactName(command.getContactId(), unitOfWork);
+//        } else {
+//            throw new ContactNameAlreadyTakenException(command.getContactNewName());
+//        }
     }
 
     /**
@@ -96,59 +111,17 @@ public class ContactCommandHandler {
      * @param unitOfWork Unit of work for the current running thread
      */
     @CommandHandler
-    public void handle(final CreateContactCommand command, UnitOfWork unitOfWork) {
+    public void handleCreateContact(final CreateContactCommand command, UnitOfWork unitOfWork) {
         logger.debug("Received a command for a new contact with name : {}", command.getNewContactName());
         Assert.notNull(command.getNewContactName(), "Name may not be null");
 
 //        if (contactNameRepository.claimContactName(command.getNewContactName())) {
 //            registerUnitOfWorkListenerToCancelClaimingName(command.getNewContactName(), unitOfWork);
-//            AggregateIdentifier contactId = command.getContactId();
-//            if (contactId == null) {
-//                contactId = new UUIDAggregateIdentifier();
-//            }
-//            Contact contact = new Contact(contactId, command.getNewContactName());
-//            repository.add(contact);
+            Contact contact = new Contact(new UUIDAggregateIdentifier(), command.getNewContactName());
+            repository.add(contact);
 //        } else {
 //            throw new ContactNameAlreadyTakenException(command.getNewContactName());
 //        }
-    }
-
-    /**
-     * Changes the provided data for the contact found based on the provided identifier
-     * <p/>
-     * An {@code AggregateNotFoundException} is thrown if the identifier does not represent a valid contact.
-     *
-     * @param command    ChangeContactNameCommand that contains the identifier and the data to be updated
-     * @param unitOfWork Unit of work for the current running thread
-     */
-    @CommandHandler
-    public void handle(final ChangeContactNameCommand command, UnitOfWork unitOfWork) {
-        Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
-        Assert.notNull(command.getContactNewName(), "Name may not be null");
-//        if (contactNameRepository.claimContactName(command.getContactNewName())) {
-//            registerUnitOfWorkListenerToCancelClaimingName(command.getContactNewName(), unitOfWork);
-//            Contact contact = repository.load(command.getContactId());
-//            contact.changeName(command.getContactNewName());
-//
-//            cancelClaimedContactName(command.getContactId(), unitOfWork);
-//        } else {
-//            throw new ContactNameAlreadyTakenException(command.getContactNewName());
-//        }
-    }
-
-    /**
-     * Removes the contact belonging to the contactId as provided by the command.
-     *
-     * @param command    RemoveContactCommand containing the identifier of the contact to be removed
-     * @param unitOfWork Unit of work for the current running thread
-     */
-    @CommandHandler
-    public void handle(RemoveContactCommand command, UnitOfWork unitOfWork) {
-        Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
-        Contact contact = repository.load(command.getContactId());
-        contact.delete();
-
-        cancelClaimedContactName(command.getContactId(), unitOfWork);
     }
 
     /**
@@ -182,23 +155,49 @@ public class ContactCommandHandler {
         contact.removeAddress(command.getAddressType());
     }
 
-    private void cancelClaimedContactName(AggregateIdentifier contactIdentifier, UnitOfWork unitOfWork) {
-        final ContactEntry contactEntry = contactRepository.findOne(contactIdentifier.asString());
-        unitOfWork.registerListener(new UnitOfWorkListenerAdapter() {
-            @Override
-            public void afterCommit() {
-                logger.debug("About to cancel the name {}", contactEntry.getName());
-//                contactNameRepository.cancelContactName(contactEntry.getName());
-            }
-        });
+    /**
+     * Removes the contact belonging to the contactId as provided by the command.
+     *
+     * @param command    RemoveContactCommand containing the identifier of the contact to be removed
+     * @param unitOfWork Unit of work for the current running thread
+     */
+    @CommandHandler
+    public void handle(RemoveContactCommand command, UnitOfWork unitOfWork) {
+        Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
+        Contact contact = repository.load(command.getContactId());
+        contact.delete();
+
+        cancelClaimedContactName(command.getContactId(), unitOfWork);
     }
 
-    private void registerUnitOfWorkListenerToCancelClaimingName(final String name, UnitOfWork unitOfWork) {
+    @SuppressWarnings("unused")
+	private void registerUnitOfWorkListenerToCancelClaimingName(final String name, UnitOfWork unitOfWork) {
         unitOfWork.registerListener(new UnitOfWorkListenerAdapter() {
             @Override
             public void onRollback(Throwable failureCause) {
 //                contactNameRepository.cancelContactName(name);
             }
         });
+    }
+
+    /**
+     * Sets the query repository for users
+     *
+     * @param contactRepository for the query database
+     */
+    @Autowired
+    public void setContactQueryRepository(ContactQueryRepository contactRepository) {
+        this.contactQueryRepository = contactRepository;
+    }
+
+    /**
+     * Sets the contact domain event repository.
+     *
+     * @param repository the contact repository
+     */
+    @Autowired
+    @Qualifier("contactRepository")
+    public void setRepository(Repository<Contact> repository) {
+        this.repository = repository;
     }
 }

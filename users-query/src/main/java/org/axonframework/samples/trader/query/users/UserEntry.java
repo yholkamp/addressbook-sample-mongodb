@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.axonframework.samples.trader.query.contacts;
+package org.axonframework.samples.trader.query.users;
 
 import org.axonframework.samples.trader.users.api.UserAccount;
 

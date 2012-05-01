@@ -29,7 +29,7 @@
     <artifactId>axon-trader-query</artifactId>
 
     <dependencies>
-        <dependency>
+         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>axon-trader-orders-api</artifactId>
             <version>${project.version}</version>
