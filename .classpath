@@ -5,10 +5,6 @@
 	<classpathentry kind="src" path="orders/src/main/java"/>
 	<classpathentry kind="src" path="orders/src/test/java"/>
 	<classpathentry kind="src" path="query/src/main/java"/>
-	<classpathentry kind="src" path="query/src/test/java"/>
-	<classpathentry kind="src" path="trade-engine-api/src/main/java"/>
-	<classpathentry kind="src" path="trade-engine/src/main/java"/>
-	<classpathentry kind="src" path="trade-engine/src/test/java"/>
 	<classpathentry kind="src" path="users-api/src/main/java"/>
 	<classpathentry kind="src" path="users-query/src/main/java"/>
 	<classpathentry kind="src" path="users/src/main/java"/>
