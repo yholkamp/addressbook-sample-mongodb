@@ -42,37 +42,12 @@
 		<!-- Internal dependencies -->
 		<dependency>
 			<groupId>org.axonframework.samples</groupId>
-			<artifactId>axon-trader-orders</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.axonframework.samples</groupId>
 			<artifactId>axon-trader-contacts</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.axonframework.samples</groupId>
 			<artifactId>axon-trader-contacts-query</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>axon-trader-trade-engine</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>axon-trader-users</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>axon-trader-users-query</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>axon-trader-companies</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

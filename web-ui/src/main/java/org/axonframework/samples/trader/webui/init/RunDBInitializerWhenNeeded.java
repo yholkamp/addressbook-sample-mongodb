@@ -16,7 +16,7 @@
 
 package org.axonframework.samples.trader.webui.init;
 
-import org.axonframework.samples.trader.query.users.UserEntry;
+import org.axonframework.samples.trader.query.contacts.ContactEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
@@ -43,7 +43,7 @@ public class RunDBInitializerWhenNeeded implements ApplicationListener<ContextRe
         MongoTemplate mongoTemplate = event.getApplicationContext().getBean(MongoTemplate.class);
 
         if ("Root WebApplicationContext".equals(event.getApplicationContext().getDisplayName())) {
-            if (!mongoTemplate.collectionExists(UserEntry.class)) {
+            if (!mongoTemplate.collectionExists(ContactEntry.class)) {
                 init.createItems();
                 logger.info("The database has been created and refreshed with some data.");
             }
