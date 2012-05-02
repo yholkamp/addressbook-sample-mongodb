@@ -16,8 +16,6 @@
 
 package org.axonframework.samples.trader.query.contacts;
 
-import org.axonframework.domain.AggregateIdentifier;
-import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.springframework.data.annotation.Id;
 
 /**
@@ -26,15 +24,15 @@ import org.springframework.data.annotation.Id;
 public class ContactEntry {
 
     @Id
-    private UUIDAggregateIdentifier identifier;
+    private String identifier;
 
     private String name;
 
-    public AggregateIdentifier getIdentifier() {
+    public String getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(UUIDAggregateIdentifier identifier) {
+    public void setIdentifier(String identifier) {
         this.identifier = identifier;
     }
 

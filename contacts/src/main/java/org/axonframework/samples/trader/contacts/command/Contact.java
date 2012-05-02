@@ -20,9 +20,8 @@ import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.samples.trader.contacts.api.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>The Aggregate root component of the sample application. This component handles all contact as well as address
@@ -32,9 +31,9 @@ import java.util.Map;
  */
 class Contact extends AbstractAnnotatedAggregateRoot {
 	
+	private final static Logger logger = LoggerFactory.getLogger(Contact.class);
+	
 	private AggregateIdentifier identifier;
-
-    private Map<AddressType, Address> addresses = new HashMap<AddressType, Address>();
 
     public Contact(AggregateIdentifier identifier, String name) {
     	super(identifier);
@@ -45,32 +44,6 @@ class Contact extends AbstractAnnotatedAggregateRoot {
     @SuppressWarnings({"UnusedDeclaration"})
     public Contact(AggregateIdentifier identifier) {
         super(identifier);
-    }
-
-    /**
-     * Register the provided address with the provided type. If a contact already has an address of the provided type,
-     * that address is changed.
-     *
-     * @param type    AddressType of the address to add or change
-     * @param address Address to add or change
-     */
-    public void registerAddress(AddressType type, Address address) {
-        if (addresses.containsKey(type)) {
-            apply(new AddressChangedEvent(getIdentifier(), type, address));
-        } else {
-            apply(new AddressAddedEvent(getIdentifier(), type, address));
-        }
-    }
-
-    /**
-     * Removes the address with the provided type if it exists.
-     *
-     * @param type AddressType of the address that needs to be removed
-     */
-    public void removeAddress(AddressType type) {
-        if (addresses.containsKey(type)) {
-            apply(new AddressRemovedEvent(getIdentifier(), type));
-        }
     }
 
     /**
@@ -88,20 +61,12 @@ class Contact extends AbstractAnnotatedAggregateRoot {
 
     @EventHandler
     protected void handleContactCreatedEvent(ContactCreatedEvent event) {
+    	logger.debug("Contact received a ContactCreatedEvent");
     }
 
     @EventHandler
     protected void handleContactNameChangedEvent(ContactNameChangedEvent event) {
-    }
-
-    @EventHandler
-    protected void handleAddressRegisteredEvent(AddressRegisteredEvent event) {
-        addresses.put(event.getType(), event.getAddress());
-    }
-
-    @EventHandler
-    protected void handleAddressRemovedEvent(AddressRemovedEvent event) {
-        addresses.remove(event.getType());
+    	logger.debug("Contact received a ContactNameChangedEvent");
     }
 
     public AggregateIdentifier getIdentifier() {

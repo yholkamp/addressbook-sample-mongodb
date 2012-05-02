@@ -16,32 +16,47 @@
 
 package org.axonframework.samples.trader.query.contacts;
 
-import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.samples.trader.query.contacts.repositories.ContactQueryRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.axonframework.samples.trader.contacts.api.ContactCreatedEvent;
+import org.axonframework.samples.trader.contacts.api.ContactNameChangedEvent;
 
 /**
  * @author Jettro Coenradie
  */
 @Component
 public class ContactListener {
+	private final static Logger logger = LoggerFactory.getLogger(ContactListener.class);
 
-    private ContactQueryRepository contactRepository;
+	private ContactQueryRepository contactRepository;
 
-    @EventHandler
-    public void handleContactCreated(ContactCreatedEvent event) {
-        ContactEntry contactEntry = new ContactEntry();
-        contactEntry.setIdentifier((UUIDAggregateIdentifier) event.getContactId());
-        contactEntry.setName(event.getName());
+	@EventHandler
+	public void handleContactCreated(ContactCreatedEvent event) {
+		logger.debug("Received a contactCreatedEvent for a contact with name : {}", event.getName());
+		
+		ContactEntry contactEntry = new ContactEntry();
+		contactEntry.setIdentifier(event.getContactId().asString());
+		contactEntry.setName(event.getName());
 
-        contactRepository.save(contactEntry);
-    }
+		contactRepository.save(contactEntry);
+	}
+	
+	@EventHandler
+	public void handleContactNameChanged(ContactNameChangedEvent event) {
+		logger.debug("Received a contactNameChangedEvent for a contact with new name : {}", event.getNewName());
+		
+		ContactEntry contactEntry = contactRepository.findOne(event.getContactId().asString());
+		contactEntry.setName(event.getNewName());
 
-    @Autowired
-    public void setContactRepository(ContactQueryRepository contactRepository) {
-        this.contactRepository = contactRepository;
-    }
+		contactRepository.save(contactEntry);
+	}
+
+	@Autowired
+	public void setContactRepository(ContactQueryRepository contactRepository) {
+		this.contactRepository = contactRepository;
+	}
 }
