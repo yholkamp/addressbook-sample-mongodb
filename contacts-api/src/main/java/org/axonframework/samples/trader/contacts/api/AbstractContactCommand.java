@@ -16,6 +16,7 @@
 
 package org.axonframework.samples.trader.contacts.api;
 
+import javax.validation.constraints.NotNull;
 import org.axonframework.domain.AggregateIdentifier;
 import org.springframework.util.Assert;
 
@@ -24,7 +25,8 @@ import org.springframework.util.Assert;
  *
  * @author Jettro Coenradie
  */
-public abstract class AbstractOrderCommand {
+public abstract class AbstractContactCommand {
+	@NotNull
     private AggregateIdentifier contactId;
 
     /**

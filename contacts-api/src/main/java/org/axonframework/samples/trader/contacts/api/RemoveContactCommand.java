@@ -24,7 +24,7 @@ import org.springframework.util.Assert;
  *
  * @author Jettro Coenradie
  */
-public class RemoveContactCommand extends AbstractOrderCommand {
+public class RemoveContactCommand extends AbstractContactCommand {
     private AggregateIdentifier contactId;
 
     public AggregateIdentifier getContactId() {

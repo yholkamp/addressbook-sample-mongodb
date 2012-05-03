@@ -72,10 +72,10 @@ public class ContactCommandHandler {
      */
     @CommandHandler
     public void handleCreateContact(final CreateContactCommand command, UnitOfWork unitOfWork) {
-        logger.debug("Received a command for a new contact with name : {}", command.getNewContactName());
-        Assert.notNull(command.getNewContactName(), "Name may not be null");
+        logger.debug("Received a command for a new contact with name : {}", command.getFirstName());
+        Assert.notNull(command.getFirstName(), "Name may not be null");
 
-        Contact contact = new Contact(new UUIDAggregateIdentifier(), command.getNewContactName());
+        Contact contact = new Contact(new UUIDAggregateIdentifier(), command.getFirstName(), command.getLastName(), command.getStreet(), command.getStreet(), command.getCity(), command.getZipCode());
         repository.add(contact);
     }
 

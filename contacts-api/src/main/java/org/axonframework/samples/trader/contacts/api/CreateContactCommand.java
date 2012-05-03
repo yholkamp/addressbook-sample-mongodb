@@ -16,6 +16,7 @@
 
 package org.axonframework.samples.trader.contacts.api;
 
+import org.axonframework.domain.AggregateIdentifier;
 import org.springframework.util.Assert;
 
 /**
@@ -23,26 +24,101 @@ import org.springframework.util.Assert;
  *
  * @author Jettro Coenradie
  */
-public class CreateContactCommand extends AbstractOrderCommand {
-    private String newContactName;
+public class CreateContactCommand extends AbstractContactCommand {
+	private String firstName;
+	private String lastName;
+	private String phoneNumber;
+	private String street;
+	private String city;
+	private String zipCode;
 
     /**
      * Set the name for the new Contact. An exception is thrown when the provided name is empty
      *
-     * @param newContactName String containing the name for the new contact
+     * @param firstName String containing the name for the new contact
      */
-    public void setNewContactName(String newContactName) {
-        Assert.hasText(newContactName, "Name for new contact must contain text");
-        this.newContactName = newContactName;
+    public void setFirstName(String firstName) {
+        Assert.hasText(firstName, "Name for new contact must contain text");
+        this.firstName = firstName;
     }
 
     /**
+	 * @return the lastName
+	 */
+	public String getLastName() {
+		return lastName;
+	}
+
+	/**
+	 * @param lastName the lastName to set
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	/**
+	 * @return the phoneNumber
+	 */
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	/**
+	 * @param phoneNumber the phoneNumber to set
+	 */
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	/**
+	 * @return the street
+	 */
+	public String getStreet() {
+		return street;
+	}
+
+	/**
+	 * @param street the street to set
+	 */
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	/**
+	 * @return the city
+	 */
+	public String getCity() {
+		return city;
+	}
+
+	/**
+	 * @param city the city to set
+	 */
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	/**
+	 * @return the zipCode
+	 */
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	/**
+	 * @param zipCode the zipCode to set
+	 */
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
+	/**
      * Returns the name for the new contact
      *
      * @return String containing the name for the new contact
      */
-    public String getNewContactName() {
-        return newContactName;
+    public String getFirstName() {
+        return firstName;
     }
 
 }

@@ -59,7 +59,7 @@ public class ContactCommandHandlerTest {
 	public void testHandleCreateContactCommand_success() throws Exception {
 		CreateContactCommand command = new CreateContactCommand();
 		command.setContactId(new UUIDAggregateIdentifier());
-		command.setNewContactName("Unique name");
+		command.setFirstName("Unique name");
 
 		// when(mockContactNameRepository.claimContactName("Double name")).thenReturn(false);
 

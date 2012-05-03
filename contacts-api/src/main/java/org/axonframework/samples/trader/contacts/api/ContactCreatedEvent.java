@@ -24,19 +24,51 @@ import org.axonframework.domain.DomainEvent;
  */
 public class ContactCreatedEvent extends DomainEvent {
 
-    private final AggregateIdentifier contactId;
-    private final String name;
+	private final AggregateIdentifier contactId;
+	private final String firstName;
+	private final String lastName;
+	private final String phoneNumber;
+	private final String street;
+	private final String city;
+	private final String zipCode;
 
-    public ContactCreatedEvent(AggregateIdentifier contactId, String name) {
-        this.contactId = contactId;
-        this.name = name;
-    }
+	public ContactCreatedEvent(AggregateIdentifier contactId, String firstName,
+			String lastName, String phoneNumber, String street, String city,
+			String zipCode) {
+		this.contactId = contactId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
+		this.street = street;
+		this.city = city;
+		this.zipCode = zipCode;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public AggregateIdentifier getContactId() {
-        return contactId;
-    }
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public AggregateIdentifier getContactId() {
+		return contactId;
+	}
 }

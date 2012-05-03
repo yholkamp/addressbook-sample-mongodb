@@ -36,11 +36,16 @@ public class ContactListener {
 
 	@EventHandler
 	public void handle(ContactCreatedEvent event) {
-		logger.debug("Received a contactCreatedEvent for a contact with name : {}", event.getName());
+		logger.debug("Received a contactCreatedEvent for a contact with name : {}", event.getFirstName());
 		
 		ContactEntry contactEntry = new ContactEntry();
 		contactEntry.setIdentifier(event.getContactId().asString());
-		contactEntry.setName(event.getName());
+		contactEntry.setFirstName(event.getFirstName());
+		contactEntry.setLastName(event.getLastName());
+		contactEntry.setPhoneNumber(event.getPhoneNumber());
+		contactEntry.setStreet(event.getStreet());
+		contactEntry.setCity(event.getCity());
+		contactEntry.setZipCode(event.getZipCode());
 
 		contactRepository.save(contactEntry);
 	}
@@ -50,7 +55,7 @@ public class ContactListener {
 		logger.debug("Received a contactNameChangedEvent for a contact with new name : {}", event.getNewName());
 		
 		ContactEntry contactEntry = contactRepository.findOne(event.getContactId().asString());
-		contactEntry.setName(event.getNewName());
+		contactEntry.setFirstName(event.getNewName());
 
 		contactRepository.save(contactEntry);
 	}

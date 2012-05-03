@@ -36,10 +36,12 @@ class Contact extends AbstractAnnotatedAggregateRoot {
 	
 	private AggregateIdentifier identifier;
 
-    public Contact(AggregateIdentifier identifier, String name) {
+    public Contact(AggregateIdentifier identifier, String firstName,
+			String lastName, String phoneNumber, String street, String city,
+			String zipCode) {
     	super(identifier);
     	this.identifier = identifier;
-        apply(new ContactCreatedEvent(identifier, name));
+        apply(new ContactCreatedEvent(identifier, firstName, lastName, phoneNumber, street, city, zipCode));
     }
 
     @SuppressWarnings({"UnusedDeclaration"})

@@ -16,7 +16,7 @@
 
 package org.axonframework.samples.trader.contacts.api;
 
-import org.axonframework.domain.AggregateIdentifier;
+import javax.validation.constraints.NotNull;
 import org.springframework.util.Assert;
 
 /**
@@ -24,7 +24,8 @@ import org.springframework.util.Assert;
  *
  * @author Jettro Coenradie
  */
-public class ChangeContactNameCommand extends AbstractOrderCommand {
+public class ChangeContactNameCommand extends AbstractContactCommand {
+	@NotNull
     private String contactNewName;
     
     /**

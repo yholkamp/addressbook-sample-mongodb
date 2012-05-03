@@ -126,7 +126,7 @@ public class ContactsController {
 		}
 
 		CreateContactCommand command = new CreateContactCommand();
-		command.setNewContactName(contact.getName());
+		command.setFirstName(contact.getName());
 
 		commandBus.dispatch((command));
 		logger.debug("Dispatching command with name : {}", command.toString());

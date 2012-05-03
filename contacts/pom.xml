@@ -56,6 +56,13 @@
             <artifactId>spring-data-mongodb</artifactId>
             <version>${springdata.mongodb.version}</version>
         </dependency>
+        
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+			<scope>compile</scope>
+		</dependency>
 
         <!-- Test dependencies -->
         <dependency>

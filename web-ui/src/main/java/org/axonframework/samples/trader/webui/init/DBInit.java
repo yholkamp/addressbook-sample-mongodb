@@ -89,7 +89,7 @@ public class DBInit {
     	
     	for(String name : names) {
     		CreateContactCommand createContact = new CreateContactCommand();
-    		createContact.setNewContactName(name);
+    		createContact.setFirstName(name);
     		commandBus.dispatch(createContact);
     	}
     }
