@@ -17,6 +17,7 @@
 package org.axonframework.samples.trader.contacts.api;
 
 import org.axonframework.domain.AggregateIdentifier;
+import org.springframework.util.Assert;
 
 /**
  * <p>Parent class for all contact related commands</p>
@@ -26,11 +27,18 @@ import org.axonframework.domain.AggregateIdentifier;
 public abstract class AbstractOrderCommand {
     private AggregateIdentifier contactId;
 
+    /**
+     * Returns the identifier for the contact
+     */
     public AggregateIdentifier getContactId() {
         return contactId;
     }
 
+    /**
+     * Provide the identifier for the existing contact. An error is thrown if the provided identifier is empty.
+     */
     public void setContactId(AggregateIdentifier contactId) {
+    	Assert.notNull(contactId, "Cannot remove a contact with an empty id");
         this.contactId = contactId;
     }
 

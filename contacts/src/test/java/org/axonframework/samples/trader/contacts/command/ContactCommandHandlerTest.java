@@ -35,7 +35,6 @@ public class ContactCommandHandlerTest {
 		contactCommandHandler = new ContactCommandHandler();
 		// contactCommandHandler.setContactNameRepository(mockContactNameRepository);
 		contactCommandHandler.setRepository(mockRepository);
-		contactCommandHandler.setContactQueryRepository(mockContactRepository);
 	}
 
 	@Test

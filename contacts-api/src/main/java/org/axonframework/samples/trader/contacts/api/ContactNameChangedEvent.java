@@ -18,6 +18,7 @@ package org.axonframework.samples.trader.contacts.api;
 
 import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.domain.DomainEvent;
+import org.springframework.util.Assert;
 
 /**
  * @author Allard Buijze

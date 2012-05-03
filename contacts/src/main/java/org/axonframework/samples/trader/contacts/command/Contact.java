@@ -22,6 +22,7 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot
 import org.axonframework.samples.trader.contacts.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 /**
  * <p>The Aggregate root component of the sample application. This component handles all contact as well as address
@@ -52,6 +53,8 @@ class Contact extends AbstractAnnotatedAggregateRoot {
      * @param name String containing the new name
      */
     public void changeName(String name) {
+    	Assert.notNull(getIdentifier(), "identifier cannot be null");
+    	Assert.hasText(name, "name cannot be empty");
         apply(new ContactNameChangedEvent(getIdentifier(), name));
     }
 
@@ -61,7 +64,7 @@ class Contact extends AbstractAnnotatedAggregateRoot {
 
     @EventHandler
     protected void handleContactCreatedEvent(ContactCreatedEvent event) {
-    	logger.debug("Contact received a ContactCreatedEvent");
+    	logger.debug("Contact received a ContactCreatedEvent, identifier: {}", identifier);
     }
 
     @EventHandler

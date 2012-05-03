@@ -16,6 +16,7 @@
 
 package org.axonframework.samples.trader.contacts.api;
 
+import org.axonframework.domain.AggregateIdentifier;
 import org.springframework.util.Assert;
 
 /**
@@ -25,7 +26,7 @@ import org.springframework.util.Assert;
  */
 public class ChangeContactNameCommand extends AbstractOrderCommand {
     private String contactNewName;
-
+    
     /**
      * Returns the new name for the contact
      *
@@ -36,7 +37,7 @@ public class ChangeContactNameCommand extends AbstractOrderCommand {
     }
 
     /**
-     * Provide the new name for the existing contact. An error is thrown if the provided name is empty
+     * Provide the new name for the existing contact. An error is thrown if the provided name is empty.
      *
      * @param contactNewName String containing the new name for the contact
      */
@@ -44,4 +45,5 @@ public class ChangeContactNameCommand extends AbstractOrderCommand {
         Assert.hasText(contactNewName, "New name for contact should contain text");
         this.contactNewName = contactNewName;
     }
+
 }

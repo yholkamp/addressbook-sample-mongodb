@@ -35,7 +35,7 @@ public class ContactListener {
 	private ContactQueryRepository contactRepository;
 
 	@EventHandler
-	public void handleContactCreated(ContactCreatedEvent event) {
+	public void handle(ContactCreatedEvent event) {
 		logger.debug("Received a contactCreatedEvent for a contact with name : {}", event.getName());
 		
 		ContactEntry contactEntry = new ContactEntry();
@@ -46,7 +46,7 @@ public class ContactListener {
 	}
 	
 	@EventHandler
-	public void handleContactNameChanged(ContactNameChangedEvent event) {
+	public void handle(ContactNameChangedEvent event) {
 		logger.debug("Received a contactNameChangedEvent for a contact with new name : {}", event.getNewName());
 		
 		ContactEntry contactEntry = contactRepository.findOne(event.getContactId().asString());
