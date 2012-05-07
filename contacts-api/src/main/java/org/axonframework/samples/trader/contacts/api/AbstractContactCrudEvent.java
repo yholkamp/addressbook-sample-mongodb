@@ -50,4 +50,8 @@ public abstract class AbstractContactCrudEvent extends AbstractContactEvent {
     public String getZipCode() {
         return zipCode;
     }
+
+    public String getDepartment() {
+        return department;
+    }
 }

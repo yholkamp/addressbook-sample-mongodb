@@ -118,6 +118,7 @@ public class DBInit {
             createContact.setLastName(lastNames[i]);
             createContact.setStreet(streets[i]);
             createContact.setCity(cities[i]);
+            createContact.setDepartment(departmentNames[i]);
     		commandBus.dispatch(createContact);
     	}
     }

@@ -75,7 +75,7 @@ public class ContactCommandHandler {
         Assert.hasText(command.getFirstName(), "First name may not be empty");
         Assert.hasText(command.getLastName(), "Last name may not be empty");
 
-        Contact contact = new Contact(new UUIDAggregateIdentifier(), command.getFirstName(), command.getLastName(), command.getStreet(), command.getStreet(), command.getCity(), command.getZipCode(), command.getDepartment());
+        Contact contact = new Contact(new UUIDAggregateIdentifier(), command.getFirstName(), command.getLastName(), command.getPhoneNumber(), command.getStreet(), command.getCity(), command.getZipCode(), command.getDepartment());
         repository.add(contact);
     }
 

@@ -99,11 +99,11 @@ public class ContactEntry {
         this.firstName = name;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public String getDepartment() {
+        return department;
     }
 
-    public String getDepartment(String department) {
-        return department;
+    public void setDepartment(String department) {
+        this.department = department;
     }
 }

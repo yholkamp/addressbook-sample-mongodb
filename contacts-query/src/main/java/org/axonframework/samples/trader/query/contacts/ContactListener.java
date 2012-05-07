@@ -83,5 +83,6 @@ public class ContactListener {
         contactEntry.setStreet(event.getStreet());
         contactEntry.setCity(event.getCity());
         contactEntry.setZipCode(event.getZipCode());
+        contactEntry.setDepartment(event.getDepartment());
     }
 }
