@@ -16,13 +16,12 @@
 
 package org.axonframework.samples.trader.webui.contacts;
 
-import javax.validation.Valid;
-
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.domain.StringAggregateIdentifier;
-import org.axonframework.samples.trader.contacts.api.ChangeContactNameCommand;
+import org.axonframework.samples.trader.contacts.api.AbstractContactCrudCommand;
 import org.axonframework.samples.trader.contacts.api.CreateContactCommand;
 import org.axonframework.samples.trader.contacts.api.RemoveContactCommand;
+import org.axonframework.samples.trader.contacts.api.UpdateContactCommand;
 import org.axonframework.samples.trader.query.contacts.ContactEntry;
 import org.axonframework.samples.trader.query.contacts.repositories.ContactQueryRepository;
 import org.slf4j.Logger;
@@ -36,144 +35,123 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.Valid;
+
 /**
- * @author Jettro Coenradie
+ * @author Jettro Coenradie, Yorick Holkamp
  */
 @Controller
 @RequestMapping("/contacts")
 public class ContactsController {
-	private final static Logger logger = LoggerFactory
-			.getLogger(ContactsController.class);
-	private ContactQueryRepository contactRepository;
-	private CommandBus commandBus;
+    private final static Logger logger = LoggerFactory
+            .getLogger(ContactsController.class);
+    private ContactQueryRepository contactRepository;
+    private CommandBus commandBus;
 
-	@Autowired
-	public ContactsController(ContactQueryRepository contactRepository,
-			CommandBus commandBus) {
-		this.contactRepository = contactRepository;
-		this.commandBus = commandBus;
-	}
+    @Autowired
+    public ContactsController(ContactQueryRepository contactRepository,
+                              CommandBus commandBus) {
+        this.contactRepository = contactRepository;
+        this.commandBus = commandBus;
+    }
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String list(Model model) {
-		model.addAttribute("contacts", contactRepository.findAll());
-		return "contacts/list";
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public String list(Model model) {
+        model.addAttribute("contacts", contactRepository.findAll());
+        return "contacts/list";
+    }
 
-	@RequestMapping(value = "{identifier}", method = RequestMethod.GET)
-	public String details(@PathVariable String identifier, Model model) {
-		String name = contactRepository.findOne(identifier).getName();
-		model.addAttribute("identifier", identifier);
-		model.addAttribute("name", name);
-		return "contacts/details";
-	}
+    @RequestMapping(value = "{identifier}", method = RequestMethod.GET)
+    public String details(@PathVariable String identifier, Model model) {
+        String name = contactRepository.findOne(identifier).getName();
+        model.addAttribute("identifier", identifier);
+        model.addAttribute("name", name);
+        return "contacts/details";
+    }
 
-	@RequestMapping(value = "{identifier}/edit", method = RequestMethod.GET)
-	public String formEdit(@PathVariable String identifier, Model model) {
-		ContactEntry contact = contactRepository.findOne(identifier);
-		if(contact == null) {
-			throw new RuntimeException("contactRepository with ID " + identifier + " could not be found.");
-		}
-		model.addAttribute("contact", contact);
-		return "contacts/edit";
-	}
+    @RequestMapping(value = "{identifier}/edit", method = RequestMethod.GET)
+    public String formEdit(@PathVariable String identifier, Model model) {
+        ContactEntry contact = contactRepository.findOne(identifier);
+        if (contact == null) {
+            throw new RuntimeException("contactRepository with ID " + identifier + " could not be found.");
+        }
+        model.addAttribute("contact", contact);
+        return "contacts/edit";
+    }
 
-	@RequestMapping(value = "{identifier}/edit", method = RequestMethod.POST)
-	public String formEditSubmit(
-			@ModelAttribute("contact") @Valid ContactEntry contactEntry,
-			BindingResult bindingResult) {
-		// beware, we cannot support other updates since that would always give
-		// an error when the name is not changed
-		if (contactHasErrors(contactEntry, bindingResult)) {
-			return "contacts/edit";
-		}
+    @RequestMapping(value = "{identifier}/edit", method = RequestMethod.POST)
+    public String formEditSubmit(
+            @ModelAttribute("contact") @Valid ContactEntry contact,
+            BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "contacts/edit";
+        }
 
-		ChangeContactNameCommand command = new ChangeContactNameCommand();
-		command.setContactNewName(contactEntry.getName());
-		command.setContactId(new StringAggregateIdentifier(contactEntry.getIdentifier()));
+        AbstractContactCrudCommand command = new UpdateContactCommand();
+        command.setContactId(new StringAggregateIdentifier(contact.getIdentifier()));
+        populateCrudCommand(command, contact);
 
-		commandBus.dispatch(command);
-		logger.debug("Dispatching command with name : {}", command.toString());
+        commandBus.dispatch(command);
+        logger.debug("Dispatching command with name : {}", command.toString());
 
-		return "redirect:/contacts";
-	}
+        return "redirect:/contacts";
+    }
 
-	@RequestMapping(value = "new", method = RequestMethod.GET)
-	public String formNew(Model model) {
-		ContactEntry attributeValue = new ContactEntry();
-		model.addAttribute("contact", attributeValue);
-		return "contacts/new";
-	}
+    @RequestMapping(value = "new", method = RequestMethod.GET)
+    public String formNew(Model model) {
+        ContactEntry attributeValue = new ContactEntry();
+        model.addAttribute("contactEntry", attributeValue);
+        return "contacts/new";
+    }
 
-	/**
-	 * If we submit a new contact, we want immediate feedback if the contact
-	 * could be added. If it could not be added we want an error. Therefore we
-	 * use the Future callback mechanism as provide by Axon.
-	 * 
-	 * @param contact
-	 *            ContactEntry object that contains the entered data
-	 * @param bindingResult
-	 *            BindingResult containing information about the binding of the
-	 *            form data to the ContactEntry
-	 * @return String representing the name of the view to present.
-	 */
-	@RequestMapping(value = "new", method = RequestMethod.POST)
-	public String formNewSubmit(
-			@ModelAttribute("contact") @Valid ContactEntry contact,
-			BindingResult bindingResult) {
-		if (contactHasErrors(contact, bindingResult)) {
-			return "contacts/new";
-		}
+    @RequestMapping(value = "new", method = RequestMethod.POST)
+    public String formNewSubmit(@Valid ContactEntry contact, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "contacts/new";
+        }
 
-		CreateContactCommand command = new CreateContactCommand();
-		command.setFirstName(contact.getName());
+        AbstractContactCrudCommand command = new CreateContactCommand();
+        populateCrudCommand(command, contact);
 
-		commandBus.dispatch((command));
-		logger.debug("Dispatching command with name : {}", command.toString());
+        logger.debug("Dispatching command with name : {}", command.toString());
+        commandBus.dispatch(command);
 
-		return "redirect:/contacts";
-	}
+        return "redirect:/contacts";
+    }
 
-	@RequestMapping(value = "{identifier}/delete", method = RequestMethod.GET)
-	public String formDelete(@PathVariable String identifier, Model model) {
-		ContactEntry contactEntry = contactRepository.findOne(identifier);
-		model.addAttribute("contact", contactEntry);
-		return "contacts/delete";
-	}
+    @RequestMapping(value = "{identifier}/delete", method = RequestMethod.GET)
+    public String formDelete(@PathVariable String identifier, Model model) {
+        ContactEntry contactEntry = contactRepository.findOne(identifier);
+        model.addAttribute("contact", contactEntry);
+        return "contacts/delete";
+    }
 
-	@RequestMapping(value = "{identifier}/delete", method = RequestMethod.POST)
-	public String formDelete(@ModelAttribute("contact") ContactEntry contact, BindingResult bindingResult) {
-		if (!bindingResult.hasErrors()) {
-			RemoveContactCommand command = new RemoveContactCommand();
-			command.setContactId(new StringAggregateIdentifier(contact.getIdentifier()));
-			commandBus.dispatch((command));
-			logger.debug("Dispatching command with name : {}",
-					command.toString());
+    @RequestMapping(value = "{identifier}/delete", method = RequestMethod.POST)
+    public String formDelete(@ModelAttribute("contact") ContactEntry contact, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            RemoveContactCommand command = new RemoveContactCommand();
+            command.setContactId(new StringAggregateIdentifier(contact.getIdentifier()));
+            commandBus.dispatch((command));
+            logger.debug("Dispatching command with name : {}", command.toString());
 
-			return "redirect:/contacts";
-		}
-		return "contacts/delete";
-	}
+            return "redirect:/contacts";
+        }
+        return "contacts/delete";
+    }
 
-	/**
-	 * Checks if the entered data for a contact is valid and if the provided
-	 * contact has not yet been taken.
-	 * 
-	 * @param contact
-	 *            Contact to validate
-	 * @param bindingResult
-	 *            BindingResult that can contain error and can be used to store
-	 *            additional errors
-	 * @return true if the contact has errors, false otherwise
-	 */
-	private boolean contactHasErrors(ContactEntry contact, BindingResult bindingResult) {
-		// if (bindingResult.hasErrors() ||
-		// !contactNameRepository.vacantContactName(contact.getName())) {
-		// ObjectError error = new FieldError("contact", "name",
-		// "The provided name \'" + contact.getName() + "\' already exists");
-		// bindingResult.addError(error);
-		// return true;
-		// }
-		return false;
-	}
+    /**
+     * Fills in a given ContactCrudCommand using the ContactEntry retrieved from a Contact form
+     *
+     * @param command Command to fill in
+     * @param contact ContactEntry to use as source
+     */
+    private void populateCrudCommand(AbstractContactCrudCommand command, ContactEntry contact) {
+        command.setFirstName(contact.getFirstName());
+        command.setLastName(contact.getLastName());
+        command.setPhoneNumber(contact.getPhoneNumber());
+        command.setStreet(contact.getStreet());
+        command.setCity(contact.getCity());
+        command.setZipCode(contact.getZipCode());
+    }
+
 }
