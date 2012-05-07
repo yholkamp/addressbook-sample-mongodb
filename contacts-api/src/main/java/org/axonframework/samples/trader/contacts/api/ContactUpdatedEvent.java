@@ -23,21 +23,10 @@ import org.springframework.util.Assert;
 /**
  * @author Allard Buijze
  */
-public class ContactNameChangedEvent extends DomainEvent {
+public class ContactUpdatedEvent extends AbstractContactCrudEvent {
 
-    private final AggregateIdentifier contactId;
-    private final String newName;
-
-    public ContactNameChangedEvent(AggregateIdentifier contactId, String newName) {
-        this.contactId = contactId;
-        this.newName = newName;
+    public ContactUpdatedEvent(AggregateIdentifier contactId, String firstName, String lastName, String phoneNumber, String street, String city, String zipCode, String department) {
+        super(contactId, zipCode, city, street, firstName, phoneNumber, lastName, department);
     }
 
-    public String getNewName() {
-        return newName;
-    }
-
-    public AggregateIdentifier getContactId() {
-        return contactId;
-    }
 }

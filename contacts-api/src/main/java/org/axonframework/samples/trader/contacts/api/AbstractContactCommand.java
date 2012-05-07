@@ -40,7 +40,7 @@ public abstract class AbstractContactCommand {
      * Provide the identifier for the existing contact. An error is thrown if the provided identifier is empty.
      */
     public void setContactId(AggregateIdentifier contactId) {
-    	Assert.notNull(contactId, "Cannot remove a contact with an empty id");
+    	Assert.notNull(contactId, "Cannot take actions on a contact with an empty id");
         this.contactId = contactId;
     }
 

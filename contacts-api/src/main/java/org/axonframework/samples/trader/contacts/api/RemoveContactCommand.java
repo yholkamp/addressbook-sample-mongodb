@@ -25,14 +25,5 @@ import org.springframework.util.Assert;
  * @author Jettro Coenradie
  */
 public class RemoveContactCommand extends AbstractContactCommand {
-    private AggregateIdentifier contactId;
 
-    public AggregateIdentifier getContactId() {
-        return contactId;
-    }
-
-    public void setContactId(AggregateIdentifier contactId) {
-        Assert.notNull(contactId, "Cannot remove a contact with an empty id");
-        this.contactId = contactId;
-    }
 }

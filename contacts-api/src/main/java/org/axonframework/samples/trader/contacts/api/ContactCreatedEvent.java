@@ -17,58 +17,14 @@
 package org.axonframework.samples.trader.contacts.api;
 
 import org.axonframework.domain.AggregateIdentifier;
-import org.axonframework.domain.DomainEvent;
 
 /**
- * @author Allard Buijze
+ * @author Yorick Holkamp
  */
-public class ContactCreatedEvent extends DomainEvent {
+public class ContactCreatedEvent extends AbstractContactCrudEvent {
 
-	private final AggregateIdentifier contactId;
-	private final String firstName;
-	private final String lastName;
-	private final String phoneNumber;
-	private final String street;
-	private final String city;
-	private final String zipCode;
+    public ContactCreatedEvent(AggregateIdentifier contactId, String firstName, String lastName, String phoneNumber, String street, String city, String zipCode, String department) {
+        super(contactId, firstName, lastName, phoneNumber, street, city, zipCode, department);
+    }
 
-	public ContactCreatedEvent(AggregateIdentifier contactId, String firstName,
-			String lastName, String phoneNumber, String street, String city,
-			String zipCode) {
-		this.contactId = contactId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phoneNumber = phoneNumber;
-		this.street = street;
-		this.city = city;
-		this.zipCode = zipCode;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public String getStreet() {
-		return street;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public String getZipCode() {
-		return zipCode;
-	}
-
-	public AggregateIdentifier getContactId() {
-		return contactId;
-	}
 }

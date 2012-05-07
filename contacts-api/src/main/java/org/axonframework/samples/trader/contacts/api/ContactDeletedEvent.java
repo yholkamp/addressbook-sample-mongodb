@@ -22,15 +22,10 @@ import org.axonframework.domain.DomainEvent;
 /**
  * @author Allard Buijze
  */
-public class ContactDeletedEvent extends DomainEvent {
-
-	private final AggregateIdentifier contactId;
+public class ContactDeletedEvent extends AbstractContactEvent {
 
 	public ContactDeletedEvent(AggregateIdentifier contactId) {
-		this.contactId = contactId;
+		super(contactId);
 	}
 
-	public AggregateIdentifier getContactId() {
-		return contactId;
-	}
 }

@@ -24,27 +24,6 @@ import org.springframework.util.Assert;
  *
  * @author Jettro Coenradie
  */
-public class ChangeContactNameCommand extends AbstractContactCommand {
-	@NotNull
-    private String contactNewName;
-    
-    /**
-     * Returns the new name for the contact
-     *
-     * @return String containing the new name
-     */
-    public String getContactNewName() {
-        return contactNewName;
-    }
-
-    /**
-     * Provide the new name for the existing contact. An error is thrown if the provided name is empty.
-     *
-     * @param contactNewName String containing the new name for the contact
-     */
-    public void setContactNewName(String contactNewName) {
-        Assert.hasText(contactNewName, "New name for contact should contain text");
-        this.contactNewName = contactNewName;
-    }
+public class UpdateContactCommand extends AbstractContactCrudCommand {
 
 }
