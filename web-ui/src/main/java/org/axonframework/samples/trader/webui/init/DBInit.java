@@ -20,7 +20,7 @@ import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.eventstore.mongo.MongoEventStore;
 import org.axonframework.saga.repository.mongo.MongoTemplate;
 import org.axonframework.samples.trader.contacts.api.CreateContactCommand;
-import org.axonframework.samples.trader.query.contacts.ContactEntry;
+import org.axonframework.samples.trader.contacts.query.ContactEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -114,11 +114,13 @@ public class DBInit {
     private void createContacts() {
     	for(int i = 0; i < departmentNames.length; i++ ) {
     		CreateContactCommand createContact = new CreateContactCommand();
-    		createContact.setFirstName(firstNames[i]);
-            createContact.setLastName(lastNames[i]);
-            createContact.setStreet(streets[i]);
-            createContact.setCity(cities[i]);
-            createContact.setDepartment(departmentNames[i]);
+            ContactEntry entry = new ContactEntry();
+            entry.setFirstName(firstNames[i]);
+            entry.setLastName(lastNames[i]);
+            entry.setStreet(streets[i]);
+            entry.setCity(cities[i]);
+            entry.setDepartment(departmentNames[i]);
+            createContact.setContactEntry(entry);
     		commandBus.dispatch(createContact);
     	}
     }

@@ -16,9 +16,6 @@
 
 package org.axonframework.samples.trader.contacts.api;
 
-import org.axonframework.domain.AggregateIdentifier;
-import org.springframework.util.Assert;
-
 /**
  * <p>Removes the contact with the provided id</p>
  *

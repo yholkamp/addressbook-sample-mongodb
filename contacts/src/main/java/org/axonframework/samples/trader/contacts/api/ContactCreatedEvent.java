@@ -17,16 +17,15 @@
 package org.axonframework.samples.trader.contacts.api;
 
 import org.axonframework.domain.AggregateIdentifier;
-import org.axonframework.domain.DomainEvent;
-import org.springframework.util.Assert;
+import org.axonframework.samples.trader.contacts.query.ContactEntry;
 
 /**
- * @author Allard Buijze
+ * @author Yorick Holkamp
  */
-public class ContactUpdatedEvent extends AbstractContactCrudEvent {
+public class ContactCreatedEvent extends AbstractContactCrudEvent {
 
-    public ContactUpdatedEvent(AggregateIdentifier contactId, String firstName, String lastName, String phoneNumber, String street, String city, String zipCode, String department) {
-        super(contactId, zipCode, city, street, firstName, phoneNumber, lastName, department);
+    public ContactCreatedEvent(AggregateIdentifier contactId, ContactEntry contact) {
+        super(contactId, contact);
     }
 
 }

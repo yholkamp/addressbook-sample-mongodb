@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package org.axonframework.samples.trader.query.contacts;
+package org.axonframework.samples.trader.contacts.query;
 
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.samples.trader.contacts.api.AbstractContactCrudEvent;
 import org.axonframework.samples.trader.contacts.api.ContactUpdatedEvent;
-import org.axonframework.samples.trader.query.contacts.repositories.ContactQueryRepository;
+import org.axonframework.samples.trader.contacts.query.repositories.ContactQueryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +38,10 @@ public class ContactListener {
 
 	@EventHandler
 	public void handle(ContactCreatedEvent event) {
-		logger.debug("Received a contactCreatedEvent for a contact with name : {}", event.getFirstName());
+		logger.debug("Received a contactCreatedEvent for a contact with id : {}", event.getContactId());
 		
-		ContactEntry contactEntry = new ContactEntry();
+		ContactEntry contactEntry = event.getContactEntry();
 		contactEntry.setIdentifier(event.getContactId().asString());
-        populateContactEntryFromEvent(contactEntry, event);
 
 		contactRepository.save(contactEntry);
 	}
@@ -51,8 +50,8 @@ public class ContactListener {
 	public void handle(ContactUpdatedEvent event) {
 		logger.debug("Received a contactNameChangedEvent for a contact id : {}", event.getContactId());
 		
-		ContactEntry contactEntry = contactRepository.findOne(event.getContactId().asString());
-        populateContactEntryFromEvent(contactEntry, event);
+		ContactEntry contactEntry = event.getContactEntry();
+        contactEntry.setIdentifier(event.getContactId().asString());
 
 		contactRepository.save(contactEntry);
 	}
@@ -70,19 +69,4 @@ public class ContactListener {
 	public void setContactRepository(ContactQueryRepository contactRepository) {
 		this.contactRepository = contactRepository;
 	}
-
-    /**
-     * Populates a given ContactEntry with fields available in the ContactCrudEvent.
-     * @param contactEntry  ContactEntry to populate with data
-     * @param event         Source of information
-     */
-    private void populateContactEntryFromEvent(ContactEntry contactEntry, AbstractContactCrudEvent event) {
-        contactEntry.setFirstName(event.getFirstName());
-        contactEntry.setLastName(event.getLastName());
-        contactEntry.setPhoneNumber(event.getPhoneNumber());
-        contactEntry.setStreet(event.getStreet());
-        contactEntry.setCity(event.getCity());
-        contactEntry.setZipCode(event.getZipCode());
-        contactEntry.setDepartment(event.getDepartment());
-    }
 }

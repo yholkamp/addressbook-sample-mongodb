@@ -47,11 +47,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.axonframework.samples</groupId>
-			<artifactId>axon-trader-contacts-query</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.axonframework.samples</groupId>
 			<artifactId>axon-trader-infrastructure</artifactId>
 			<version>${project.version}</version>
 		</dependency>

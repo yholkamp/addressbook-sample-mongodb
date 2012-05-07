@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012. Axon Framework
+ * Copyright (c) 2010-2011. Axon Framework
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-package org.axonframework.samples.trader.query.contacts.repositories;
+package org.axonframework.samples.trader.contacts.api;
 
-import org.axonframework.samples.trader.query.contacts.ContactEntry;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.axonframework.domain.AggregateIdentifier;
 
 /**
- * @author Jettro Coenradie
+ * @author Allard Buijze
  */
-public interface ContactQueryRepository extends PagingAndSortingRepository<ContactEntry, String> {
+public class ContactDeletedEvent extends AbstractContactEvent {
+
+	public ContactDeletedEvent(AggregateIdentifier contactId) {
+		super(contactId);
+	}
 
 }

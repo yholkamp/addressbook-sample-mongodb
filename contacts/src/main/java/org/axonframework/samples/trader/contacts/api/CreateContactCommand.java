@@ -16,9 +16,6 @@
 
 package org.axonframework.samples.trader.contacts.api;
 
-import org.axonframework.domain.AggregateIdentifier;
-import org.springframework.util.Assert;
-
 /**
  * <p>Create a new contact with the provided name</p>
  *

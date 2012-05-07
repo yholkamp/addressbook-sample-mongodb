@@ -3,7 +3,8 @@ package org.axonframework.samples.trader.contacts.command;
 import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.repository.Repository;
 import org.axonframework.samples.trader.contacts.api.CreateContactCommand;
-import org.axonframework.samples.trader.query.contacts.repositories.ContactQueryRepository;
+import org.axonframework.samples.trader.contacts.query.ContactEntry;
+import org.axonframework.samples.trader.contacts.query.repositories.ContactQueryRepository;
 import org.axonframework.unitofwork.UnitOfWork;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,8 +39,7 @@ public class ContactCommandHandlerTest {
 	public void testHandleCreateContactCommand_success() throws Exception {
 		CreateContactCommand command = new CreateContactCommand();
 		command.setContactId(new UUIDAggregateIdentifier());
-		command.setFirstName("Unique");
-        command.setLastName("Name");
+		command.setContactEntry(new ContactEntry());
 
 		// when(mockContactNameRepository.claimContactName("Double name")).thenReturn(false);
 

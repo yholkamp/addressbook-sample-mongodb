@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.axonframework.samples.trader.query.contacts;
+package org.axonframework.samples.trader.contacts.query;
 
 import org.springframework.data.annotation.Id;
 import javax.validation.constraints.NotNull;

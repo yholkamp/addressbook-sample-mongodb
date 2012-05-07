@@ -22,8 +22,8 @@ import org.axonframework.samples.trader.contacts.api.AbstractContactCrudCommand;
 import org.axonframework.samples.trader.contacts.api.CreateContactCommand;
 import org.axonframework.samples.trader.contacts.api.RemoveContactCommand;
 import org.axonframework.samples.trader.contacts.api.UpdateContactCommand;
-import org.axonframework.samples.trader.query.contacts.ContactEntry;
-import org.axonframework.samples.trader.query.contacts.repositories.ContactQueryRepository;
+import org.axonframework.samples.trader.contacts.query.ContactEntry;
+import org.axonframework.samples.trader.contacts.query.repositories.ContactQueryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,7 +89,7 @@ public class ContactsController {
 
         AbstractContactCrudCommand command = new UpdateContactCommand();
         command.setContactId(new StringAggregateIdentifier(contact.getIdentifier()));
-        populateCrudCommand(command, contact);
+        command.setContactEntry(contact);
 
         commandBus.dispatch(command);
         logger.debug("Dispatching command with name : {}", command.toString());
@@ -111,7 +111,7 @@ public class ContactsController {
         }
 
         AbstractContactCrudCommand command = new CreateContactCommand();
-        populateCrudCommand(command, contact);
+        command.setContactEntry(contact);
 
         logger.debug("Dispatching command with name : {}", command.toString());
         commandBus.dispatch(command);
@@ -138,20 +138,4 @@ public class ContactsController {
         }
         return "contacts/delete";
     }
-
-    /**
-     * Fills in a given ContactCrudCommand using the ContactEntry retrieved from a Contact form
-     *
-     * @param command Command to fill in
-     * @param contact ContactEntry to use as source
-     */
-    private void populateCrudCommand(AbstractContactCrudCommand command, ContactEntry contact) {
-        command.setFirstName(contact.getFirstName());
-        command.setLastName(contact.getLastName());
-        command.setPhoneNumber(contact.getPhoneNumber());
-        command.setStreet(contact.getStreet());
-        command.setCity(contact.getCity());
-        command.setZipCode(contact.getZipCode());
-    }
-
 }

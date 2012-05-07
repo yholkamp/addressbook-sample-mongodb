@@ -53,14 +53,14 @@ public class ContactCommandHandler {
      * @param unitOfWork Unit of work for the current running thread
      */
     @CommandHandler
-    public void handleChangeContactName(final UpdateContactCommand command, UnitOfWork unitOfWork) {
+    public void handleUpdateContact(final UpdateContactCommand command, UnitOfWork unitOfWork) {
         logger.debug("Received a updateContactCommand for id : {}", command.getContactId());
         Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
 
         Contact contact = repository.load(command.getContactId());
         Assert.notNull(contact.getIdentifier(), "Contact identifier cannot be null");
 
-        contact.change(command.getFirstName(), command.getLastName(), command.getPhoneNumber(), command.getStreet(), command.getCity(), command.getZipCode(), command.getDepartment());
+        contact.change(command.getContactEntry());
     }
 
     /**
@@ -71,11 +71,9 @@ public class ContactCommandHandler {
      */
     @CommandHandler
     public void handleCreateContact(final CreateContactCommand command, UnitOfWork unitOfWork) {
-        logger.debug("Received a command for a new contact with name : {}", command.getFirstName());
-        Assert.hasText(command.getFirstName(), "First name may not be empty");
-        Assert.hasText(command.getLastName(), "Last name may not be empty");
+        logger.debug("Received a command for a new contact with id : {}", command.getContactId());
 
-        Contact contact = new Contact(new UUIDAggregateIdentifier(), command.getFirstName(), command.getLastName(), command.getPhoneNumber(), command.getStreet(), command.getCity(), command.getZipCode(), command.getDepartment());
+        Contact contact = new Contact(command.getContactId(), command.getContactEntry());
         repository.add(contact);
     }
 

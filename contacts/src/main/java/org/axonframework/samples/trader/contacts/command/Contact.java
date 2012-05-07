@@ -16,10 +16,13 @@
 
 package org.axonframework.samples.trader.contacts.command;
 
+import org.axonframework.samples.trader.contacts.api.ContactCreatedEvent;
+import org.axonframework.samples.trader.contacts.api.ContactDeletedEvent;
+import org.axonframework.samples.trader.contacts.api.ContactUpdatedEvent;
 import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
-import org.axonframework.samples.trader.contacts.api.*;
+import org.axonframework.samples.trader.contacts.query.ContactEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
@@ -39,11 +42,10 @@ class Contact extends AbstractAnnotatedAggregateRoot {
     @NotNull
     private AggregateIdentifier identifier;
 
-    public Contact(AggregateIdentifier identifier, String firstName, String lastName, String phoneNumber, String street,
-                   String city, String zipCode, String department) {
+    public Contact(AggregateIdentifier identifier, ContactEntry contact) {
         super(identifier);
         this.identifier = identifier;
-        apply(new ContactCreatedEvent(identifier, firstName, lastName, phoneNumber, street, city, zipCode, department));
+        apply(new ContactCreatedEvent(identifier, contact));
     }
 
     @SuppressWarnings({"UnusedDeclaration"})
@@ -57,10 +59,9 @@ class Contact extends AbstractAnnotatedAggregateRoot {
      *
      * @param name String containing the new name
      */
-    public void change(String firstName, String lastName, String phoneNumber, String street, String city,
-                       String zipCode, String department) {
+    public void change(ContactEntry contact) {
         Assert.notNull(getIdentifier(), "identifier cannot be null");
-        apply(new ContactUpdatedEvent(getIdentifier(), firstName, lastName, phoneNumber, street, city, zipCode, department));
+        apply(new ContactUpdatedEvent(getIdentifier(), contact));
     }
 
     /**
