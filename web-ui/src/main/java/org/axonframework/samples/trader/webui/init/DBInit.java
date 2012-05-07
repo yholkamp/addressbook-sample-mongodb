@@ -17,10 +17,6 @@
 package org.axonframework.samples.trader.webui.init;
 
 import org.axonframework.commandhandling.CommandBus;
-import org.axonframework.commandhandling.callbacks.FutureCallback;
-import org.axonframework.domain.AggregateIdentifier;
-import org.axonframework.domain.StringAggregateIdentifier;
-import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.eventstore.mongo.MongoEventStore;
 import org.axonframework.saga.repository.mongo.MongoTemplate;
 import org.axonframework.samples.trader.contacts.api.CreateContactCommand;
@@ -28,7 +24,6 @@ import org.axonframework.samples.trader.query.contacts.ContactEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -84,12 +79,45 @@ public class DBInit {
     }
 
 
+    final static String[] departmentNames = { "Corporate Development",
+            "Human Resources", "Legal", "Environment", "Quality Assurance",
+            "Research and Development", "Production", "Sales", "Marketing" };
+    final static String[] firstNames = { "Peter", "Alice", "Joshua", "Mike",
+            "Olivia", "Nina", "Alex", "Rita", "Dan", "Umberto", "Henrik",
+            "Rene", "Lisa", "Marge" };
+    final static String[] lastNames = { "Smith", "Gordon", "Simpson", "Brown",
+            "Clavel", "Simons", "Verne", "Scott", "Allison", "Gates",
+            "Rowling", "Barks", "Ross", "Schneider", "Tate" };
+    final static String cities[] = { "Amsterdam", "Berlin", "Helsinki",
+            "Hong Kong", "London", "Luxemburg", "New York", "Oslo", "Paris",
+            "Rome", "Stockholm", "Tokyo", "Turku" };
+    final static String streets[] = { "4215 Blandit Av.", "452-8121 Sem Ave",
+            "279-4475 Tellus Road", "4062 Libero. Av.", "7081 Pede. Ave",
+            "6800 Aliquet St.", "P.O. Box 298, 9401 Mauris St.",
+            "161-7279 Augue Ave", "P.O. Box 496, 1390 Sagittis. Rd.",
+            "448-8295 Mi Avenue", "6419 Non Av.", "659-2538 Elementum Street",
+            "2205 Quis St.", "252-5213 Tincidunt St.",
+            "P.O. Box 175, 4049 Adipiscing Rd.", "3217 Nam Ave",
+            "P.O. Box 859, 7661 Auctor St.", "2873 Nonummy Av.",
+            "7342 Mi, Avenue", "539-3914 Dignissim. Rd.",
+            "539-3675 Magna Avenue", "Ap #357-5640 Pharetra Avenue",
+            "416-2983 Posuere Rd.", "141-1287 Adipiscing Avenue",
+            "Ap #781-3145 Gravida St.", "6897 Suscipit Rd.",
+            "8336 Purus Avenue", "2603 Bibendum. Av.", "2870 Vestibulum St.",
+            "Ap #722 Aenean Avenue", "446-968 Augue Ave",
+            "1141 Ultricies Street", "Ap #992-5769 Nunc Street",
+            "6690 Porttitor Avenue", "Ap #105-1700 Risus Street",
+            "P.O. Box 532, 3225 Lacus. Avenue", "736 Metus Street",
+            "414-1417 Fringilla Street", "Ap #183-928 Scelerisque Road",
+            "561-9262 Iaculis Avenue" };
+
     private void createContacts() {
-    	String[] names = new String[] {"Foo", "Bar", "Baz", "Foobar"};
-    	
-    	for(String name : names) {
+    	for(int i = 0; i < departmentNames.length; i++ ) {
     		CreateContactCommand createContact = new CreateContactCommand();
-    		createContact.setFirstName(name);
+    		createContact.setFirstName(firstNames[i]);
+            createContact.setLastName(lastNames[i]);
+            createContact.setStreet(streets[i]);
+            createContact.setCity(cities[i]);
     		commandBus.dispatch(createContact);
     	}
     }
