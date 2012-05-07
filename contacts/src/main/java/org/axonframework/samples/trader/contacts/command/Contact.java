@@ -24,6 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * <p>The Aggregate root component of the sample application. This component handles all contact as well as address
  * domain events.</p>
@@ -31,22 +33,23 @@ import org.springframework.util.Assert;
  * @author Allard Buijze
  */
 class Contact extends AbstractAnnotatedAggregateRoot {
-	
-	private final static Logger logger = LoggerFactory.getLogger(Contact.class);
-	
-	private AggregateIdentifier identifier;
 
-    public Contact(AggregateIdentifier identifier, String firstName,
-			String lastName, String phoneNumber, String street, String city,
-			String zipCode) {
-    	super(identifier);
-    	this.identifier = identifier;
-        apply(new ContactCreatedEvent(identifier, firstName, lastName, phoneNumber, street, city, zipCode));
+    private final static Logger logger = LoggerFactory.getLogger(Contact.class);
+
+    @NotNull
+    private AggregateIdentifier identifier;
+
+    public Contact(AggregateIdentifier identifier, String firstName, String lastName, String phoneNumber, String street,
+                   String city, String zipCode, String department) {
+        super(identifier);
+        this.identifier = identifier;
+        apply(new ContactCreatedEvent(identifier, firstName, lastName, phoneNumber, street, city, zipCode, department));
     }
 
     @SuppressWarnings({"UnusedDeclaration"})
     public Contact(AggregateIdentifier identifier) {
         super(identifier);
+        this.identifier = identifier;
     }
 
     /**
@@ -54,24 +57,28 @@ class Contact extends AbstractAnnotatedAggregateRoot {
      *
      * @param name String containing the new name
      */
-    public void changeName(String name) {
-    	Assert.notNull(getIdentifier(), "identifier cannot be null");
-    	Assert.hasText(name, "name cannot be empty");
-        apply(new ContactNameChangedEvent(getIdentifier(), name));
+    public void change(String firstName, String lastName, String phoneNumber, String street, String city,
+                       String zipCode, String department) {
+        Assert.notNull(getIdentifier(), "identifier cannot be null");
+        apply(new ContactUpdatedEvent(getIdentifier(), firstName, lastName, phoneNumber, street, city, zipCode, department));
     }
 
+    /**
+     * Deletes the contact from our domain
+     */
     public void delete() {
+        Assert.notNull(getIdentifier(), "identifier cannot be null");
         apply(new ContactDeletedEvent(getIdentifier()));
     }
 
     @EventHandler
     protected void handleContactCreatedEvent(ContactCreatedEvent event) {
-    	logger.debug("Contact received a ContactCreatedEvent, identifier: {}", identifier);
+        logger.debug("Contact received a ContactCreatedEvent, identifier: {}", identifier);
     }
 
     @EventHandler
-    protected void handleContactNameChangedEvent(ContactNameChangedEvent event) {
-    	logger.debug("Contact received a ContactNameChangedEvent");
+    protected void handleContactNameChangedEvent(ContactUpdatedEvent event) {
+        logger.debug("Contact received a ContactUpdatedEvent, identifier: {}", identifier);
     }
 
     public AggregateIdentifier getIdentifier() {

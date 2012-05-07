@@ -17,13 +17,15 @@
 package org.axonframework.samples.trader.query.contacts;
 
 import org.axonframework.eventhandling.annotation.EventHandler;
+import org.axonframework.samples.trader.contacts.api.AbstractContactCrudEvent;
+import org.axonframework.samples.trader.contacts.api.ContactUpdatedEvent;
 import org.axonframework.samples.trader.query.contacts.repositories.ContactQueryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.axonframework.samples.trader.contacts.api.ContactCreatedEvent;
-import org.axonframework.samples.trader.contacts.api.ContactNameChangedEvent;
+import org.axonframework.samples.trader.contacts.api.ContactDeletedEvent;
 
 /**
  * @author Jettro Coenradie
@@ -40,28 +42,46 @@ public class ContactListener {
 		
 		ContactEntry contactEntry = new ContactEntry();
 		contactEntry.setIdentifier(event.getContactId().asString());
-		contactEntry.setFirstName(event.getFirstName());
-		contactEntry.setLastName(event.getLastName());
-		contactEntry.setPhoneNumber(event.getPhoneNumber());
-		contactEntry.setStreet(event.getStreet());
-		contactEntry.setCity(event.getCity());
-		contactEntry.setZipCode(event.getZipCode());
+        populateContactEntryFromEvent(contactEntry, event);
 
 		contactRepository.save(contactEntry);
 	}
 	
 	@EventHandler
-	public void handle(ContactNameChangedEvent event) {
-		logger.debug("Received a contactNameChangedEvent for a contact with new name : {}", event.getNewName());
+	public void handle(ContactUpdatedEvent event) {
+		logger.debug("Received a contactNameChangedEvent for a contact id : {}", event.getContactId());
 		
 		ContactEntry contactEntry = contactRepository.findOne(event.getContactId().asString());
-		contactEntry.setFirstName(event.getNewName());
+        populateContactEntryFromEvent(contactEntry, event);
 
 		contactRepository.save(contactEntry);
 	}
+
+    @EventHandler
+    public void handle(ContactDeletedEvent event) {
+        logger.debug("Received a ContactRemovedEvent for a contact with id : {}", event.getContactId());
+
+        ContactEntry contactEntry = contactRepository.findOne(event.getContactId().asString());
+
+        contactRepository.delete(contactEntry);
+    }
 
 	@Autowired
 	public void setContactRepository(ContactQueryRepository contactRepository) {
 		this.contactRepository = contactRepository;
 	}
+
+    /**
+     * Populates a given ContactEntry with fields available in the ContactCrudEvent.
+     * @param contactEntry  ContactEntry to populate with data
+     * @param event         Source of information
+     */
+    private void populateContactEntryFromEvent(ContactEntry contactEntry, AbstractContactCrudEvent event) {
+        contactEntry.setFirstName(event.getFirstName());
+        contactEntry.setLastName(event.getLastName());
+        contactEntry.setPhoneNumber(event.getPhoneNumber());
+        contactEntry.setStreet(event.getStreet());
+        contactEntry.setCity(event.getCity());
+        contactEntry.setZipCode(event.getZipCode());
+    }
 }

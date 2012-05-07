@@ -3,7 +3,6 @@ package org.axonframework.samples.trader.contacts.command;
 import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.repository.Repository;
 import org.axonframework.samples.trader.contacts.api.CreateContactCommand;
-//import org.axonframework.samples.trader.query.contacts.repositories.ContactNameRepository;
 import org.axonframework.samples.trader.query.contacts.repositories.ContactQueryRepository;
 import org.axonframework.unitofwork.UnitOfWork;
 import org.junit.Before;
@@ -20,8 +19,6 @@ public class ContactCommandHandlerTest {
 	private ContactCommandHandler contactCommandHandler;
 	@Mock
 	private UnitOfWork mockUnitOfWork;
-	// @Mock
-	// private ContactNameRepository mockContactNameRepository;
 	@Mock
 	private Repository<Contact> mockRepository;
 	@Mock
@@ -38,28 +35,11 @@ public class ContactCommandHandlerTest {
 	}
 
 	@Test
-	public void testHandleCreateContactCommand_doubleName() throws Exception {
-		// CreateContactCommand command = new CreateContactCommand();
-		// command.setContactId(new UUIDAggregateIdentifier());
-		// command.setNewContactName("Double name");
-		//
-		// when(mockContactNameRepository.claimContactName("Double name")).thenReturn(false);
-		//
-		// try {
-		// contactCommandHandler.handleCreateContact(command, mockUnitOfWork);
-		// fail("ContactNameAlreadyTakenException was expected to be thrown");
-		// } catch (ContactNameAlreadyTakenException e) {
-		// // as expected
-		// }
-
-		// verify(mockContactNameRepository).claimContactName("Double name");
-	}
-
-	@Test
 	public void testHandleCreateContactCommand_success() throws Exception {
 		CreateContactCommand command = new CreateContactCommand();
 		command.setContactId(new UUIDAggregateIdentifier());
-		command.setFirstName("Unique name");
+		command.setFirstName("Unique");
+        command.setLastName("Name");
 
 		// when(mockContactNameRepository.claimContactName("Double name")).thenReturn(false);
 
@@ -92,7 +72,7 @@ public class ContactCommandHandlerTest {
 
 	@Test
 	public void testHandleChangeNameContactCommand_doubleName() {
-		// ChangeContactNameCommand command = new ChangeContactNameCommand();
+		// UpdateContactCommand command = new UpdateContactCommand();
 		// command.setContactId(new UUIDAggregateIdentifier());
 		// command.setContactNewName("Double New Name");
 		//
@@ -108,12 +88,12 @@ public class ContactCommandHandlerTest {
 		// }
 		//
 		// verify(mockContactNameRepository).claimContactName("Double New Name");
-		// verify(contact, never()).changeName("Double New Name");
+		// verify(contact, never()).change("Double New Name");
 	}
 
 	@Test
 	public void testHandleChangeNameContactCommand_happypath() {
-		// ChangeContactNameCommand command = new ChangeContactNameCommand();
+		// UpdateContactCommand command = new UpdateContactCommand();
 		// command.setContactId(new UUIDAggregateIdentifier());
 		// command.setContactNewName("Good New Name");
 		//
@@ -133,7 +113,7 @@ public class ContactCommandHandlerTest {
 		// contactCommandHandler.handle(command, mockUnitOfWork);
 		//
 		// verify(mockContactNameRepository).claimContactName("Good New Name");
-		// verify(mockContact).changeName("Good New Name");
+		// verify(mockContact).change("Good New Name");
 		// verify(mockUnitOfWork,
 		// times(2)).registerListener(unitOfWorkListenerArgumentCaptor.capture());
 		// for (UnitOfWorkListener listener :
@@ -147,7 +127,7 @@ public class ContactCommandHandlerTest {
 	@Test
 	public void testHandleChangeNameContactCommand_otherProblemWithTransaction()
 			throws Exception {
-		// ChangeContactNameCommand command = new ChangeContactNameCommand();
+		// UpdateContactCommand command = new UpdateContactCommand();
 		// command.setContactId(new UUIDAggregateIdentifier());
 		// command.setContactNewName("Good New Name");
 		//

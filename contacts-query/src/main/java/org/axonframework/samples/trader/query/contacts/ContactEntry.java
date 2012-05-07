@@ -17,20 +17,27 @@
 package org.axonframework.samples.trader.query.contacts;
 
 import org.springframework.data.annotation.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * @author Allard Buijze
+ * @author Allard Buijze, Yorick Holkamp
  */
 public class ContactEntry {
 
     @Id
     private String identifier;
+    @NotNull
+    @Size(min = 1, max = 255)
 	private String firstName;
+    @Size(min = 2, max = 255)
 	private String lastName;
+    @NotNull
 	private String phoneNumber;
 	private String street;
 	private String city;
 	private String zipCode;
+    private String department;
 
 	public String getLastName() {
 		return lastName;
@@ -90,5 +97,13 @@ public class ContactEntry {
 
     public void setFirstName(String name) {
         this.firstName = name;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getDepartment(String department) {
+        return department;
     }
 }
