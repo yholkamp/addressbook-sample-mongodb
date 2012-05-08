@@ -23,6 +23,8 @@ import org.axonframework.domain.AggregateIdentifier;
  */
 public class ContactDeletedEvent extends AbstractContactEvent {
 
+	private static final long serialVersionUID = 1993047997852195258L;
+
 	public ContactDeletedEvent(AggregateIdentifier contactId) {
 		super(contactId);
 	}

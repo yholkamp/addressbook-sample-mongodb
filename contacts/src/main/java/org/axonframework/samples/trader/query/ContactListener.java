@@ -21,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.axonframework.samples.trader.event.AbstractContactCrudEvent;
 import org.axonframework.samples.trader.event.ContactCreatedEvent;
 import org.axonframework.samples.trader.event.ContactDeletedEvent;
 import org.axonframework.samples.trader.event.ContactUpdatedEvent;

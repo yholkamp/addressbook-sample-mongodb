@@ -29,7 +29,11 @@ public abstract class AbstractContactCommand {
 	@NotNull
     private AggregateIdentifier contactId;
 
-    /**
+    public AbstractContactCommand(AggregateIdentifier contactId) {
+		this.contactId = contactId;
+	}
+
+	/**
      * Returns the identifier for the contact
      */
     public AggregateIdentifier getContactId() {

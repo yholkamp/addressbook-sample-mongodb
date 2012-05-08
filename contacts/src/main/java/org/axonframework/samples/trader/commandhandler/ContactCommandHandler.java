@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package org.axonframework.samples.trader.command;
+package org.axonframework.samples.trader.commandhandler;
 
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
+import org.axonframework.samples.trader.command.CreateContactCommand;
+import org.axonframework.samples.trader.command.RemoveContactCommand;
+import org.axonframework.samples.trader.command.UpdateContactCommand;
 import org.axonframework.samples.trader.domain.Contact;
 import org.axonframework.unitofwork.UnitOfWork;
 import org.slf4j.Logger;
@@ -75,7 +78,7 @@ public class ContactCommandHandler {
     }
 
     /**
-     * Removes the contact belonging to the contactId as provided by the command.
+     * Removes the contact matching the contactId provided by the command.
      *
      * @param command    RemoveContactCommand containing the identifier of the contact to be removed
      * @param unitOfWork Unit of work for the current running thread
@@ -86,7 +89,6 @@ public class ContactCommandHandler {
         Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
 
         Contact contact = repository.load(command.getContactId());
-        logger.debug("Contact identifier: " + contact.getIdentifier());
         contact.delete();
     }
 

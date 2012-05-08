@@ -9,13 +9,25 @@ import org.axonframework.samples.trader.query.ContactEntry;
  * @author Yorick Holkamp
  */
 public abstract class AbstractContactCrudEvent extends AbstractContactEvent {
-    protected final ContactEntry contactEntry;
+
+	/**
+	 * The constant serialVersionUID
+	 */
+	private static final long serialVersionUID = -5216279393575217270L;
+	
+	/**
+	 * The ContactEntry relevant for the event
+	 */
+	protected final ContactEntry contactEntry;
 
     public AbstractContactCrudEvent(AggregateIdentifier contactId, ContactEntry contact) {
         super(contactId);
         this.contactEntry = contact;
     }
 
+    /**
+     * @return ContactEntry the ContactEntry
+     */
     public ContactEntry getContactEntry() {
         return contactEntry;
     }

@@ -16,11 +16,21 @@
 
 package org.axonframework.samples.trader.command;
 
+import org.axonframework.domain.AggregateIdentifier;
+import org.axonframework.samples.trader.query.ContactEntry;
+
 /**
- * <p>Create a new contact with the provided name</p>
- *
+ * <p>
+ * Create a new contact with the provided contactEntry
+ * </p>
+ * 
  * @author Jettro Coenradie
  */
 public class CreateContactCommand extends AbstractContactCrudCommand {
+
+	public CreateContactCommand(AggregateIdentifier contactId,
+			ContactEntry contactEntry) {
+		super(contactId, contactEntry);
+	}
 
 }

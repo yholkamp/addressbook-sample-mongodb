@@ -24,7 +24,9 @@ import org.axonframework.samples.trader.query.ContactEntry;
  */
 public class ContactUpdatedEvent extends AbstractContactCrudEvent {
 
-    public ContactUpdatedEvent(AggregateIdentifier contactId, ContactEntry contact) {
+	private static final long serialVersionUID = 6180478023666969166L;
+
+	public ContactUpdatedEvent(AggregateIdentifier contactId, ContactEntry contact) {
         super(contactId, contact);
     }
 

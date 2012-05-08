@@ -17,6 +17,7 @@
 package org.axonframework.samples.trader.webui.contacts;
 
 import org.axonframework.commandhandling.CommandBus;
+import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.domain.StringAggregateIdentifier;
 import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.samples.trader.command.AbstractContactCrudCommand;
@@ -88,12 +89,11 @@ public class ContactsController {
             return "contacts/edit";
         }
 
-        AbstractContactCrudCommand command = new UpdateContactCommand();
-        command.setContactId(new StringAggregateIdentifier(contact.getIdentifier()));
-        command.setContactEntry(contact);
+        AggregateIdentifier identifier = new StringAggregateIdentifier(contact.getIdentifier());
+        AbstractContactCrudCommand command = new UpdateContactCommand(identifier, contact);
 
-        commandBus.dispatch(command);
         logger.debug("Dispatching command with name : {}", command.toString());
+        commandBus.dispatch(command);
 
         return "redirect:/contacts";
     }
@@ -111,9 +111,7 @@ public class ContactsController {
             return "contacts/new";
         }
 
-        AbstractContactCrudCommand command = new CreateContactCommand();
-        command.setContactId(new UUIDAggregateIdentifier());
-        command.setContactEntry(contact);
+        AbstractContactCrudCommand command = new CreateContactCommand(new UUIDAggregateIdentifier(), contact);
 
         logger.debug("Dispatching command with name : {}", command.toString());
         commandBus.dispatch(command);
@@ -131,10 +129,11 @@ public class ContactsController {
     @RequestMapping(value = "{identifier}/delete", method = RequestMethod.POST)
     public String formDelete(@ModelAttribute("contact") ContactEntry contact, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-            RemoveContactCommand command = new RemoveContactCommand();
-            command.setContactId(new StringAggregateIdentifier(contact.getIdentifier()));
-            commandBus.dispatch(command);
+        	AggregateIdentifier identifier = new StringAggregateIdentifier(contact.getIdentifier());
+            RemoveContactCommand command = new RemoveContactCommand(identifier);
+
             logger.debug("Dispatching command with name : {}", command.toString());
+            commandBus.dispatch(command);
 
             return "redirect:/contacts";
         }
