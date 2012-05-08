@@ -101,7 +101,7 @@ public class ContactsController {
     @RequestMapping(value = "new", method = RequestMethod.GET)
     public String formNew(Model model) {
         ContactEntry attributeValue = new ContactEntry();
-        model.addAttribute("contactEntry", attributeValue);
+        model.addAttribute("contact", attributeValue);
         return "contacts/new";
     }
 
@@ -124,7 +124,7 @@ public class ContactsController {
     @RequestMapping(value = "{identifier}/delete", method = RequestMethod.GET)
     public String formDelete(@PathVariable String identifier, Model model) {
         ContactEntry contactEntry = contactRepository.findOne(identifier);
-        model.addAttribute("contactEntry", contactEntry);
+        model.addAttribute("contact", contactEntry);
         return "contacts/delete";
     }
 
@@ -133,7 +133,7 @@ public class ContactsController {
         if (!bindingResult.hasErrors()) {
             RemoveContactCommand command = new RemoveContactCommand();
             command.setContactId(new StringAggregateIdentifier(contact.getIdentifier()));
-            commandBus.dispatch((command));
+            commandBus.dispatch(command);
             logger.debug("Dispatching command with name : {}", command.toString());
 
             return "redirect:/contacts";

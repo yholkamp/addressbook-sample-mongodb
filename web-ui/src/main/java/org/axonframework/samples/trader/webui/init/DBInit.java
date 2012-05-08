@@ -17,6 +17,7 @@
 package org.axonframework.samples.trader.webui.init;
 
 import org.axonframework.commandhandling.CommandBus;
+import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.eventstore.mongo.MongoEventStore;
 import org.axonframework.saga.repository.mongo.MongoTemplate;
 import org.axonframework.samples.trader.contacts.api.CreateContactCommand;
@@ -114,6 +115,7 @@ public class DBInit {
     private void createContacts() {
     	for(int i = 0; i < departmentNames.length; i++ ) {
     		CreateContactCommand createContact = new CreateContactCommand();
+    		createContact.setContactId(new UUIDAggregateIdentifier());
             ContactEntry entry = new ContactEntry();
             entry.setFirstName(firstNames[i]);
             entry.setLastName(lastNames[i]);
