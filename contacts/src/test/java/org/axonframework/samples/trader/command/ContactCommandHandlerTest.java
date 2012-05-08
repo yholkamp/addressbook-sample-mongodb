@@ -1,10 +1,12 @@
-package org.axonframework.samples.trader.contacts.command;
+package org.axonframework.samples.trader.command;
 
 import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.repository.Repository;
-import org.axonframework.samples.trader.contacts.api.CreateContactCommand;
-import org.axonframework.samples.trader.contacts.query.ContactEntry;
-import org.axonframework.samples.trader.contacts.query.repositories.ContactQueryRepository;
+import org.axonframework.samples.trader.command.ContactCommandHandler;
+import org.axonframework.samples.trader.command.CreateContactCommand;
+import org.axonframework.samples.trader.domain.Contact;
+import org.axonframework.samples.trader.query.ContactEntry;
+import org.axonframework.samples.trader.query.repositories.ContactQueryRepository;
 import org.axonframework.unitofwork.UnitOfWork;
 import org.junit.Before;
 import org.junit.Test;

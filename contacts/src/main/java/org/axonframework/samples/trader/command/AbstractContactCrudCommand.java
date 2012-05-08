@@ -1,6 +1,6 @@
-package org.axonframework.samples.trader.contacts.api;
+package org.axonframework.samples.trader.command;
 
-import org.axonframework.samples.trader.contacts.query.ContactEntry;
+import org.axonframework.samples.trader.query.ContactEntry;
 
 public abstract class AbstractContactCrudCommand extends AbstractContactCommand {
     private ContactEntry contactEntry;

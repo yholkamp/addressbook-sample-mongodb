@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package org.axonframework.samples.trader.contacts.command;
+package org.axonframework.samples.trader.domain;
 
-import org.axonframework.samples.trader.contacts.api.ContactCreatedEvent;
-import org.axonframework.samples.trader.contacts.api.ContactDeletedEvent;
-import org.axonframework.samples.trader.contacts.api.ContactUpdatedEvent;
 import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
-import org.axonframework.samples.trader.contacts.query.ContactEntry;
+import org.axonframework.samples.trader.event.ContactCreatedEvent;
+import org.axonframework.samples.trader.event.ContactDeletedEvent;
+import org.axonframework.samples.trader.event.ContactUpdatedEvent;
+import org.axonframework.samples.trader.query.ContactEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
@@ -35,7 +35,7 @@ import javax.validation.constraints.NotNull;
  *
  * @author Allard Buijze
  */
-class Contact extends AbstractAnnotatedAggregateRoot {
+public class Contact extends AbstractAnnotatedAggregateRoot {
 
     private final static Logger logger = LoggerFactory.getLogger(Contact.class);
 

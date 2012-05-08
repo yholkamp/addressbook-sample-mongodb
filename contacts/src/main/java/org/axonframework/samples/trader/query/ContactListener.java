@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package org.axonframework.samples.trader.contacts.query;
+package org.axonframework.samples.trader.query;
 
 import org.axonframework.eventhandling.annotation.EventHandler;
-import org.axonframework.samples.trader.contacts.api.AbstractContactCrudEvent;
-import org.axonframework.samples.trader.contacts.api.ContactUpdatedEvent;
-import org.axonframework.samples.trader.contacts.query.repositories.ContactQueryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.axonframework.samples.trader.contacts.api.ContactCreatedEvent;
-import org.axonframework.samples.trader.contacts.api.ContactDeletedEvent;
+import org.axonframework.samples.trader.event.AbstractContactCrudEvent;
+import org.axonframework.samples.trader.event.ContactCreatedEvent;
+import org.axonframework.samples.trader.event.ContactDeletedEvent;
+import org.axonframework.samples.trader.event.ContactUpdatedEvent;
+import org.axonframework.samples.trader.query.repositories.ContactQueryRepository;
 
 /**
  * @author Jettro Coenradie

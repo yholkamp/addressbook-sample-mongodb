@@ -1,7 +1,7 @@
-package org.axonframework.samples.trader.contacts.api;
+package org.axonframework.samples.trader.event;
 
 import org.axonframework.domain.AggregateIdentifier;
-import org.axonframework.samples.trader.contacts.query.ContactEntry;
+import org.axonframework.samples.trader.query.ContactEntry;
 
 /**
  * Abstract class containing all Contact model fields for CRUD related events.

@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package org.axonframework.samples.trader.contacts.command;
+package org.axonframework.samples.trader.command;
 
 import org.axonframework.commandhandling.annotation.CommandHandler;
-import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.repository.Repository;
-import org.axonframework.samples.trader.contacts.api.UpdateContactCommand;
+import org.axonframework.samples.trader.domain.Contact;
 import org.axonframework.unitofwork.UnitOfWork;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-import org.axonframework.samples.trader.contacts.api.CreateContactCommand;
-import org.axonframework.samples.trader.contacts.api.RemoveContactCommand;
 
 /**
  * <p>Command handler that can be used to create and update Contacts. It can also be used to register and remove

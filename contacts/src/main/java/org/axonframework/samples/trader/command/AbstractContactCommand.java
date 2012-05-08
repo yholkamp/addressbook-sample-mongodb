@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.axonframework.samples.trader.contacts.api;
+package org.axonframework.samples.trader.command;
 
 import javax.validation.constraints.NotNull;
 import org.axonframework.domain.AggregateIdentifier;

@@ -16,7 +16,7 @@
 
 package org.axonframework.samples.trader.webui.init;
 
-import org.axonframework.samples.trader.contacts.query.ContactEntry;
+import org.axonframework.samples.trader.query.ContactEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.axonframework.samples.trader.contacts.query;
+package org.axonframework.samples.trader.query;
 
 import java.io.Serializable;
 

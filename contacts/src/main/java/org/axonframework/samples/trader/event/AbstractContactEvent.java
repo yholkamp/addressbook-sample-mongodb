@@ -1,4 +1,4 @@
-package org.axonframework.samples.trader.contacts.api;
+package org.axonframework.samples.trader.event;
 
 import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.domain.DomainEvent;
