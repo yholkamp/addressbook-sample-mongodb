@@ -7,7 +7,7 @@
     <ul class="breadcrumb">
         <li><a href="${ctx}/">Home</a> <span class="divider">/</span></li>
         <li><a href="${ctx}/contacts">Contacts</a> <span class="divider">/</span></li>
-        <li class="active">Confirm deletion of <c:out value='${contact.firstName} ${contact.lastName}'/></li>
+        <li class="active">Confirm deletion of <c:out value='${contactEntry.firstName} ${contactEntry.lastName}'/></li>
     </ul>
 </content>
 

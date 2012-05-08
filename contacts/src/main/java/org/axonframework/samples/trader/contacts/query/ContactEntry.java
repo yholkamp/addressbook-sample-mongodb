@@ -16,6 +16,8 @@
 
 package org.axonframework.samples.trader.contacts.query;
 
+import java.io.Serializable;
+
 import org.springframework.data.annotation.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

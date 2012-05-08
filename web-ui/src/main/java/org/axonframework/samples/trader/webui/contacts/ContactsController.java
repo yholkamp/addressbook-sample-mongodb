@@ -18,6 +18,7 @@ package org.axonframework.samples.trader.webui.contacts;
 
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.domain.StringAggregateIdentifier;
+import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.samples.trader.contacts.api.AbstractContactCrudCommand;
 import org.axonframework.samples.trader.contacts.api.CreateContactCommand;
 import org.axonframework.samples.trader.contacts.api.RemoveContactCommand;
@@ -111,6 +112,7 @@ public class ContactsController {
         }
 
         AbstractContactCrudCommand command = new CreateContactCommand();
+        command.setContactId(new UUIDAggregateIdentifier());
         command.setContactEntry(contact);
 
         logger.debug("Dispatching command with name : {}", command.toString());
@@ -122,7 +124,7 @@ public class ContactsController {
     @RequestMapping(value = "{identifier}/delete", method = RequestMethod.GET)
     public String formDelete(@PathVariable String identifier, Model model) {
         ContactEntry contactEntry = contactRepository.findOne(identifier);
-        model.addAttribute("contact", contactEntry);
+        model.addAttribute("contactEntry", contactEntry);
         return "contacts/delete";
     }
 

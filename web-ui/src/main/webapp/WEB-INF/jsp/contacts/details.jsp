@@ -7,7 +7,7 @@
     <ul class="breadcrumb">
         <li><a href="${ctx}/">Home</a> <span class="divider">/</span></li>
         <li><a href="${ctx}/contacts">Contacts</a> <span class="divider">/</span></li>
-        <li class="active">Details for contact</li>
+        <li class="active">Details for <c:out value='${contactEntry.firstName} ${contactEntry.lastName}'/></li>
     </ul>
 </content>
 
