@@ -97,7 +97,7 @@ public class ContactCommandHandler {
      */
     @Autowired
     @Qualifier("contactRepository")
-    public void setRepository(Repository<Contact> repository) {
+    public void setContactRepository(Repository<Contact> repository) {
         this.repository = repository;
     }
 }

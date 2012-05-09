@@ -114,15 +114,13 @@ public class DBInit {
 
     private void createContacts() {
     	for(int i = 0; i < departmentNames.length; i++ ) {
-    		CreateContactCommand createContact = new CreateContactCommand();
-    		createContact.setContactId(new UUIDAggregateIdentifier());
             ContactEntry entry = new ContactEntry();
             entry.setFirstName(firstNames[i]);
             entry.setLastName(lastNames[i]);
             entry.setStreet(streets[i]);
             entry.setCity(cities[i]);
             entry.setDepartment(departmentNames[i]);
-            createContact.setContactEntry(entry);
+            CreateContactCommand createContact = new CreateContactCommand(new UUIDAggregateIdentifier(), entry);
     		commandBus.dispatch(createContact);
     	}
     }

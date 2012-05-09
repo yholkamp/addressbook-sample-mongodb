@@ -34,14 +34,12 @@ public class ContactCommandHandlerTest {
 		MockitoAnnotations.initMocks(this);
 		contactCommandHandler = new ContactCommandHandler();
 		// contactCommandHandler.setContactNameRepository(mockContactNameRepository);
-		contactCommandHandler.setRepository(mockRepository);
+		contactCommandHandler.setContactRepository(mockRepository);
 	}
 
 	@Test
 	public void testHandleCreateContactCommand_success() throws Exception {
-		CreateContactCommand command = new CreateContactCommand();
-		command.setContactId(new UUIDAggregateIdentifier());
-		command.setContactEntry(new ContactEntry());
+		CreateContactCommand command = new CreateContactCommand(new UUIDAggregateIdentifier(), new ContactEntry());
 
 		// when(mockContactNameRepository.claimContactName("Double name")).thenReturn(false);
 

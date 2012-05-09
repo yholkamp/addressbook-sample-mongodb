@@ -16,6 +16,8 @@
 
 package org.axonframework.samples.trader.command;
 
+import org.axonframework.domain.AggregateIdentifier;
+
 /**
  * <p>Removes the contact with the provided id</p>
  *
@@ -23,4 +25,7 @@ package org.axonframework.samples.trader.command;
  */
 public class RemoveContactCommand extends AbstractContactCommand {
 
+    public RemoveContactCommand(AggregateIdentifier identifier) {
+        super(identifier);
+    }
 }

@@ -28,6 +28,10 @@ import org.springframework.util.Assert;
 public abstract class AbstractContactCommand {
 	@NotNull
     private AggregateIdentifier contactId;
+	
+	public AbstractContactCommand(AggregateIdentifier identifier ) {
+	    this.contactId = identifier;
+	}
 
     /**
      * Returns the identifier for the contact
