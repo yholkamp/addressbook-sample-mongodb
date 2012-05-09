@@ -23,12 +23,13 @@ import org.springframework.data.mongodb.MongoDbFactory;
 
 /**
  * CloudFoundry implementation of a MongoTemplate. We obtain the connection through the acquired factory.
- *
+ * 
  * @author Jettro Coenradie
  */
 public class CFMongoTemplate implements MongoTemplate {
 
     private static final String DEFAULT_DOMAINEVENTS_COLLECTION = "domainevents";
+
     private static final String DEFAULT_SNAPSHOTEVENTS_COLLECTION = "snapshotevents";
 
     private MongoDbFactory mongoDbFactory;

@@ -4,12 +4,12 @@ import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.samples.trader.query.ContactEntry;
 
 public abstract class AbstractContactCrudCommand extends AbstractContactCommand {
-    
+
     public AbstractContactCrudCommand(AggregateIdentifier identifier, ContactEntry contactEntry) {
         super(identifier);
         this.contactEntry = contactEntry;
     }
-    
+
     public AbstractContactCrudCommand(AggregateIdentifier identifier) {
         super(identifier);
     }

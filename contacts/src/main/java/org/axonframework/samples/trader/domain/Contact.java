@@ -30,9 +30,10 @@ import org.springframework.util.Assert;
 import javax.validation.constraints.NotNull;
 
 /**
- * <p>The Aggregate root component of the sample application. This component handles all contact as well as address
- * domain events.</p>
- *
+ * <p>
+ * The Aggregate root component of the sample application. This component handles all contact as well as address domain events.
+ * </p>
+ * 
  * @author Allard Buijze, Yorick Holkamp
  */
 public class Contact extends AbstractAnnotatedAggregateRoot {
@@ -57,7 +58,8 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
     /**
      * Constructor for the Contact model, available for internal usage by Axon.
      * 
-     * @param identifier of the contact
+     * @param identifier
+     *            of the contact
      */
     public Contact(AggregateIdentifier identifier) {
         super(identifier);
@@ -66,8 +68,9 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
 
     /**
      * Change the attributes to match the attributes of a given ContactEntry.
-     *
-     * @param contact to use as a source of attributes
+     * 
+     * @param contact
+     *            to use as a source of attributes
      */
     public void change(ContactEntry contact) {
         Assert.notNull(getIdentifier(), "Identifier cannot be null");

@@ -27,7 +27,9 @@ import org.springframework.data.mongodb.MongoDbFactory;
 public class CFSagaMongoTemplate implements MongoTemplate {
 
     static final String SAGA_ASSOCIATIONS = "sagaassociations";
+
     static final String SAGA_COLLECTION = "sagacollection";
+
     private MongoDbFactory mongoDbFactory;
 
     public CFSagaMongoTemplate(MongoDbFactory mongoDbFactory) {

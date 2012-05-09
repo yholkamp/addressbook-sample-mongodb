@@ -1,5 +1,5 @@
 /*
-  * Copyright (c) 2010. Axon Framework
+ * Copyright (c) 2010. Axon Framework
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,10 +31,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 /**
- * <p>Command handler that can be used to create and update Contacts. It can also be used to register and remove
- * addresses.</p>
- * <p>The provided repository is used to store the changes.</p>
- *
+ * <p>
+ * Command handler that can be used to create and update Contacts. It can also be used to register and remove addresses.
+ * </p>
+ * <p>
+ * The provided repository is used to store the changes.
+ * </p>
+ * 
  * @author Allard Buijze
  */
 @Component
@@ -48,9 +51,11 @@ public class ContactCommandHandler {
      * Changes the provided data for the contact found based on the provided identifier
      * <p/>
      * An {@code AggregateNotFoundException} is thrown if the identifier does not represent a valid contact.
-     *
-     * @param command    UpdateContactCommand that contains the identifier and the data to be updated
-     * @param unitOfWork Unit of work for the current running thread
+     * 
+     * @param command
+     *            UpdateContactCommand that contains the identifier and the data to be updated
+     * @param unitOfWork
+     *            Unit of work for the current running thread
      */
     @CommandHandler
     public void handleUpdateContact(final UpdateContactCommand command, UnitOfWork unitOfWork) {
@@ -65,9 +70,11 @@ public class ContactCommandHandler {
 
     /**
      * Creates a new contact based on the provided data.
-     *
-     * @param command    CreateContactCommand object that contains the needed data to create a new contact
-     * @param unitOfWork Unit of work for the current running thread
+     * 
+     * @param command
+     *            CreateContactCommand object that contains the needed data to create a new contact
+     * @param unitOfWork
+     *            Unit of work for the current running thread
      */
     @CommandHandler
     public void handleCreateContact(final CreateContactCommand command, UnitOfWork unitOfWork) {
@@ -79,9 +86,11 @@ public class ContactCommandHandler {
 
     /**
      * Removes the contact belonging to the contactId as provided by the command.
-     *
-     * @param command    RemoveContactCommand containing the identifier of the contact to be removed
-     * @param unitOfWork Unit of work for the current running thread
+     * 
+     * @param command
+     *            RemoveContactCommand containing the identifier of the contact to be removed
+     * @param unitOfWork
+     *            Unit of work for the current running thread
      */
     @CommandHandler
     public void handleRemoveContact(RemoveContactCommand command, UnitOfWork unitOfWork) {
@@ -95,8 +104,9 @@ public class ContactCommandHandler {
 
     /**
      * Sets the contact domain event repository.
-     *
-     * @param repository the contact repository
+     * 
+     * @param repository
+     *            the contact repository
      */
     @Autowired
     @Qualifier("contactRepository")

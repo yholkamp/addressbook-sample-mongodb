@@ -20,17 +20,18 @@ import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.samples.trader.query.ContactEntry;
 
 /**
- * <p>Command that wants to change the name of the contact and requires the new contact name to do that</p>
- *
+ * <p>
+ * Command that wants to change the name of the contact and requires the new contact name to do that
+ * </p>
+ * 
  * @author Jettro Coenradie
  */
 public class UpdateContactCommand extends AbstractContactCrudCommand {
 
-
     public UpdateContactCommand(AggregateIdentifier identifier, ContactEntry contactEntry) {
         super(identifier, contactEntry);
     }
-    
+
     public UpdateContactCommand(AggregateIdentifier identifier) {
         super(identifier);
     }

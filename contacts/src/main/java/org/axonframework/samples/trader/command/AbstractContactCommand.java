@@ -21,17 +21,19 @@ import org.axonframework.domain.AggregateIdentifier;
 import org.springframework.util.Assert;
 
 /**
- * <p>Parent class for all contact related commands</p>
- *
+ * <p>
+ * Parent class for all contact related commands
+ * </p>
+ * 
  * @author Jettro Coenradie
  */
 public abstract class AbstractContactCommand {
-	@NotNull
+    @NotNull
     private AggregateIdentifier contactId;
-	
-	public AbstractContactCommand(AggregateIdentifier identifier ) {
-	    this.contactId = identifier;
-	}
+
+    public AbstractContactCommand(AggregateIdentifier identifier) {
+        this.contactId = identifier;
+    }
 
     /**
      * Returns the identifier for the contact
@@ -44,7 +46,7 @@ public abstract class AbstractContactCommand {
      * Provide the identifier for the existing contact. An error is thrown if the provided identifier is empty.
      */
     public void setContactId(AggregateIdentifier contactId) {
-    	Assert.notNull(contactId, "Cannot take actions on a contact with an empty id");
+        Assert.notNull(contactId, "Cannot take actions on a contact with an empty id");
         this.contactId = contactId;
     }
 

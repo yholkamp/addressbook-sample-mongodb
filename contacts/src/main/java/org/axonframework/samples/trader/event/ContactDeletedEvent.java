@@ -23,8 +23,8 @@ import org.axonframework.domain.AggregateIdentifier;
  */
 public class ContactDeletedEvent extends AbstractContactEvent {
 
-	public ContactDeletedEvent(AggregateIdentifier contactId) {
-		super(contactId);
-	}
+    public ContactDeletedEvent(AggregateIdentifier contactId) {
+        super(contactId);
+    }
 
 }

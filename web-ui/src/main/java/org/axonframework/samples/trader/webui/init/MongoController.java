@@ -40,6 +40,7 @@ import java.util.Set;
 public class MongoController {
 
     private DBInit dbInit;
+
     private org.springframework.data.mongodb.core.MongoTemplate springTemplate;
 
     @Autowired
@@ -56,10 +57,8 @@ public class MongoController {
     }
 
     @RequestMapping(value = "/collection/{id}", method = RequestMethod.GET)
-    public String collection(@PathVariable("id") String collectionName,
-                             @RequestParam(value = "page", defaultValue = "1") int pageNumber,
-                             @RequestParam(value = "itemsperpage", defaultValue = "5") int itemsPerPage,
-                             Model model) {
+    public String collection(@PathVariable("id") String collectionName, @RequestParam(value = "page", defaultValue = "1") int pageNumber,
+                             @RequestParam(value = "itemsperpage", defaultValue = "5") int itemsPerPage, Model model) {
         DBCursor dbCursor = springTemplate.getCollection(collectionName).find();
         List<DBObject> dbObjects = dbCursor.skip((pageNumber - 1) * itemsPerPage).limit(itemsPerPage).toArray();
 

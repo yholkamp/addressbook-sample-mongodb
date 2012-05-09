@@ -16,34 +16,30 @@ import static org.junit.Assert.*;
  * @author Allard Buijze Modified by Yorick
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {
-		"classpath:/META-INF/spring/persistence-infrastructure-context.xml", 
-		"classpath:/META-INF/spring/cqrs-infrastructure-context.xml",
-		"classpath:/META-INF/spring/configuration-context.xml",
-		"classpath:/META-INF/spring/contacts-context.xml",
-		"classpath:/META-INF/spring/contacts-query-context.xml",
-		})
+@ContextConfiguration(locations = { "classpath:/META-INF/spring/persistence-infrastructure-context.xml",
+                                   "classpath:/META-INF/spring/cqrs-infrastructure-context.xml", "classpath:/META-INF/spring/configuration-context.xml",
+                                   "classpath:/META-INF/spring/contacts-context.xml", "classpath:/META-INF/spring/contacts-query-context.xml", })
 public class ContactIntegrationTest {
 
-	@Autowired
-	private ContactCommandHandler commandHandler;
+    @Autowired
+    private ContactCommandHandler commandHandler;
 
-	@Autowired
-	private EventStore eventStore;
+    @Autowired
+    private EventStore eventStore;
 
-	@Autowired
-	private ThreadPoolTaskExecutor taskExecutor;
+    @Autowired
+    private ThreadPoolTaskExecutor taskExecutor;
 
-	@Autowired
-	private ContactQueryRepository contactQueryRepository;
+    @Autowired
+    private ContactQueryRepository contactQueryRepository;
 
-	@Test(timeout = 10000)
-	public void testApplicationContext() throws InterruptedException {
-		assertNotNull(commandHandler);
-		assertNotNull(eventStore);
-		assertNotNull(taskExecutor);
-		assertNotNull(contactQueryRepository);
-		// assertNotNull(commandRepository);
-	}
+    @Test(timeout = 10000)
+    public void testApplicationContext() throws InterruptedException {
+        assertNotNull(commandHandler);
+        assertNotNull(eventStore);
+        assertNotNull(taskExecutor);
+        assertNotNull(contactQueryRepository);
+        // assertNotNull(commandRepository);
+    }
 
 }

@@ -32,29 +32,29 @@ import org.axonframework.samples.trader.query.repositories.ContactQueryRepositor
  */
 @Component
 public class ContactListener {
-	private final static Logger logger = LoggerFactory.getLogger(ContactListener.class);
+    private final static Logger logger = LoggerFactory.getLogger(ContactListener.class);
 
-	private ContactQueryRepository contactRepository;
+    private ContactQueryRepository contactRepository;
 
-	@EventHandler
-	public void handle(ContactCreatedEvent event) {
-		logger.debug("Received a contactCreatedEvent for a contact with id : {}", event.getContactId());
-		
-		ContactEntry contactEntry = event.getContactEntry();
-		contactEntry.setIdentifier(event.getContactId().asString());
+    @EventHandler
+    public void handle(ContactCreatedEvent event) {
+        logger.debug("Received a contactCreatedEvent for a contact with id : {}", event.getContactId());
 
-		contactRepository.save(contactEntry);
-	}
-	
-	@EventHandler
-	public void handle(ContactUpdatedEvent event) {
-		logger.debug("Received a contactNameChangedEvent for a contact id : {}", event.getContactId());
-		
-		ContactEntry contactEntry = event.getContactEntry();
+        ContactEntry contactEntry = event.getContactEntry();
         contactEntry.setIdentifier(event.getContactId().asString());
 
-		contactRepository.save(contactEntry);
-	}
+        contactRepository.save(contactEntry);
+    }
+
+    @EventHandler
+    public void handle(ContactUpdatedEvent event) {
+        logger.debug("Received a contactNameChangedEvent for a contact id : {}", event.getContactId());
+
+        ContactEntry contactEntry = event.getContactEntry();
+        contactEntry.setIdentifier(event.getContactId().asString());
+
+        contactRepository.save(contactEntry);
+    }
 
     @EventHandler
     public void handle(ContactDeletedEvent event) {
@@ -65,8 +65,8 @@ public class ContactListener {
         contactRepository.delete(contactEntry);
     }
 
-	@Autowired
-	public void setContactRepository(ContactQueryRepository contactRepository) {
-		this.contactRepository = contactRepository;
-	}
+    @Autowired
+    public void setContactRepository(ContactQueryRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
 }

@@ -19,50 +19,50 @@ import static org.mockito.Mockito.*;
  * @author Yorick Holkamp
  */
 public class ContactListenerTest {
-	private ContactListener contactListener;
-	@Mock
-	private ContactQueryRepository mockContactRepository;
-	@Mock
-	private ContactEntry mockContactEntry;
+    private ContactListener contactListener;
 
-	@Before
-	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		contactListener = new ContactListener();
-		contactListener.setContactRepository(mockContactRepository);
-	}
+    @Mock
+    private ContactQueryRepository mockContactRepository;
 
-	@Test
-	public final void testHandleContactCreatedEvent() {
-		AggregateIdentifier id = new UUIDAggregateIdentifier();
-		ContactCreatedEvent event = new ContactCreatedEvent(id,
-				mockContactEntry);
+    @Mock
+    private ContactEntry mockContactEntry;
 
-		contactListener.handle(event);
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        contactListener = new ContactListener();
+        contactListener.setContactRepository(mockContactRepository);
+    }
 
-		verify(mockContactRepository).save(mockContactEntry);
-	}
+    @Test
+    public final void testHandleContactCreatedEvent() {
+        AggregateIdentifier id = new UUIDAggregateIdentifier();
+        ContactCreatedEvent event = new ContactCreatedEvent(id, mockContactEntry);
 
-	@Test
-	public final void testHandleContactUpdatedEvent() {
-		AggregateIdentifier id = new UUIDAggregateIdentifier();
-		ContactUpdatedEvent event = new ContactUpdatedEvent(id,
-				mockContactEntry);
+        contactListener.handle(event);
 
-		contactListener.handle(event);
+        verify(mockContactRepository).save(mockContactEntry);
+    }
 
-		verify(mockContactRepository).save(mockContactEntry);
-	}
+    @Test
+    public final void testHandleContactUpdatedEvent() {
+        AggregateIdentifier id = new UUIDAggregateIdentifier();
+        ContactUpdatedEvent event = new ContactUpdatedEvent(id, mockContactEntry);
 
-	@Test
-	public final void testHandleContactDeletedEvent() {
-		AggregateIdentifier id = new UUIDAggregateIdentifier();
-		ContactDeletedEvent event = new ContactDeletedEvent(id);
-		
-		when(mockContactRepository.findOne(id.asString())).thenReturn(mockContactEntry);
-		contactListener.handle(event);
+        contactListener.handle(event);
 
-		verify(mockContactRepository).delete(mockContactEntry);
-	}
+        verify(mockContactRepository).save(mockContactEntry);
+    }
+
+    @Test
+    public final void testHandleContactDeletedEvent() {
+        AggregateIdentifier id = new UUIDAggregateIdentifier();
+        ContactDeletedEvent event = new ContactDeletedEvent(id);
+
+        when(mockContactRepository.findOne(id.asString())).thenReturn(mockContactEntry);
+        contactListener.handle(event);
+
+        verify(mockContactRepository).delete(mockContactEntry);
+    }
 
 }

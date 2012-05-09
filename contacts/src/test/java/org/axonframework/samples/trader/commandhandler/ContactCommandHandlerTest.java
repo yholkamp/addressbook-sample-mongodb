@@ -22,68 +22,66 @@ import static org.mockito.Mockito.*;
  * @author Jettro Coenradie
  */
 public class ContactCommandHandlerTest {
-	private ContactCommandHandler contactCommandHandler;
-	@Mock
-	private UnitOfWork mockUnitOfWork;
-	@Mock
-	private Repository<Contact> mockContactRepository;
-	@Mock
-	private Contact mockContact;
-	@Mock
-	private ContactEntry mockContactEntry;
+    private ContactCommandHandler contactCommandHandler;
 
-	@Before
-	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		contactCommandHandler = new ContactCommandHandler();
-		contactCommandHandler.setContactRepository(mockContactRepository);
-	}
+    @Mock
+    private UnitOfWork mockUnitOfWork;
 
-	@Test
-	public void testCreateContactCommand() {
-		AggregateIdentifier identifier = new UUIDAggregateIdentifier();
-		CreateContactCommand createCommand = new CreateContactCommand(
-				identifier, mockContactEntry);
+    @Mock
+    private Repository<Contact> mockContactRepository;
 
-		when(mockContact.getIdentifier()).thenReturn(identifier);
-		when(mockContactRepository.load(identifier))
-		.thenReturn(mockContact);
+    @Mock
+    private Contact mockContact;
 
-		contactCommandHandler.handleCreateContact(createCommand, mockUnitOfWork);
+    @Mock
+    private ContactEntry mockContactEntry;
 
-		// Ensure the contact is being added to our repository 
-		verify(mockContactRepository).add((Contact) anyObject());
-	}
-	
-	@Test
-	public void testUpdateContactCommand() {
-		AggregateIdentifier identifier = new UUIDAggregateIdentifier();
-		UpdateContactCommand updateCommand = new UpdateContactCommand(
-				identifier, mockContactEntry);
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        contactCommandHandler = new ContactCommandHandler();
+        contactCommandHandler.setContactRepository(mockContactRepository);
+    }
 
-		when(mockContact.getIdentifier()).thenReturn(identifier);
-		when(mockContactRepository.load(identifier))
-		.thenReturn(mockContact);
+    @Test
+    public void testCreateContactCommand() {
+        AggregateIdentifier identifier = new UUIDAggregateIdentifier();
+        CreateContactCommand createCommand = new CreateContactCommand(identifier, mockContactEntry);
 
-		contactCommandHandler.handleUpdateContact(updateCommand, mockUnitOfWork);
+        when(mockContact.getIdentifier()).thenReturn(identifier);
+        when(mockContactRepository.load(identifier)).thenReturn(mockContact);
 
-		// Ensure changes are made (saving is handled by the Axon Framework)
-		verify(mockContact).change(mockContactEntry);
-	}
+        contactCommandHandler.handleCreateContact(createCommand, mockUnitOfWork);
 
-	@Test
-	public void testRemoveContactCommand() {
-		AggregateIdentifier identifier = new UUIDAggregateIdentifier();
-		RemoveContactCommand removeCommand = new RemoveContactCommand(
-				identifier);
+        // Ensure the contact is being added to our repository
+        verify(mockContactRepository).add((Contact) anyObject());
+    }
 
-		when(mockContactRepository.load(identifier))
-		.thenReturn(mockContact);
+    @Test
+    public void testUpdateContactCommand() {
+        AggregateIdentifier identifier = new UUIDAggregateIdentifier();
+        UpdateContactCommand updateCommand = new UpdateContactCommand(identifier, mockContactEntry);
 
-		contactCommandHandler.handleRemoveContact(removeCommand, mockUnitOfWork);
+        when(mockContact.getIdentifier()).thenReturn(identifier);
+        when(mockContactRepository.load(identifier)).thenReturn(mockContact);
 
-		// Verify a contact is loaded properly and deleted afterwards
-		verify(mockContactRepository, times(1)).load(identifier);
-		verify(mockContact).delete();
-	}
+        contactCommandHandler.handleUpdateContact(updateCommand, mockUnitOfWork);
+
+        // Ensure changes are made (saving is handled by the Axon Framework)
+        verify(mockContact).change(mockContactEntry);
+    }
+
+    @Test
+    public void testRemoveContactCommand() {
+        AggregateIdentifier identifier = new UUIDAggregateIdentifier();
+        RemoveContactCommand removeCommand = new RemoveContactCommand(identifier);
+
+        when(mockContactRepository.load(identifier)).thenReturn(mockContact);
+
+        contactCommandHandler.handleRemoveContact(removeCommand, mockUnitOfWork);
+
+        // Verify a contact is loaded properly and deleted afterwards
+        verify(mockContactRepository, times(1)).load(identifier);
+        verify(mockContact).delete();
+    }
 }
