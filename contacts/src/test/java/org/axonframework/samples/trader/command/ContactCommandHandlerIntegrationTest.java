@@ -3,7 +3,7 @@ package org.axonframework.samples.trader.command;
 import static org.junit.Assert.*;
 
 import org.axonframework.domain.AggregateIdentifier;
-import org.axonframework.samples.trader.command.ContactCommandHandler;
+import org.axonframework.samples.trader.commandhandler.ContactCommandHandler;
 import org.axonframework.samples.trader.domain.Contact;
 import org.axonframework.samples.trader.event.ContactCreatedEvent;
 import org.axonframework.samples.trader.event.ContactDeletedEvent;

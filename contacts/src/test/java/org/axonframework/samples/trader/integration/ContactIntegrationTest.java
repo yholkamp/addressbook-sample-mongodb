@@ -1,7 +1,7 @@
 package org.axonframework.samples.trader.integration;
 
 import org.axonframework.eventstore.EventStore;
-import org.axonframework.samples.trader.command.ContactCommandHandler;
+import org.axonframework.samples.trader.commandhandler.ContactCommandHandler;
 import org.axonframework.samples.trader.query.repositories.ContactQueryRepository;
 import org.junit.*;
 import org.junit.runner.*;

@@ -2,8 +2,8 @@ package org.axonframework.samples.trader.command;
 
 import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.repository.Repository;
-import org.axonframework.samples.trader.command.ContactCommandHandler;
 import org.axonframework.samples.trader.command.CreateContactCommand;
+import org.axonframework.samples.trader.commandhandler.ContactCommandHandler;
 import org.axonframework.samples.trader.domain.Contact;
 import org.axonframework.samples.trader.query.ContactEntry;
 import org.axonframework.samples.trader.query.repositories.ContactQueryRepository;

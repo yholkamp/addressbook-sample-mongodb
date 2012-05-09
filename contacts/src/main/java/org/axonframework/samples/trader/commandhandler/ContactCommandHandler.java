@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package org.axonframework.samples.trader.command;
+package org.axonframework.samples.trader.commandhandler;
 
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
+import org.axonframework.samples.trader.command.CreateContactCommand;
+import org.axonframework.samples.trader.command.RemoveContactCommand;
+import org.axonframework.samples.trader.command.UpdateContactCommand;
 import org.axonframework.samples.trader.domain.Contact;
 import org.axonframework.unitofwork.UnitOfWork;
 import org.slf4j.Logger;
