@@ -59,9 +59,9 @@ public class ContactsController {
 
     @RequestMapping(value = "{identifier}", method = RequestMethod.GET)
     public String details(@PathVariable String identifier, Model model) {
-        String name = contactRepository.findOne(identifier).getName();
+        ContactEntry contactEntry = contactRepository.findOne(identifier);
         model.addAttribute("identifier", identifier);
-        model.addAttribute("name", name);
+        model.addAttribute("contact", contactEntry);
         return "contacts/details";
     }
 
