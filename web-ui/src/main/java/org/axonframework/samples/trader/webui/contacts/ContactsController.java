@@ -16,6 +16,8 @@
 
 package org.axonframework.samples.trader.webui.contacts;
 
+import javax.validation.Valid;
+
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.domain.StringAggregateIdentifier;
@@ -37,8 +39,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.validation.Valid;
-
 /**
  * @author Jettro Coenradie, Yorick Holkamp
  */
@@ -57,18 +57,33 @@ public class ContactsController {
         this.commandBus = commandBus;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String list(Model model) {
-        model.addAttribute("contacts", contactRepository.findAll());
-        return "contacts/list";
-    }
-
     @RequestMapping(value = "{identifier}", method = RequestMethod.GET)
     public String details(@PathVariable String identifier, Model model) {
         String name = contactRepository.findOne(identifier).getName();
         model.addAttribute("identifier", identifier);
         model.addAttribute("name", name);
         return "contacts/details";
+    }
+
+    @RequestMapping(value = "{identifier}/delete", method = RequestMethod.POST)
+    public String formDelete(@ModelAttribute("contact") ContactEntry contact, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            AggregateIdentifier identifier = new StringAggregateIdentifier(contact.getIdentifier());
+            RemoveContactCommand command = new RemoveContactCommand(identifier);
+
+            logger.debug("Dispatching command with name : {}", command.toString());
+            commandBus.dispatch(command);
+
+            return "redirect:/contacts";
+        }
+        return "contacts/delete";
+    }
+
+    @RequestMapping(value = "{identifier}/delete", method = RequestMethod.GET)
+    public String formDelete(@PathVariable String identifier, Model model) {
+        ContactEntry contactEntry = contactRepository.findOne(identifier);
+        model.addAttribute("contact", contactEntry);
+        return "contacts/delete";
     }
 
     @RequestMapping(value = "{identifier}/edit", method = RequestMethod.GET)
@@ -117,24 +132,9 @@ public class ContactsController {
         return "redirect:/contacts";
     }
 
-    @RequestMapping(value = "{identifier}/delete", method = RequestMethod.GET)
-    public String formDelete(@PathVariable String identifier, Model model) {
-        ContactEntry contactEntry = contactRepository.findOne(identifier);
-        model.addAttribute("contact", contactEntry);
-        return "contacts/delete";
-    }
-
-    @RequestMapping(value = "{identifier}/delete", method = RequestMethod.POST)
-    public String formDelete(@ModelAttribute("contact") ContactEntry contact, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) {
-            AggregateIdentifier identifier = new StringAggregateIdentifier(contact.getIdentifier());
-            RemoveContactCommand command = new RemoveContactCommand(identifier);
-
-            logger.debug("Dispatching command with name : {}", command.toString());
-            commandBus.dispatch(command);
-
-            return "redirect:/contacts";
-        }
-        return "contacts/delete";
+    @RequestMapping(method = RequestMethod.GET)
+    public String list(Model model) {
+        model.addAttribute("contacts", contactRepository.findAll());
+        return "contacts/list";
     }
 }

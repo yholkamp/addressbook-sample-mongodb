@@ -17,15 +17,14 @@
 package org.axonframework.samples.trader.query;
 
 import org.axonframework.eventhandling.annotation.EventHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.axonframework.samples.trader.event.AbstractContactCrudEvent;
 import org.axonframework.samples.trader.event.ContactCreatedEvent;
 import org.axonframework.samples.trader.event.ContactDeletedEvent;
 import org.axonframework.samples.trader.event.ContactUpdatedEvent;
 import org.axonframework.samples.trader.query.repositories.ContactQueryRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Jettro Coenradie
@@ -47,6 +46,15 @@ public class ContactListener {
     }
 
     @EventHandler
+    public void handle(ContactDeletedEvent event) {
+        logger.debug("Received a ContactRemovedEvent for a contact with id : {}", event.getContactId());
+
+        ContactEntry contactEntry = contactRepository.findOne(event.getContactId().asString());
+
+        contactRepository.delete(contactEntry);
+    }
+
+    @EventHandler
     public void handle(ContactUpdatedEvent event) {
         logger.debug("Received a contactNameChangedEvent for a contact id : {}", event.getContactId());
 
@@ -54,15 +62,6 @@ public class ContactListener {
         contactEntry.setIdentifier(event.getContactId().asString());
 
         contactRepository.save(contactEntry);
-    }
-
-    @EventHandler
-    public void handle(ContactDeletedEvent event) {
-        logger.debug("Received a ContactRemovedEvent for a contact with id : {}", event.getContactId());
-
-        ContactEntry contactEntry = contactRepository.findOne(event.getContactId().asString());
-
-        contactRepository.delete(contactEntry);
     }
 
     @Autowired

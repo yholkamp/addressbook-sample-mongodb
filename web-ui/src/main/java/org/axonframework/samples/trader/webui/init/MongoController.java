@@ -16,8 +16,11 @@
 
 package org.axonframework.samples.trader.webui.init;
 
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Controller;
@@ -27,10 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 
 /**
  * @author Jettro Coenradie
@@ -47,13 +48,6 @@ public class MongoController {
     public MongoController(DBInit dbInit, MongoTemplate springTemplate) {
         this.dbInit = dbInit;
         this.springTemplate = springTemplate;
-    }
-
-    @RequestMapping(value = "/collections", method = RequestMethod.GET)
-    public String collections(Model model) {
-        Set<String> collectionNames = springTemplate.getCollectionNames();
-        model.addAttribute("collections", collectionNames);
-        return "data/collections";
     }
 
     @RequestMapping(value = "/collection/{id}", method = RequestMethod.GET)
@@ -75,6 +69,13 @@ public class MongoController {
         model.addAttribute("itemsPerPage", itemsPerPage);
         model.addAttribute("collectionName", collectionName);
         return "data/collection";
+    }
+
+    @RequestMapping(value = "/collections", method = RequestMethod.GET)
+    public String collections(Model model) {
+        Set<String> collectionNames = springTemplate.getCollectionNames();
+        model.addAttribute("collections", collectionNames);
+        return "data/collections";
     }
 
     @RequestMapping(value = "/init", method = RequestMethod.GET)

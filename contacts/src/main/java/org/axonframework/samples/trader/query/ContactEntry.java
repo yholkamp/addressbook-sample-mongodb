@@ -16,11 +16,9 @@
 
 package org.axonframework.samples.trader.query;
 
-import java.io.Serializable;
+import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  * @author Allard Buijze, Yorick Holkamp
@@ -47,44 +45,12 @@ public class ContactEntry {
 
     private String department;
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public String getDepartment() {
+        return department;
     }
 
     public String getFirstName() {
@@ -95,23 +61,55 @@ public class ContactEntry {
         return identifier;
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public String getLastName() {
+        return lastName;
     }
 
     public String getName() {
         return firstName;
     }
 
-    public void setFirstName(String name) {
-        this.firstName = name;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public String getDepartment() {
-        return department;
+    public String getStreet() {
+        return street;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    public void setFirstName(String name) {
+        firstName = name;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 }

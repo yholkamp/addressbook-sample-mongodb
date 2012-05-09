@@ -48,27 +48,6 @@ public class ContactCommandHandler {
     private Repository<Contact> repository;
 
     /**
-     * Changes the provided data for the contact found based on the provided identifier
-     * <p/>
-     * An {@code AggregateNotFoundException} is thrown if the identifier does not represent a valid contact.
-     * 
-     * @param command
-     *            UpdateContactCommand that contains the identifier and the data to be updated
-     * @param unitOfWork
-     *            Unit of work for the current running thread
-     */
-    @CommandHandler
-    public void handleUpdateContact(final UpdateContactCommand command, UnitOfWork unitOfWork) {
-        logger.debug("Received a updateContactCommand for id : {}", command.getContactId());
-        Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
-
-        Contact contact = repository.load(command.getContactId());
-        Assert.notNull(contact.getIdentifier(), "Contact identifier cannot be null");
-
-        contact.change(command.getContactEntry());
-    }
-
-    /**
      * Creates a new contact based on the provided data.
      * 
      * @param command
@@ -100,6 +79,27 @@ public class ContactCommandHandler {
         Contact contact = repository.load(command.getContactId());
         logger.debug("Contact identifier: " + contact.getIdentifier());
         contact.delete();
+    }
+
+    /**
+     * Changes the provided data for the contact found based on the provided identifier
+     * <p/>
+     * An {@code AggregateNotFoundException} is thrown if the identifier does not represent a valid contact.
+     * 
+     * @param command
+     *            UpdateContactCommand that contains the identifier and the data to be updated
+     * @param unitOfWork
+     *            Unit of work for the current running thread
+     */
+    @CommandHandler
+    public void handleUpdateContact(final UpdateContactCommand command, UnitOfWork unitOfWork) {
+        logger.debug("Received a updateContactCommand for id : {}", command.getContactId());
+        Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
+
+        Contact contact = repository.load(command.getContactId());
+        Assert.notNull(contact.getIdentifier(), "Contact identifier cannot be null");
+
+        contact.change(command.getContactEntry());
     }
 
     /**

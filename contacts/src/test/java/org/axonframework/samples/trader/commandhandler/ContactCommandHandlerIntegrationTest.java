@@ -1,12 +1,11 @@
 package org.axonframework.samples.trader.commandhandler;
 
-import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
 import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.samples.trader.command.CreateContactCommand;
 import org.axonframework.samples.trader.command.RemoveContactCommand;
 import org.axonframework.samples.trader.command.UpdateContactCommand;
-import org.axonframework.samples.trader.commandhandler.ContactCommandHandler;
 import org.axonframework.samples.trader.domain.Contact;
 import org.axonframework.samples.trader.event.ContactCreatedEvent;
 import org.axonframework.samples.trader.event.ContactDeletedEvent;
@@ -18,8 +17,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import static org.mockito.Mockito.*;
 
 /**
  * @author Yorick Holkamp
@@ -37,18 +34,6 @@ public class ContactCommandHandlerIntegrationTest {
         ContactCommandHandler commandHandler = new ContactCommandHandler();
         commandHandler.setContactRepository(fixture.createGenericRepository(Contact.class));
         fixture.registerAnnotatedCommandHandler(commandHandler);
-    }
-
-    @Test
-    public void testUpdateContactCommandPipeline() {
-        AggregateIdentifier identifier = fixture.getAggregateIdentifier();
-        UpdateContactCommand givenCommand = new UpdateContactCommand(identifier, mockContactEntry);
-
-        when(mockContactEntry.getIdentifier()).thenReturn(identifier.asString());
-        ContactCreatedEvent createdEvent = new ContactCreatedEvent(identifier, mockContactEntry);
-
-        // Check if our event will be properly fired
-        fixture.given(createdEvent).when(givenCommand).expectEvents(new ContactUpdatedEvent(identifier, mockContactEntry));
     }
 
     @Test
@@ -70,6 +55,18 @@ public class ContactCommandHandlerIntegrationTest {
         ContactCreatedEvent createdEvent = new ContactCreatedEvent(identifier, mockContactEntry);
 
         fixture.given(createdEvent).when(removeCommand).expectEvents(new ContactDeletedEvent(identifier));
+    }
+
+    @Test
+    public void testUpdateContactCommandPipeline() {
+        AggregateIdentifier identifier = fixture.getAggregateIdentifier();
+        UpdateContactCommand givenCommand = new UpdateContactCommand(identifier, mockContactEntry);
+
+        when(mockContactEntry.getIdentifier()).thenReturn(identifier.asString());
+        ContactCreatedEvent createdEvent = new ContactCreatedEvent(identifier, mockContactEntry);
+
+        // Check if our event will be properly fired
+        fixture.given(createdEvent).when(givenCommand).expectEvents(new ContactUpdatedEvent(identifier, mockContactEntry));
     }
 
 }

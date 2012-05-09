@@ -17,6 +17,7 @@
 package org.axonframework.samples.trader.command;
 
 import javax.validation.constraints.NotNull;
+
 import org.axonframework.domain.AggregateIdentifier;
 import org.springframework.util.Assert;
 
@@ -32,7 +33,7 @@ public abstract class AbstractContactCommand {
     private AggregateIdentifier contactId;
 
     public AbstractContactCommand(AggregateIdentifier identifier) {
-        this.contactId = identifier;
+        contactId = identifier;
     }
 
     /**

@@ -1,16 +1,16 @@
 package org.axonframework.samples.trader.integration;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.axonframework.eventstore.EventStore;
 import org.axonframework.samples.trader.commandhandler.ContactCommandHandler;
 import org.axonframework.samples.trader.query.repositories.ContactQueryRepository;
-import org.junit.*;
-import org.junit.runner.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import static org.junit.Assert.*;
 
 /**
  * @author Allard Buijze Modified by Yorick

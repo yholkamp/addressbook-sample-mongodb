@@ -16,7 +16,7 @@ public abstract class AbstractContactCrudEvent extends AbstractContactEvent {
 
     public AbstractContactCrudEvent(AggregateIdentifier contactId, ContactEntry contact) {
         super(contactId);
-        this.contactEntry = contact;
+        contactEntry = contact;
     }
 
     /**

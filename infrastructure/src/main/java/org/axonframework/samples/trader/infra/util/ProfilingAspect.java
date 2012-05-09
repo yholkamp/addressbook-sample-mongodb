@@ -28,6 +28,10 @@ import org.springframework.util.StopWatch;
 // @Component
 public class ProfilingAspect {
 
+    @Pointcut("execution(public * org.axonframework.eventstore.mongo.MongoEventStore.*(..))")
+    public void methodsToBeProfiled() {
+    }
+
     @Around("methodsToBeProfiled()")
     public Object profile(ProceedingJoinPoint pjp) throws Throwable {
         StopWatch sw = new StopWatch(getClass().getSimpleName());
@@ -38,9 +42,5 @@ public class ProfilingAspect {
             sw.stop();
             System.out.println(sw.getLastTaskName() + sw.shortSummary());
         }
-    }
-
-    @Pointcut("execution(public * org.axonframework.eventstore.mongo.MongoEventStore.*(..))")
-    public void methodsToBeProfiled() {
     }
 }

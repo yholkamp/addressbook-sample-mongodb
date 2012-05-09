@@ -16,6 +16,8 @@
 
 package org.axonframework.samples.trader.webui.init;
 
+import java.util.Set;
+
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.eventstore.mongo.MongoEventStore;
@@ -24,8 +26,6 @@ import org.axonframework.samples.trader.command.CreateContactCommand;
 import org.axonframework.samples.trader.query.ContactEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Set;
 
 /**
  * <p>
@@ -47,40 +47,6 @@ public class DBInit {
     private org.springframework.data.mongodb.core.MongoTemplate mongoTemplate;
 
     private MongoTemplate systemAxonSagaMongo;
-
-    @Autowired
-    public DBInit(CommandBus commandBus, org.axonframework.eventstore.mongo.MongoTemplate systemMongo, MongoEventStore eventStore,
-                  org.springframework.data.mongodb.core.MongoTemplate mongoTemplate, MongoTemplate systemAxonSagaMongo) {
-        this.commandBus = commandBus;
-        this.systemAxonMongo = systemMongo;
-        this.eventStore = eventStore;
-        this.mongoTemplate = mongoTemplate;
-        this.systemAxonSagaMongo = systemAxonSagaMongo;
-    }
-
-    public String obtainInfo() {
-        Set<String> collectionNames = systemAxonMongo.database().getCollectionNames();
-        StringBuilder sb = new StringBuilder();
-        for (String name : collectionNames) {
-            sb.append(name);
-            sb.append("  ");
-        }
-        return sb.toString();
-    }
-
-    public void createItems() {
-        systemAxonMongo.domainEventCollection().drop();
-        systemAxonMongo.snapshotEventCollection().drop();
-
-        systemAxonSagaMongo.sagaCollection().drop();
-        systemAxonSagaMongo.associationsCollection().drop();
-
-        mongoTemplate.dropCollection(ContactEntry.class);
-
-        createContacts();
-
-        eventStore.ensureIndexes();
-    }
 
     final static String[] departmentNames = { "Corporate Development", "Human Resources", "Legal", "Environment", "Quality Assurance",
                                              "Research and Development", "Production", "Sales", "Marketing" };
@@ -105,6 +71,16 @@ public class DBInit {
                                      "P.O. Box 532, 3225 Lacus. Avenue", "736 Metus Street", "414-1417 Fringilla Street", "Ap #183-928 Scelerisque Road",
                                      "561-9262 Iaculis Avenue" };
 
+    @Autowired
+    public DBInit(CommandBus commandBus, org.axonframework.eventstore.mongo.MongoTemplate systemMongo, MongoEventStore eventStore,
+                  org.springframework.data.mongodb.core.MongoTemplate mongoTemplate, MongoTemplate systemAxonSagaMongo) {
+        this.commandBus = commandBus;
+        systemAxonMongo = systemMongo;
+        this.eventStore = eventStore;
+        this.mongoTemplate = mongoTemplate;
+        this.systemAxonSagaMongo = systemAxonSagaMongo;
+    }
+
     private void createContacts() {
         for (int i = 0; i < departmentNames.length; i++) {
             ContactEntry entry = new ContactEntry();
@@ -116,5 +92,29 @@ public class DBInit {
             CreateContactCommand createContact = new CreateContactCommand(new UUIDAggregateIdentifier(), entry);
             commandBus.dispatch(createContact);
         }
+    }
+
+    public void createItems() {
+        systemAxonMongo.domainEventCollection().drop();
+        systemAxonMongo.snapshotEventCollection().drop();
+
+        systemAxonSagaMongo.sagaCollection().drop();
+        systemAxonSagaMongo.associationsCollection().drop();
+
+        mongoTemplate.dropCollection(ContactEntry.class);
+
+        createContacts();
+
+        eventStore.ensureIndexes();
+    }
+
+    public String obtainInfo() {
+        Set<String> collectionNames = systemAxonMongo.database().getCollectionNames();
+        StringBuilder sb = new StringBuilder();
+        for (String name : collectionNames) {
+            sb.append(name);
+            sb.append("  ");
+        }
+        return sb.toString();
     }
 }

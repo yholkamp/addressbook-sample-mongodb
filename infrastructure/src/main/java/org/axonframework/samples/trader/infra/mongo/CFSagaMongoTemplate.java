@@ -16,10 +16,11 @@
 
 package org.axonframework.samples.trader.infra.mongo;
 
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
 import org.axonframework.saga.repository.mongo.MongoTemplate;
 import org.springframework.data.mongodb.MongoDbFactory;
+
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
 
 /**
  * @author Jettro Coenradie
@@ -37,11 +38,6 @@ public class CFSagaMongoTemplate implements MongoTemplate {
     }
 
     @Override
-    public DBCollection sagaCollection() {
-        return database().getCollection(SAGA_COLLECTION);
-    }
-
-    @Override
     public DBCollection associationsCollection() {
         return database().getCollection(SAGA_ASSOCIATIONS);
     }
@@ -49,5 +45,10 @@ public class CFSagaMongoTemplate implements MongoTemplate {
     @Override
     public DB database() {
         return mongoDbFactory.getDb();
+    }
+
+    @Override
+    public DBCollection sagaCollection() {
+        return database().getCollection(SAGA_COLLECTION);
     }
 }

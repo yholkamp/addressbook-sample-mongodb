@@ -3,6 +3,9 @@
  */
 package org.axonframework.samples.trader.query;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.samples.trader.event.ContactCreatedEvent;
@@ -13,7 +16,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import static org.mockito.Mockito.*;
 
 /**
  * @author Yorick Holkamp
@@ -45,16 +47,6 @@ public class ContactListenerTest {
     }
 
     @Test
-    public final void testHandleContactUpdatedEvent() {
-        AggregateIdentifier id = new UUIDAggregateIdentifier();
-        ContactUpdatedEvent event = new ContactUpdatedEvent(id, mockContactEntry);
-
-        contactListener.handle(event);
-
-        verify(mockContactRepository).save(mockContactEntry);
-    }
-
-    @Test
     public final void testHandleContactDeletedEvent() {
         AggregateIdentifier id = new UUIDAggregateIdentifier();
         ContactDeletedEvent event = new ContactDeletedEvent(id);
@@ -63,6 +55,16 @@ public class ContactListenerTest {
         contactListener.handle(event);
 
         verify(mockContactRepository).delete(mockContactEntry);
+    }
+
+    @Test
+    public final void testHandleContactUpdatedEvent() {
+        AggregateIdentifier id = new UUIDAggregateIdentifier();
+        ContactUpdatedEvent event = new ContactUpdatedEvent(id, mockContactEntry);
+
+        contactListener.handle(event);
+
+        verify(mockContactRepository).save(mockContactEntry);
     }
 
 }

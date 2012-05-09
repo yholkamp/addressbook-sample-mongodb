@@ -28,11 +28,11 @@ import org.axonframework.samples.trader.query.ContactEntry;
  */
 public class CreateContactCommand extends AbstractContactCrudCommand {
 
-    public CreateContactCommand(AggregateIdentifier identifier, ContactEntry contactEntry) {
-        super(identifier, contactEntry);
-    }
-
     public CreateContactCommand(AggregateIdentifier identifier) {
         super(identifier);
+    }
+
+    public CreateContactCommand(AggregateIdentifier identifier, ContactEntry contactEntry) {
+        super(identifier, contactEntry);
     }
 }

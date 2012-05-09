@@ -16,6 +16,8 @@
 
 package org.axonframework.samples.trader.domain;
 
+import javax.validation.constraints.NotNull;
+
 import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
@@ -26,8 +28,6 @@ import org.axonframework.samples.trader.query.ContactEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * <p>
@@ -44,6 +44,17 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
     private AggregateIdentifier identifier;
 
     /**
+     * Constructor for the Contact model, available for internal usage by Axon.
+     * 
+     * @param identifier
+     *            of the contact
+     */
+    public Contact(AggregateIdentifier identifier) {
+        super(identifier);
+        this.identifier = identifier;
+    }
+
+    /**
      * Creates a new event source-backed Contact from a given identifier and ContactEntry.
      * 
      * @param identifier
@@ -53,17 +64,6 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
         super(identifier);
         this.identifier = identifier;
         apply(new ContactCreatedEvent(identifier, contact));
-    }
-
-    /**
-     * Constructor for the Contact model, available for internal usage by Axon.
-     * 
-     * @param identifier
-     *            of the contact
-     */
-    public Contact(AggregateIdentifier identifier) {
-        super(identifier);
-        this.identifier = identifier;
     }
 
     /**
@@ -86,6 +86,16 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
     }
 
     /**
+     * Returns the identifier for this contact.
+     * 
+     * @return identifier
+     */
+    @Override
+    public AggregateIdentifier getIdentifier() {
+        return identifier;
+    }
+
+    /**
      * Logs the propagation of a ContactCreatedEvent.
      * 
      * @param event
@@ -103,14 +113,5 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
     @EventHandler
     protected void handleContactNameChangedEvent(ContactUpdatedEvent event) {
         logger.debug("Contact received a ContactUpdatedEvent, identifier: {}", identifier);
-    }
-
-    /**
-     * Returns the identifier for this contact.
-     * 
-     * @return identifier
-     */
-    public AggregateIdentifier getIdentifier() {
-        return this.identifier;
     }
 }

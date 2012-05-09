@@ -16,10 +16,11 @@
 
 package org.axonframework.samples.trader.infra.mongo;
 
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
 import org.axonframework.eventstore.mongo.MongoTemplate;
 import org.springframework.data.mongodb.MongoDbFactory;
+
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
 
 /**
  * CloudFoundry implementation of a MongoTemplate. We obtain the connection through the acquired factory.
@@ -39,6 +40,11 @@ public class CFMongoTemplate implements MongoTemplate {
     }
 
     @Override
+    public DB database() {
+        return mongoDbFactory.getDb();
+    }
+
+    @Override
     public DBCollection domainEventCollection() {
         return database().getCollection(DEFAULT_DOMAINEVENTS_COLLECTION);
     }
@@ -46,10 +52,5 @@ public class CFMongoTemplate implements MongoTemplate {
     @Override
     public DBCollection snapshotEventCollection() {
         return database().getCollection(DEFAULT_SNAPSHOTEVENTS_COLLECTION);
-    }
-
-    @Override
-    public DB database() {
-        return mongoDbFactory.getDb();
     }
 }
