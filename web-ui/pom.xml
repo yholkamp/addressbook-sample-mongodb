@@ -12,15 +12,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>axon-trader</artifactId>
-		<groupId>org.axonframework.samples</groupId>
-		<version>0.1-SNAPSHOT</version>
+		<artifactId>addressbook-cqrs</artifactId>
+		<groupId>nl.enovation</groupId>
+		<version>0.2-SNAPSHOT</version>
 	</parent>
 
-	<groupId>org.axonframework.samples</groupId>
-	<artifactId>axon-trader-webui</artifactId>
-	<version>0.1-SNAPSHOT</version>
-	<name>Axon Trader Sample - Web ui</name>
+	<groupId>nl.enovation</groupId>
+	<artifactId>addressbook-cqrs-webui</artifactId>
+	<version>0.2-SNAPSHOT</version>
+	<name>Addressbook CQRS Sample - Web ui</name>
 	<packaging>war</packaging>
 
 	<build>
@@ -41,13 +41,13 @@
 	<dependencies>
 		<!-- Internal dependencies -->
 		<dependency>
-			<groupId>org.axonframework.samples</groupId>
-			<artifactId>axon-trader-contacts</artifactId>
+			<groupId>nl.enovation</groupId>
+			<artifactId>addressbook-cqrs-contacts</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.axonframework.samples</groupId>
-			<artifactId>axon-trader-infrastructure</artifactId>
+			<groupId>nl.enovation</groupId>
+			<artifactId>addressbook-cqrs-infrastructure</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

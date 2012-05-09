@@ -18,12 +18,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.axonframework.samples</groupId>
-    <artifactId>axon-trader</artifactId>
+    <groupId>nl.enovation</groupId>
+    <artifactId>addressbook-cqrs</artifactId>
     <packaging>pom</packaging>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
 
-    <name>Axon Trader Sample Project</name>
+    <name>Addressbook CQRS Sample Project</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

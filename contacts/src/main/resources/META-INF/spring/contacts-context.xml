@@ -20,12 +20,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.axonframework.org/schema/core http://www.axonframework.org/schema/axon-core-1.2.xsd">
 
-    <bean class="org.axonframework.samples.trader.command.ContactCommandHandler">
+    <bean class="nl.enovation.addressbook.cqrs.command.ContactCommandHandler">
         <property name="repository" ref="contactRepository"/>
     </bean>
 
     <axon:event-sourcing-repository id="contactRepository"
-                                    aggregate-type="org.axonframework.samples.trader.domain.Contact"
+                                    aggregate-type="nl.enovation.addressbook.cqrs.domain.Contact"
                                     cache-ref="ehcache"
                                     event-bus="eventBus"
                                     event-store="eventStore">
