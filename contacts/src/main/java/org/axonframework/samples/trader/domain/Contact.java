@@ -33,7 +33,7 @@ import javax.validation.constraints.NotNull;
  * <p>The Aggregate root component of the sample application. This component handles all contact as well as address
  * domain events.</p>
  *
- * @author Allard Buijze
+ * @author Allard Buijze, Yorick Holkamp
  */
 public class Contact extends AbstractAnnotatedAggregateRoot {
 
@@ -42,25 +42,35 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
     @NotNull
     private AggregateIdentifier identifier;
 
+    /**
+     * Creates a new event source-backed Contact from a given identifier and ContactEntry.
+     * 
+     * @param identifier
+     * @param contact
+     */
     public Contact(AggregateIdentifier identifier, ContactEntry contact) {
         super(identifier);
         this.identifier = identifier;
         apply(new ContactCreatedEvent(identifier, contact));
     }
 
-    @SuppressWarnings({"UnusedDeclaration"})
+    /**
+     * Constructor for the Contact model, available for internal usage by Axon.
+     * 
+     * @param identifier of the contact
+     */
     public Contact(AggregateIdentifier identifier) {
         super(identifier);
         this.identifier = identifier;
     }
 
     /**
-     * Change the name of the contact
+     * Change the attributes to match the attributes of a given ContactEntry.
      *
-     * @param name String containing the new name
+     * @param contact to use as a source of attributes
      */
     public void change(ContactEntry contact) {
-        Assert.notNull(getIdentifier(), "identifier cannot be null");
+        Assert.notNull(getIdentifier(), "Identifier cannot be null");
         apply(new ContactUpdatedEvent(getIdentifier(), contact));
     }
 
@@ -68,20 +78,35 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
      * Deletes the contact from our domain
      */
     public void delete() {
-        Assert.notNull(getIdentifier(), "identifier cannot be null");
+        Assert.notNull(getIdentifier(), "Identifier cannot be null");
         apply(new ContactDeletedEvent(getIdentifier()));
     }
 
+    /**
+     * Logs the propagation of a ContactCreatedEvent.
+     * 
+     * @param event
+     */
     @EventHandler
     protected void handleContactCreatedEvent(ContactCreatedEvent event) {
         logger.debug("Contact received a ContactCreatedEvent, identifier: {}", identifier);
     }
 
+    /**
+     * Logs the propagation of a ContactUpdatedEvent.
+     * 
+     * @param event
+     */
     @EventHandler
     protected void handleContactNameChangedEvent(ContactUpdatedEvent event) {
         logger.debug("Contact received a ContactUpdatedEvent, identifier: {}", identifier);
     }
 
+    /**
+     * Returns the identifier for this contact.
+     * 
+     * @return identifier
+     */
     public AggregateIdentifier getIdentifier() {
         return this.identifier;
     }

@@ -9,6 +9,9 @@ import org.axonframework.samples.trader.query.ContactEntry;
  * @author Yorick Holkamp
  */
 public abstract class AbstractContactCrudEvent extends AbstractContactEvent {
+	/**
+	 * The ContactEntry relevant for the event
+	 */
     protected final ContactEntry contactEntry;
 
     public AbstractContactCrudEvent(AggregateIdentifier contactId, ContactEntry contact) {
@@ -16,6 +19,9 @@ public abstract class AbstractContactCrudEvent extends AbstractContactEvent {
         this.contactEntry = contact;
     }
 
+    /**
+     * @return ContactEntry the ContactEntry
+     */
     public ContactEntry getContactEntry() {
         return contactEntry;
     }

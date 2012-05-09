@@ -27,14 +27,13 @@ import javax.validation.constraints.Size;
  */
 public class ContactEntry {
 
-    @Id
-    private String identifier;
-    @NotNull
-    @Size(min = 1, max = 255)
+	@Id
+	private String identifier;
+	@Size(min = 1, max = 255)
 	private String firstName;
-    @Size(min = 2, max = 255)
+	@Size(min = 2, max = 255)
 	private String lastName;
-    @NotNull
+	@Size(min = 6, max = 14)
 	private String phoneNumber;
 	private String street;
 	private String city;
