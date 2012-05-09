@@ -65,6 +65,8 @@ public class ContactCommandHandler {
 
     /**
      * Creates a new contact based on the provided data.
+     * <p/>
+     * An {@code AggregateNotFoundException} is thrown if the identifier does not represent a valid contact.
      *
      * @param command    CreateContactCommand object that contains the needed data to create a new contact
      * @param unitOfWork Unit of work for the current running thread
@@ -79,6 +81,8 @@ public class ContactCommandHandler {
 
     /**
      * Removes the contact matching the contactId provided by the command.
+     * <p/>
+     * An {@code AggregateNotFoundException} is thrown if the identifier does not represent a valid contact.
      *
      * @param command    RemoveContactCommand containing the identifier of the contact to be removed
      * @param unitOfWork Unit of work for the current running thread
@@ -93,7 +97,7 @@ public class ContactCommandHandler {
     }
 
     /**
-     * Sets the contact domain event repository.
+     * Sets the contact domain event repository used for persistence.
      *
      * @param repository the contact repository
      */

@@ -39,7 +39,7 @@
     </bean>
 
     <beans profile="default">
-        <mongo:db-factory id="mongoDbFactory" dbname="addressbook-sample" host="127.0.0.1" port="27017"/>
+        <mongo:db-factory id="mongoDbFactory" dbname="addressbook-sample-test" host="127.0.0.1" port="27017"/>
     </beans>
 
 </beans>

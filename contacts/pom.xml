@@ -29,6 +29,12 @@
     <artifactId>axon-trader-contacts</artifactId>
 
     <dependencies>
+		<dependency>
+			<groupId>org.axonframework.samples</groupId>
+			<artifactId>axon-trader-infrastructure</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
