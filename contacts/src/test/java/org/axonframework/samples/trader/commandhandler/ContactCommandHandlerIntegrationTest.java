@@ -1,8 +1,11 @@
-package org.axonframework.samples.trader.command;
+package org.axonframework.samples.trader.commandhandler;
 
 import static org.junit.Assert.*;
 
 import org.axonframework.domain.AggregateIdentifier;
+import org.axonframework.samples.trader.command.CreateContactCommand;
+import org.axonframework.samples.trader.command.RemoveContactCommand;
+import org.axonframework.samples.trader.command.UpdateContactCommand;
 import org.axonframework.samples.trader.commandhandler.ContactCommandHandler;
 import org.axonframework.samples.trader.domain.Contact;
 import org.axonframework.samples.trader.event.ContactCreatedEvent;
