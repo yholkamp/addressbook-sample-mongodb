@@ -35,7 +35,7 @@ import org.springframework.util.Assert;
  * Command handler that can be used to create and update Contacts. It can also be used to register and remove addresses.
  * </p>
  * <p>
- * The provided repository is used to store the changes.
+ * The provided contactRepository is used to store the changes.
  * </p>
  * 
  * @author Allard Buijze
@@ -45,7 +45,7 @@ public class ContactCommandHandler {
 
     private final static Logger logger = LoggerFactory.getLogger(ContactCommandHandler.class);
 
-    private Repository<Contact> repository;
+    private Repository<Contact> contactRepository;
 
     /**
      * Creates a new contact based on the provided data.
@@ -60,7 +60,7 @@ public class ContactCommandHandler {
         logger.debug("Received a command for a new contact with id : {}", command.getContactId());
 
         Contact contact = new Contact(command.getContactId(), command.getContactEntry());
-        repository.add(contact);
+        contactRepository.add(contact);
     }
 
     /**
@@ -76,7 +76,7 @@ public class ContactCommandHandler {
         logger.debug("Received a remove command for contact with id : {}", command.getContactId());
         Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
 
-        Contact contact = repository.load(command.getContactId());
+        Contact contact = contactRepository.load(command.getContactId());
         logger.debug("Contact identifier: " + contact.getIdentifier());
         contact.delete();
     }
@@ -96,21 +96,21 @@ public class ContactCommandHandler {
         logger.debug("Received a updateContactCommand for id : {}", command.getContactId());
         Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
 
-        Contact contact = repository.load(command.getContactId());
+        Contact contact = contactRepository.load(command.getContactId());
         Assert.notNull(contact.getIdentifier(), "Contact identifier cannot be null");
 
         contact.change(command.getContactEntry());
     }
 
     /**
-     * Sets the contact domain event repository.
+     * Sets the contact domain event contactRepository.
      * 
      * @param repository
-     *            the contact repository
+     *            the contact contactRepository
      */
     @Autowired
     @Qualifier("contactRepository")
     public void setContactRepository(Repository<Contact> repository) {
-        this.repository = repository;
+        this.contactRepository = repository;
     }
 }
