@@ -16,10 +16,15 @@
 
 package nl.enovation.addressbook.cqrs.query;
 
+import java.util.List;
+
 import org.axonframework.eventhandling.annotation.EventHandler;
 import nl.enovation.addressbook.cqrs.event.ContactCreatedEvent;
-import nl.enovation.addressbook.cqrs.event.ContactDeletedEvent;
+import nl.enovation.addressbook.cqrs.event.ContactRemovedEvent;
 import nl.enovation.addressbook.cqrs.event.ContactUpdatedEvent;
+import nl.enovation.addressbook.cqrs.event.PhoneNumberAddedEvent;
+import nl.enovation.addressbook.cqrs.event.PhoneNumberRemovedEvent;
+import nl.enovation.addressbook.cqrs.pojo.PhoneNumber;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +51,7 @@ public class ContactListener {
     }
 
     @EventHandler
-    public void handle(ContactDeletedEvent event) {
+    public void handle(ContactRemovedEvent event) {
         logger.debug("Received a ContactRemovedEvent for a contact with id : {}", event.getContactId());
 
         ContactEntry contactEntry = contactRepository.findOne(event.getContactId().asString());
@@ -56,12 +61,36 @@ public class ContactListener {
 
     @EventHandler
     public void handle(ContactUpdatedEvent event) {
-        logger.debug("Received a contactNameChangedEvent for a contact id : {}", event.getContactId());
+        logger.debug("Received a ContactUpdatedEvent for a contact id : {}", event.getContactId());
 
         ContactEntry contactEntry = event.getContactEntry();
         contactEntry.setIdentifier(event.getContactId().asString());
 
         contactRepository.save(contactEntry);
+    }
+
+    @EventHandler
+    public void handle(PhoneNumberAddedEvent event) {
+        logger.debug("Received a PhoneNumberAddedEvent for a contact id : {}", event.getContactId());
+
+        // TODO: Implement a MongoDB-friendly way to add the phone number without having to load & save the entire model
+        ContactEntry contact = contactRepository.findOne(event.getContactId().asString());
+        List<PhoneNumber> phoneNumbers = contact.getPhoneNumbers();
+        phoneNumbers.add(event.getPhoneNumber());
+        contact.setPhoneNumbers(phoneNumbers);
+        contactRepository.save(contact);
+    }
+
+    @EventHandler
+    public void handle(PhoneNumberRemovedEvent event) {
+        logger.debug("Received a PhoneNumberRemovedEvent for a contact id : {}", event.getContactId());
+
+        // TODO: Implement a MongoDB-friendly way to remove the phone number without having to load & save the entire model
+        ContactEntry contact = contactRepository.findOne(event.getContactId().asString());
+        List<PhoneNumber> phoneNumbers = contact.getPhoneNumbers();
+        phoneNumbers.remove(event.getPhoneNumber());
+        contact.setPhoneNumbers(phoneNumbers);
+        contactRepository.save(contact);
     }
 
     @Autowired

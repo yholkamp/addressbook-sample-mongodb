@@ -16,7 +16,11 @@
 
 package nl.enovation.addressbook.cqrs.query;
 
+import java.util.List;
+
 import javax.validation.constraints.Size;
+
+import nl.enovation.addressbook.cqrs.pojo.PhoneNumber;
 
 import org.springframework.data.annotation.Id;
 
@@ -34,9 +38,6 @@ public class ContactEntry {
     @Size(min = 2, max = 255)
     private String lastName;
 
-    @Size(min = 6, max = 14)
-    private String phoneNumber;
-
     private String street;
 
     private String city;
@@ -44,6 +45,8 @@ public class ContactEntry {
     private String zipCode;
 
     private String department;
+
+    private List<PhoneNumber> phoneNumbers;
 
     public String getCity() {
         return city;
@@ -69,8 +72,8 @@ public class ContactEntry {
         return firstName;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public List<PhoneNumber> getPhoneNumbers() {
+        return phoneNumbers;
     }
 
     public String getStreet() {
@@ -101,8 +104,8 @@ public class ContactEntry {
         this.lastName = lastName;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
+        this.phoneNumbers = phoneNumbers;
     }
 
     public void setStreet(String street) {

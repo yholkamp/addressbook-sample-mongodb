@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012. Axon Framework
+ * Copyright (c) 2010-2011. Axon Framework
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,30 @@
  * limitations under the License.
  */
 
-package nl.enovation.addressbook.cqrs.query.repositories;
+package nl.enovation.addressbook.cqrs.event;
+
+import org.axonframework.domain.AggregateIdentifier;
 
 import nl.enovation.addressbook.cqrs.pojo.PhoneNumber;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 
-import org.axonframework.domain.AggregateIdentifier;
-import org.springframework.data.repository.PagingAndSortingRepository;
-
 /**
- * @author Jettro Coenradie, Yorick Holkamp
+ * @author Yorick Holkamp
  */
-public interface ContactQueryRepository extends PagingAndSortingRepository<ContactEntry, String> {
+public class PhoneNumberAddedEvent extends AbstractContactEvent {
+    private PhoneNumber phoneNumber;
+
+    public PhoneNumberAddedEvent(AggregateIdentifier contactId, PhoneNumber phoneNumber) {
+        super(contactId);
+        this.setPhoneNumber(phoneNumber);
+    }
+
+    public PhoneNumber getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(PhoneNumber phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
 }

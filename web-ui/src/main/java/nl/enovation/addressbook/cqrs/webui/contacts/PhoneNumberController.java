@@ -18,23 +18,17 @@ package nl.enovation.addressbook.cqrs.webui.contacts;
 
 import javax.validation.Valid;
 
-import org.axonframework.commandhandling.CommandBus;
-import org.axonframework.domain.AggregateIdentifier;
-import org.axonframework.domain.StringAggregateIdentifier;
-import org.axonframework.domain.UUIDAggregateIdentifier;
-import nl.enovation.addressbook.cqrs.command.AbstractContactCrudCommand;
-import nl.enovation.addressbook.cqrs.command.CreateContactCommand;
-import nl.enovation.addressbook.cqrs.command.RemoveContactCommand;
-import nl.enovation.addressbook.cqrs.command.UpdateContactCommand;
+import nl.enovation.addressbook.cqrs.pojo.PhoneNumber;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
+
+import org.axonframework.commandhandling.CommandBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,30 +54,35 @@ public class PhoneNumberController {
     @RequestMapping(value = "{contactIdentifier}/phonenumbers/{identifier}/delete", method = RequestMethod.POST)
     public String formDelete(@PathVariable String contactIdentifier, @PathVariable String identifier, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-
-            return "redirect:/contacts/"+contactIdentifier;
+            return "redirect:/contacts/" + contactIdentifier;
         }
+        
+        
+
         return "phonenumbers/delete";
     }
 
     @RequestMapping(value = "{contactIdentifier}/phonenumbers/{identifier}/delete", method = RequestMethod.GET)
-    public String formDelete(@PathVariable String contactIdentifier, @PathVariable String identifier,  Model model) {
+    public String formDelete(@PathVariable String contactIdentifier, @PathVariable String identifier, Model model) {
+        ContactEntry contactEntry = contactRepository.findOne(contactIdentifier);
+        model.addAttribute("contact", contactEntry);
+
         return "phonenumbers/delete";
     }
 
     @RequestMapping(value = "{contactIdentifier}/phonenumbers/new", method = RequestMethod.GET)
     public String formNew(@PathVariable String contactIdentifier, Model model) {
-        ContactEntry attributeValue = new ContactEntry();
-        model.addAttribute("contact", attributeValue);
+        ContactEntry contactEntry = contactRepository.findOne(contactIdentifier);
+        model.addAttribute("contact", contactEntry);
         return "phonenumbers/new";
     }
 
     @RequestMapping(value = "{contactIdentifier}/phonenumbers/new", method = RequestMethod.POST)
-    public String formNewSubmit(@PathVariable String contactIdentifier, @Valid ContactEntry contact, BindingResult bindingResult) {
+    public String formNewSubmit(@PathVariable String contactIdentifier, @Valid PhoneNumber phoneNumber, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "phonenumbers/new";
         }
 
-        return "redirect:/contacts/"+contactIdentifier;
+        return "redirect:/contacts/" + contactIdentifier;
     }
 }

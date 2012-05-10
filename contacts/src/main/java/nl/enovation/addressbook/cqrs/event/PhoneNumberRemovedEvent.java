@@ -18,13 +18,26 @@ package nl.enovation.addressbook.cqrs.event;
 
 import org.axonframework.domain.AggregateIdentifier;
 
-/**
- * @author Allard Buijze
- */
-public class ContactDeletedEvent extends AbstractContactEvent {
+import nl.enovation.addressbook.cqrs.pojo.PhoneNumber;
+import nl.enovation.addressbook.cqrs.query.ContactEntry;
 
-    public ContactDeletedEvent(AggregateIdentifier contactId) {
+/**
+ * @author Yorick Holkamp
+ */
+public class PhoneNumberRemovedEvent extends AbstractContactEvent {
+    private PhoneNumber phoneNumber;
+
+    public PhoneNumberRemovedEvent(AggregateIdentifier contactId, PhoneNumber phoneNumber) {
         super(contactId);
+        this.setPhoneNumber(phoneNumber);
+    }
+
+    public PhoneNumber getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(PhoneNumber phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
 }

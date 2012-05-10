@@ -19,7 +19,9 @@ package nl.enovation.addressbook.cqrs.commandhandler;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import nl.enovation.addressbook.cqrs.command.CreateContactCommand;
+import nl.enovation.addressbook.cqrs.command.CreatePhoneNumberCommand;
 import nl.enovation.addressbook.cqrs.command.RemoveContactCommand;
+import nl.enovation.addressbook.cqrs.command.RemovePhoneNumberCommand;
 import nl.enovation.addressbook.cqrs.command.UpdateContactCommand;
 import nl.enovation.addressbook.cqrs.domain.Contact;
 import org.axonframework.unitofwork.UnitOfWork;
@@ -101,7 +103,50 @@ public class ContactCommandHandler {
 
         contact.change(command.getContactEntry());
     }
+    
+    /**
+     * Adds a new phone number to the list of phone numbers of the provided contact.
+     * <p/>
+     * An {@code AggregateNotFoundException} is thrown if the identifier does not represent a valid contact.
+     * 
+     * @param command
+     *            UpdateContactCommand that contains the identifier and the data to be updated
+     * @param unitOfWork
+     *            Unit of work for the current running thread
+     */
+    @CommandHandler
+    public void handleCreatePhoneNumber(final CreatePhoneNumberCommand command, UnitOfWork unitOfWork) {
+        logger.debug("Received a updateContactCommand for id : {}", command.getContactId());
+        Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
 
+        Contact contact = contactRepository.load(command.getContactId());
+        Assert.notNull(contact.getIdentifier(), "Contact identifier cannot be null");
+
+        contact.addPhoneNumber(command.getPhoneNumber());
+    }
+    
+    /**
+     * Removes a phone number from the list of phone numbers of the provided contact.
+     * <p/>
+     * An {@code AggregateNotFoundException} is thrown if the identifier does not represent a valid contact.
+     * 
+     * @param command
+     *            UpdateContactCommand that contains the identifier and the data to be updated
+     * @param unitOfWork
+     *            Unit of work for the current running thread
+     */
+    @CommandHandler
+    public void handleRemovePhoneNumber(final RemovePhoneNumberCommand command, UnitOfWork unitOfWork) {
+        logger.debug("Received a updateContactCommand for id : {}", command.getContactId());
+        Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
+
+        Contact contact = contactRepository.load(command.getContactId());
+        Assert.notNull(contact.getIdentifier(), "Contact identifier cannot be null");
+
+        contact.removePhoneNumber(command.getPhoneNumber());
+    }
+    
+    
     /**
      * Sets the contact domain event contactRepository.
      * 
