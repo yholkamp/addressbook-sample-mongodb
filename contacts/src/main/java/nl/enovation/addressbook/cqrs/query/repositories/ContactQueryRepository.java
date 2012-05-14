@@ -16,12 +16,18 @@
 
 package nl.enovation.addressbook.cqrs.query.repositories;
 
+import java.util.List;
+
+import nl.enovation.addressbook.cqrs.domain.Contact;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
+
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * @author Jettro Coenradie
  */
-public interface ContactQueryRepository extends PagingAndSortingRepository<ContactEntry, String> {
+public interface ContactQueryRepository extends PagingAndSortingRepository<ContactEntry, String>, ContactsRepositoryCustom{
+//    , MongoRepository<ContactEntry, String> 
+    public List<Contact> searchForContacts(String searchValue);
 
 }

@@ -16,6 +16,8 @@
 
 package nl.enovation.addressbook.cqrs.webui.contacts;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.axonframework.commandhandling.CommandBus;
@@ -28,9 +30,14 @@ import nl.enovation.addressbook.cqrs.command.RemoveContactCommand;
 import nl.enovation.addressbook.cqrs.command.UpdateContactCommand;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
+import nl.enovation.addressbook.cqrs.domain.Contact;
+import nl.enovation.addressbook.cqrs.webui.contacts.SearchForm;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -134,7 +141,28 @@ public class ContactsController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
+        SearchForm searchForm = new SearchForm();
         model.addAttribute("contacts", contactRepository.findAll());
+        model.addAttribute("searchForm", searchForm);
         return "contacts/list";
     }
+    
+    @RequestMapping(value = "search", method = RequestMethod.POST)
+    public String search(@ModelAttribute("searchForm") SearchForm value, Model model, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "contacts/list";
+        }
+//        contactRepository.findAll();
+//        List<Contact> listSearchContacts = contactsFactory.searchForContacts(value.getSearchValue());
+//        List<Contact> listSearchContacts = contactRepository.findAll();
+//        AggregateIdentifier identifier = new StringAggregateIdentifier(contact.getIdentifier());
+//        AbstractContactCrudCommand command = new UpdateContactCommand(identifier, contact);
+//        List<Contact> contacts = contactRepository.findByLastName(value.getSearchValue());
+        
+        System.out.println("VALUE" + value);
+//        contactRepository.
+//        logger.debug("Dispatching command with name : {}", command.toString());
+//        model.addAttribute("contacts", contacts);
+        return "contacts/list";
+    }    
 }
