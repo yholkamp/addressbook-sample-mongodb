@@ -42,6 +42,10 @@
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="validationMessageSource" ref="messageSource"/>
     </bean>
+    
+    <!-- bean id="test" class="nl.enovation.addressbook.cqrs.webui.init.MongoController">
+    	<constructor-arg ref=""></constructor-arg>
+    </bean -->
 
     <bean id="messageSource"
           class="org.springframework.context.support.ReloadableResourceBundleMessageSource">

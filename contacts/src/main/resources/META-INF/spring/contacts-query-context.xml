@@ -22,7 +22,9 @@
 
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 
-    <mongo:repositories base-package="nl.enovation.addressbook.cqrs.query.repositories"
-                        mongo-template-ref="mongoSpringTemplate"/>
-
+<!--     <mongo:repositories base-package="nl.enovation.addressbook.cqrs.query.repositories"
+                        mongo-template-ref="mongoSpringTemplate"/> -->
+    <mongo:repositories base-package="nl.enovation.addressbook.cqrs.query.repositories" mongo-template-ref="mongoTemplate">
+    	<mongo:repository id="ContactQueryRepository"/>
+	</mongo:repositories>
 </beans>

@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import nl.enovation.addressbook.cqrs.infra.mongo.CFMongoTemplate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Controller;
@@ -42,7 +44,7 @@ public class MongoController {
 
     private DBInit dbInit;
 
-    private org.springframework.data.mongodb.core.MongoTemplate springTemplate;
+    private MongoTemplate springTemplate;
 
     @Autowired
     public MongoController(DBInit dbInit, MongoTemplate springTemplate) {

@@ -16,7 +16,6 @@
 
 package nl.enovation.addressbook.cqrs.infra.mongo;
 
-import org.axonframework.eventstore.mongo.MongoTemplate;
 import org.springframework.data.mongodb.MongoDbFactory;
 
 import com.mongodb.DB;
@@ -27,21 +26,22 @@ import com.mongodb.DBCollection;
  * 
  * @author Jettro Coenradie
  */
-public class CFMongoTemplate implements MongoTemplate {
+public class CFMongoTemplate extends org.springframework.data.mongodb.core.MongoTemplate  implements  org.axonframework.eventstore.mongo.MongoTemplate {
 
     private static final String DEFAULT_DOMAINEVENTS_COLLECTION = "domainevents";
 
     private static final String DEFAULT_SNAPSHOTEVENTS_COLLECTION = "snapshotevents";
 
-    private MongoDbFactory mongoDbFactory;
+ //   private MongoDbFactory mongoDbFactory;
 
     public CFMongoTemplate(MongoDbFactory mongoDbFactory) {
-        this.mongoDbFactory = mongoDbFactory;
+        super(mongoDbFactory);
+     //   this.mongoDbFactory = mongoDbFactory;
     }
 
     @Override
     public DB database() {
-        return mongoDbFactory.getDb();
+        return /*mongoDbFactory*/super.getDb();
     }
 
     @Override

@@ -22,9 +22,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class ContactIntegrationTest {
 
     @Autowired
-    private ContactCommandHandler commandHandler;
-
-    @Autowired
     private EventStore eventStore;
 
     @Autowired
@@ -35,7 +32,6 @@ public class ContactIntegrationTest {
 
     @Test(timeout = 10000)
     public void testApplicationContext() throws InterruptedException {
-        assertNotNull(commandHandler);
         assertNotNull(eventStore);
         assertNotNull(taskExecutor);
         assertNotNull(contactQueryRepository);

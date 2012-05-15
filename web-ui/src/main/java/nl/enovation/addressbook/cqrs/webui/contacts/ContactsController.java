@@ -148,18 +148,22 @@ public class ContactsController {
     }
     
     @RequestMapping(value = "search", method = RequestMethod.POST)
-    public String search(@ModelAttribute("searchForm") SearchForm value, Model model, BindingResult bindingResult) {
+    public String search(@ModelAttribute("searchForm") SearchForm searchForm, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "contacts/list";
         }
+        System.out.println("BEFORE CALL");
+//        contactRepository.findByFirstNameOrLastNameLike(searchForm.getSearchValue());
+        System.out.println("AFTER CALL");
 //        contactRepository.findAll();
 //        List<Contact> listSearchContacts = contactsFactory.searchForContacts(value.getSearchValue());
 //        List<Contact> listSearchContacts = contactRepository.findAll();
+        
 //        AggregateIdentifier identifier = new StringAggregateIdentifier(contact.getIdentifier());
 //        AbstractContactCrudCommand command = new UpdateContactCommand(identifier, contact);
 //        List<Contact> contacts = contactRepository.findByLastName(value.getSearchValue());
         
-        System.out.println("VALUE" + value);
+//        System.out.println("VALUE" + searchForm.getSearchValue());
 //        contactRepository.
 //        logger.debug("Dispatching command with name : {}", command.toString());
 //        model.addAttribute("contacts", contacts);
