@@ -26,8 +26,9 @@ import nl.enovation.addressbook.cqrs.event.ContactRemovedEvent;
 import nl.enovation.addressbook.cqrs.event.ContactUpdatedEvent;
 import nl.enovation.addressbook.cqrs.event.PhoneNumberAddedEvent;
 import nl.enovation.addressbook.cqrs.event.PhoneNumberRemovedEvent;
-import nl.enovation.addressbook.cqrs.pojo.PhoneNumber;
+import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
@@ -85,17 +86,17 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
      * 
      * @param phoneNumber
      */
-    public void addPhoneNumber(PhoneNumber phoneNumber) {
+    public void addPhoneNumber(PhoneNumberEntry phoneNumber) {
         Assert.notNull(getIdentifier(), "Identifier cannot be null");
         
         apply(new PhoneNumberAddedEvent(getIdentifier(), phoneNumber));
     }
     
-    public void removePhoneNumber(PhoneNumber phoneNumber) {
+    public void removePhoneNumber(String phoneNumberId) {
         Assert.notNull(getIdentifier(), "Identifier cannot be null");
-        Assert.notNull(phoneNumber, "phoneNumber cannot be null");
+        Assert.notNull(phoneNumberId, "phoneNumber cannot be null");
         
-        apply(new PhoneNumberRemovedEvent(getIdentifier(), phoneNumber));        
+        apply(new PhoneNumberRemovedEvent(getIdentifier(), phoneNumberId));        
     }
 
     /**

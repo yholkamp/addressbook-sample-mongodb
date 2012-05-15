@@ -143,7 +143,7 @@ public class ContactCommandHandler {
         Contact contact = contactRepository.load(command.getContactId());
         Assert.notNull(contact.getIdentifier(), "Contact identifier cannot be null");
 
-        contact.removePhoneNumber(command.getPhoneNumber());
+        contact.removePhoneNumber(command.getPhoneNumberId());
     }
     
     

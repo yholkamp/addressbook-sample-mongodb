@@ -18,17 +18,22 @@ package nl.enovation.addressbook.cqrs.webui.contacts;
 
 import javax.validation.Valid;
 
-import nl.enovation.addressbook.cqrs.pojo.PhoneNumber;
+import nl.enovation.addressbook.cqrs.command.CreatePhoneNumberCommand;
+import nl.enovation.addressbook.cqrs.command.RemovePhoneNumberCommand;
+import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
 
 import org.axonframework.commandhandling.CommandBus;
+import org.axonframework.domain.StringAggregateIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,12 +57,14 @@ public class PhoneNumberController {
     }
 
     @RequestMapping(value = "{contactIdentifier}/phonenumbers/{identifier}/delete", method = RequestMethod.POST)
-    public String formDelete(@PathVariable String contactIdentifier, @PathVariable String identifier, BindingResult bindingResult) {
+    public String formDelete(@PathVariable String contactIdentifier, @ModelAttribute("phoneNumber") @Valid PhoneNumberEntry phoneNumber, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
+            RemovePhoneNumberCommand command = new RemovePhoneNumberCommand(new StringAggregateIdentifier(contactIdentifier), phoneNumber.getPhoneNumber());
+            logger.debug("Dispatching command with name : {}", command.toString());
+            commandBus.dispatch(command);
+
             return "redirect:/contacts/" + contactIdentifier;
         }
-        
-        
 
         return "phonenumbers/delete";
     }
@@ -66,6 +73,7 @@ public class PhoneNumberController {
     public String formDelete(@PathVariable String contactIdentifier, @PathVariable String identifier, Model model) {
         ContactEntry contactEntry = contactRepository.findOne(contactIdentifier);
         model.addAttribute("contact", contactEntry);
+        model.addAttribute("phoneNumber", contactEntry.getPhoneNumberEntry(identifier));
 
         return "phonenumbers/delete";
     }
@@ -74,14 +82,21 @@ public class PhoneNumberController {
     public String formNew(@PathVariable String contactIdentifier, Model model) {
         ContactEntry contactEntry = contactRepository.findOne(contactIdentifier);
         model.addAttribute("contact", contactEntry);
+        model.addAttribute("phoneNumberEntry", new PhoneNumberEntry());
         return "phonenumbers/new";
     }
 
     @RequestMapping(value = "{contactIdentifier}/phonenumbers/new", method = RequestMethod.POST)
-    public String formNewSubmit(@PathVariable String contactIdentifier, @Valid PhoneNumber phoneNumber, BindingResult bindingResult) {
+    public String formNewSubmit(@PathVariable String contactIdentifier, @Valid PhoneNumberEntry phoneNumber, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "phonenumbers/new";
         }
+        
+        Assert.notNull(contactIdentifier);
+        
+        CreatePhoneNumberCommand command = new CreatePhoneNumberCommand(new StringAggregateIdentifier(contactIdentifier), phoneNumber);
+        logger.debug("Dispatching command with name : {}", command.toString());
+        commandBus.dispatch(command);
 
         return "redirect:/contacts/" + contactIdentifier;
     }

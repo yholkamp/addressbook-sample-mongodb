@@ -12,8 +12,8 @@
     </ul>
 </content>
 
-<form:form commandName="phonenumber">
+<form:form commandName="phoneNumber">
     <form:errors path="*" cssClass="errorBox"/>
-    <form:hidden path="identifier"/>
+    <form:hidden path="phoneNumber"/>
     <input type="submit" name="submit" value="Delete"/>
 </form:form>

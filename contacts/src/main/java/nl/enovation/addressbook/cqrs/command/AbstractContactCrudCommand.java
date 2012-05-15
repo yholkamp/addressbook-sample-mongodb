@@ -1,6 +1,7 @@
 package nl.enovation.addressbook.cqrs.command;
 
 import org.axonframework.domain.AggregateIdentifier;
+
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 
 /**

@@ -14,6 +14,7 @@ import nl.enovation.addressbook.cqrs.command.RemoveContactCommand;
 import nl.enovation.addressbook.cqrs.command.UpdateContactCommand;
 import nl.enovation.addressbook.cqrs.domain.Contact;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
+
 import org.axonframework.unitofwork.UnitOfWork;
 import org.junit.Before;
 import org.junit.Test;

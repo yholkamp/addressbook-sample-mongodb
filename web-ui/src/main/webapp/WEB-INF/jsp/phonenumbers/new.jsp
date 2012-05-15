@@ -14,21 +14,23 @@
 </ul>
 </content>
 
-<form:form commandName="phonenumber" cssClass="form-horizontal">
+<form:form commandName="phoneNumberEntry" cssClass="form-horizontal">
 	<fieldset>
 		<div class="control-group">
-			<form:label path="phonenumber" cssClass="control-label">Phone number</form:label>
+			<form:label path="phoneNumber" cssClass="control-label">Phone number</form:label>
 			<div class="controls">
-				<form:input path="phonenumber" />
-				<form:errors path="phonenumber" cssClass="error-inline" />
+				<form:input path="phoneNumber" />
+				<form:errors path="phoneNumber" cssClass="error-inline" />
 			</div>
 		</div>
-		
+
 		<div class="control-group">
-			<form:label path="type" cssClass="control-label">Phone number type</form:label>
+			<form:label path="phoneNumberType" cssClass="control-label">Phone number type</form:label>
 			<div class="controls">
-				<form:input path="type" />
-				<form:errors path="type" cssClass="error-inline" />
+				<form:select path="phoneNumberType">
+					<form:option value="-" label="-- Please Select" />
+					<form:options items="${enumValues}" />
+				</form:select>
 			</div>
 		</div>
 

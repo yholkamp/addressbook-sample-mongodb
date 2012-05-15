@@ -17,7 +17,6 @@
     <tr>
         <th>First Name</th>
         <th>Last Name</th>
-        <th>Phone Number</th>
         <th>City</th>
         <th>Department</th>
         <th>Actions</th>
@@ -28,7 +27,6 @@
         <tr>
             <td><c:out value='${contact.firstName}'/></td>
             <td><c:out value='${contact.lastName}'/></td>
-            <td><c:out value='${contact.phoneNumber}'/></td>
             <td><c:out value='${contact.city}'/></td>
             <td><c:out value='${contact.department}'/></td>
             <td>

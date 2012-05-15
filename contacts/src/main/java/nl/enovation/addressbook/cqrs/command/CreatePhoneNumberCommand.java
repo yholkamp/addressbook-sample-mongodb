@@ -1,6 +1,6 @@
 package nl.enovation.addressbook.cqrs.command;
 
-import nl.enovation.addressbook.cqrs.pojo.PhoneNumber;
+import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
 
 import org.axonframework.domain.AggregateIdentifier;
 
@@ -11,18 +11,18 @@ import org.axonframework.domain.AggregateIdentifier;
  */
 public class CreatePhoneNumberCommand extends AbstractContactCommand  {
 
-    private PhoneNumber phoneNumber;
+    private PhoneNumberEntry phoneNumber;
 
     public CreatePhoneNumberCommand(AggregateIdentifier contactIdentifier) {
         super(contactIdentifier);
     }
     
-    public CreatePhoneNumberCommand(AggregateIdentifier contactIdentifier, PhoneNumber phoneNumber) {
+    public CreatePhoneNumberCommand(AggregateIdentifier contactIdentifier, PhoneNumberEntry phoneNumber) {
         super(contactIdentifier);
         this.phoneNumber = phoneNumber;
     }
     
-    public PhoneNumber getPhoneNumber() {
+    public PhoneNumberEntry getPhoneNumber() {
         return phoneNumber;
     }
     

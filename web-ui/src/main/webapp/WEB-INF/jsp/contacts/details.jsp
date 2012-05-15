@@ -61,12 +61,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${phoneNumbers}" var="phoneNumber">
+				<c:forEach items="${contact.phoneNumbers}" var="phoneNumber">
 					<tr>
-						<td><c:out value='${phoneNumber.number}' /></td>
-						<td><c:out value='${phoneNumber.type}' /></td>
+						<td><c:out value='${phoneNumber.phoneNumber}' /></td>
+						<td><c:out value='${phoneNumber.phoneNumberType}' /></td>
 						<td><a
-							href="${ctx}/contacts/${identifier}/phonenumbers/${phoneNumber.identifier}/delete">Remove</a>
+							href="${ctx}/contacts/${identifier}/phonenumbers/${phoneNumber.phoneNumber}/delete">Remove</a>
 						</td>
 					</tr>
 				</c:forEach>

@@ -1,28 +1,28 @@
 package nl.enovation.addressbook.cqrs.command;
 
-import nl.enovation.addressbook.cqrs.pojo.PhoneNumber;
+import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
 
 import org.axonframework.domain.AggregateIdentifier;
 
 public class RemovePhoneNumberCommand extends AbstractContactCommand {
 
-    private PhoneNumber phoneNumber;
+    private String phoneNumberId;
 
-    public RemovePhoneNumberCommand(AggregateIdentifier identifier) {
-        super(identifier);
+    public RemovePhoneNumberCommand(AggregateIdentifier contactIdentifier) {
+        super(contactIdentifier);
     }
 
-    public RemovePhoneNumberCommand(AggregateIdentifier identifier, PhoneNumber phoneNumber) {
-        super(identifier);
-        this.phoneNumber = phoneNumber;
+    public RemovePhoneNumberCommand(AggregateIdentifier contactIdentifier, String identifier) {
+        super(contactIdentifier);
+        this.phoneNumberId = identifier;
     }
 
-    public PhoneNumber getPhoneNumber() {
-        return phoneNumber;
+    public String getPhoneNumberId() {
+        return phoneNumberId;
     }
 
-    public void setPhoneNumber(PhoneNumber phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhoneNumber(String identifier) {
+        this.phoneNumberId = identifier;
     }
 
 }

@@ -17,8 +17,9 @@ import nl.enovation.addressbook.cqrs.event.ContactRemovedEvent;
 import nl.enovation.addressbook.cqrs.event.ContactUpdatedEvent;
 import nl.enovation.addressbook.cqrs.event.PhoneNumberAddedEvent;
 import nl.enovation.addressbook.cqrs.event.PhoneNumberRemovedEvent;
-import nl.enovation.addressbook.cqrs.pojo.PhoneNumber;
+import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
+
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;
@@ -34,7 +35,7 @@ public class ContactCommandHandlerIntegrationTest {
     @Mock
     private ContactEntry mockContactEntry;
     @Mock
-    private PhoneNumber mockPhoneNumber;
+    private PhoneNumberEntry mockPhoneNumber;
 
     private FixtureConfiguration fixture;
 
@@ -96,18 +97,17 @@ public class ContactCommandHandlerIntegrationTest {
     public void testRemovePhoneNumberCommandPipeline() {
         // Set up the identifiers for our mocks
         AggregateIdentifier identifier = fixture.getAggregateIdentifier();
-        AggregateIdentifier phoneIdentifier = fixture.getAggregateIdentifier();
         when(mockContactEntry.getIdentifier()).thenReturn(identifier.asString());
-        //when(mockPhoneNumber.getIdentifier()).thenReturn(phoneIdentifier.asString());
+        when(mockPhoneNumber.getPhoneNumber()).thenReturn("12345678");
         
         // Build two pre-existing events
         ContactCreatedEvent createdEvent = new ContactCreatedEvent(identifier, mockContactEntry);
         PhoneNumberAddedEvent phoneNumberCreatedEvent = new PhoneNumberAddedEvent(identifier, mockPhoneNumber);
         
-        RemovePhoneNumberCommand givenCommand = new RemovePhoneNumberCommand(identifier, mockPhoneNumber);
+        RemovePhoneNumberCommand givenCommand = new RemovePhoneNumberCommand(identifier, "12345678");
 
         // Check if our expected event will be properly fired
-        fixture.given(createdEvent, phoneNumberCreatedEvent).when(givenCommand).expectEvents(new PhoneNumberRemovedEvent(identifier, mockPhoneNumber));
+        fixture.given(createdEvent, phoneNumberCreatedEvent).when(givenCommand).expectEvents(new PhoneNumberRemovedEvent(identifier, "12345678"));
     }
 
 }

@@ -6,8 +6,11 @@ package nl.enovation.addressbook.cqrs.query;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import nl.enovation.addressbook.cqrs.pojo.PhoneNumber;
-import nl.enovation.addressbook.cqrs.query.ContactEntry;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
 import nl.enovation.addressbook.cqrs.query.ContactListener;
 import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.domain.UUIDAggregateIdentifier;
@@ -23,16 +26,13 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * @author Yorick Holkamp
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/META-INF/spring/persistence-infrastructure-context.xml",
-                                   "classpath:/META-INF/spring/cqrs-infrastructure-context.xml", "classpath:/META-INF/spring/configuration-context.xml",
-                                   "classpath:/META-INF/spring/contacts-context.xml", "classpath:/META-INF/spring/contacts-query-context.xml", })
 public class ContactListenerTest {
     private ContactListener contactListener;
 
@@ -43,23 +43,13 @@ public class ContactListenerTest {
     private ContactEntry mockContactEntry;
     
     @Mock
-    private PhoneNumber mockPhoneNumber;
+    private PhoneNumberEntry mockPhoneNumber;
     
-    @Autowired
-    private ContactQueryRepository contactRepository;
-    
-    private ContactEntry contactEntry;
-
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         contactListener = new ContactListener();
         contactListener.setContactRepository(mockContactRepository);
-        
-        ContactEntry contactEntry = new ContactEntry();
-        contactEntry.setFirstName("Foo");
-        contactEntry.setLastName("Bar");
-        contactRepository.save(contactEntry);
     }
 
     @Test
@@ -102,18 +92,29 @@ public class ContactListenerTest {
 
         contactListener.handle(event);
 
+        List<PhoneNumberEntry> phoneNumbers = new ArrayList<PhoneNumberEntry>();
+        phoneNumbers.add(mockPhoneNumber);
+        verify(mockContactEntry).setPhoneNumbers(phoneNumbers);
         verify(mockContactRepository).save(mockContactEntry);
     }
 
     @Test
     public final void testHandlePhoneNumberRemovedEvent() {
+        List<PhoneNumberEntry> phoneNumbers = new ArrayList<PhoneNumberEntry>();
+        PhoneNumberEntry phoneNumberEntry = new PhoneNumberEntry();
+        phoneNumberEntry.setPhoneNumber("123456");
+        phoneNumbers.add(phoneNumberEntry);
+        when(mockContactEntry.getPhoneNumbers()).thenReturn(phoneNumbers);
+        
         AggregateIdentifier id = new UUIDAggregateIdentifier();
-        PhoneNumberRemovedEvent event = new PhoneNumberRemovedEvent(id, mockPhoneNumber);
+        PhoneNumberRemovedEvent event = new PhoneNumberRemovedEvent(id, "123456");
 
         when(mockContactRepository.findOne(id.asString())).thenReturn(mockContactEntry);
         
         contactListener.handle(event);
 
+        phoneNumbers = new ArrayList<PhoneNumberEntry>();
+        verify(mockContactEntry).setPhoneNumbers(phoneNumbers);
         verify(mockContactRepository).save(mockContactEntry);
     }
 }

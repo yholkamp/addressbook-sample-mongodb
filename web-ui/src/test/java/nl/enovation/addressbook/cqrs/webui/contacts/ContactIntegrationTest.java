@@ -1,4 +1,4 @@
-package nl.enovation.addressbook.cqrs.integration;
+package nl.enovation.addressbook.cqrs.webui.contacts;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -17,12 +17,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/META-INF/spring/persistence-infrastructure-context.xml",
-                                   "classpath:/META-INF/spring/cqrs-infrastructure-context.xml", "classpath:/META-INF/spring/configuration-context.xml",
+                                   "classpath:/META-INF/spring/cqrs-infrastructure-context.xml", 
                                    "classpath:/META-INF/spring/contacts-context.xml", "classpath:/META-INF/spring/contacts-query-context.xml", })
 public class ContactIntegrationTest {
-
-    @Autowired
-    private ContactCommandHandler commandHandler;
 
     @Autowired
     private EventStore eventStore;
@@ -35,11 +32,9 @@ public class ContactIntegrationTest {
 
     @Test(timeout = 10000)
     public void testApplicationContext() throws InterruptedException {
-        assertNotNull(commandHandler);
         assertNotNull(eventStore);
         assertNotNull(taskExecutor);
         assertNotNull(contactQueryRepository);
-        // assertNotNull(commandRepository);
     }
 
 }
