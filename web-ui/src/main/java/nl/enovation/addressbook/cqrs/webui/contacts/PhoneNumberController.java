@@ -57,7 +57,8 @@ public class PhoneNumberController {
     }
 
     @RequestMapping(value = "{contactIdentifier}/phonenumbers/{identifier}/delete", method = RequestMethod.POST)
-    public String formDelete(@PathVariable String contactIdentifier, @ModelAttribute("phoneNumber") @Valid PhoneNumberEntry phoneNumber, BindingResult bindingResult) {
+    public String formDelete(@PathVariable String contactIdentifier, @ModelAttribute("phoneNumber") @Valid PhoneNumberEntry phoneNumber,
+                             BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             RemovePhoneNumberCommand command = new RemovePhoneNumberCommand(new StringAggregateIdentifier(contactIdentifier), phoneNumber.getPhoneNumber());
             logger.debug("Dispatching command with name : {}", command.toString());
@@ -91,9 +92,9 @@ public class PhoneNumberController {
         if (bindingResult.hasErrors()) {
             return "phonenumbers/new";
         }
-        
+
         Assert.notNull(contactIdentifier);
-        
+
         CreatePhoneNumberCommand command = new CreatePhoneNumberCommand(new StringAggregateIdentifier(contactIdentifier), phoneNumber);
         logger.debug("Dispatching command with name : {}", command.toString());
         commandBus.dispatch(command);

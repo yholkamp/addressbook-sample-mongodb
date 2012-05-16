@@ -12,6 +12,8 @@ import java.util.List;
 
 import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
 import nl.enovation.addressbook.cqrs.query.ContactListener;
+import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
+
 import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.domain.UUIDAggregateIdentifier;
 import nl.enovation.addressbook.cqrs.event.ContactCreatedEvent;
@@ -19,7 +21,6 @@ import nl.enovation.addressbook.cqrs.event.ContactRemovedEvent;
 import nl.enovation.addressbook.cqrs.event.ContactUpdatedEvent;
 import nl.enovation.addressbook.cqrs.event.PhoneNumberAddedEvent;
 import nl.enovation.addressbook.cqrs.event.PhoneNumberRemovedEvent;
-import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

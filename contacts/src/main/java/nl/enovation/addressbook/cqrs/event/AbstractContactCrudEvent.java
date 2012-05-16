@@ -13,7 +13,7 @@ public abstract class AbstractContactCrudEvent extends AbstractContactEvent {
     /**
      * The ContactEntry relevant for the event
      */
-    protected final ContactEntry contactEntry;
+    private final ContactEntry contactEntry;
 
     public AbstractContactCrudEvent(AggregateIdentifier contactId, ContactEntry contact) {
         super(contactId);

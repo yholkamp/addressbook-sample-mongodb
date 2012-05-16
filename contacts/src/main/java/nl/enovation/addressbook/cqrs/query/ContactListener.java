@@ -40,7 +40,7 @@ import org.springframework.util.Assert;
  */
 @Component
 public class ContactListener {
-    private final static Logger logger = LoggerFactory.getLogger(ContactListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(ContactListener.class);
 
     private ContactQueryRepository contactRepository;
 

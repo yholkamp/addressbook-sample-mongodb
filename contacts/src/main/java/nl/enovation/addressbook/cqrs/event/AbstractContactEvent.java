@@ -4,7 +4,7 @@ import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.domain.DomainEvent;
 
 public abstract class AbstractContactEvent extends DomainEvent {
-    protected final AggregateIdentifier contactId;
+    private final AggregateIdentifier contactId;
 
     public AbstractContactEvent(AggregateIdentifier contactId) {
         this.contactId = contactId;

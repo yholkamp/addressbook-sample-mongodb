@@ -29,7 +29,7 @@ public class PhoneNumberAddedEvent extends AbstractContactEvent {
 
     public PhoneNumberAddedEvent(AggregateIdentifier contactId, PhoneNumberEntry phoneNumber) {
         super(contactId);
-        this.setPhoneNumber(phoneNumber);
+        this.phoneNumber = phoneNumber;
     }
 
     public PhoneNumberEntry getPhoneNumber() {

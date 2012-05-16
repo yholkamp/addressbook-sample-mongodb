@@ -42,7 +42,7 @@ import org.springframework.util.Assert;
  */
 public class Contact extends AbstractAnnotatedAggregateRoot {
 
-    private final static Logger logger = LoggerFactory.getLogger(Contact.class);
+    private static final Logger logger = LoggerFactory.getLogger(Contact.class);
 
     @NotNull
     private AggregateIdentifier identifier;

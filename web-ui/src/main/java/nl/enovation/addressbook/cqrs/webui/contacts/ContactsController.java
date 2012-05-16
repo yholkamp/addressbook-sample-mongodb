@@ -18,16 +18,17 @@ package nl.enovation.addressbook.cqrs.webui.contacts;
 
 import javax.validation.Valid;
 
-import org.axonframework.commandhandling.CommandBus;
-import org.axonframework.domain.AggregateIdentifier;
-import org.axonframework.domain.StringAggregateIdentifier;
-import org.axonframework.domain.UUIDAggregateIdentifier;
 import nl.enovation.addressbook.cqrs.command.AbstractContactCrudCommand;
 import nl.enovation.addressbook.cqrs.command.CreateContactCommand;
 import nl.enovation.addressbook.cqrs.command.RemoveContactCommand;
 import nl.enovation.addressbook.cqrs.command.UpdateContactCommand;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
+
+import org.axonframework.commandhandling.CommandBus;
+import org.axonframework.domain.AggregateIdentifier;
+import org.axonframework.domain.StringAggregateIdentifier;
+import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

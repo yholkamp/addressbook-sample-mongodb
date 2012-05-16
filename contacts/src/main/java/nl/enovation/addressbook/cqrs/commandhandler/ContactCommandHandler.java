@@ -45,7 +45,7 @@ import org.springframework.util.Assert;
 @Component
 public class ContactCommandHandler {
 
-    private final static Logger logger = LoggerFactory.getLogger(ContactCommandHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(ContactCommandHandler.class);
 
     private Repository<Contact> contactRepository;
 
