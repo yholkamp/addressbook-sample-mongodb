@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import nl.enovation.addressbook.cqrs.infra.mongo.CFMongoTemplate;
+//import nl.enovation.addressbook.cqrs.infra.mongo.CFMongoTemplate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;

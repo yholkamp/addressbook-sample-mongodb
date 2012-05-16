@@ -15,5 +15,6 @@ rebel.xml
 .settings
 .project
 .classpath
+*.orig
 *~
 bin/

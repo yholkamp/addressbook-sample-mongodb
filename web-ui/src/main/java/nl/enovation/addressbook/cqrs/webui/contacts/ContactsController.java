@@ -36,8 +36,6 @@ import nl.enovation.addressbook.cqrs.webui.contacts.SearchForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -153,20 +151,10 @@ public class ContactsController {
             return "contacts/list";
         }
         System.out.println("BEFORE CALL");
-//        contactRepository.findByFirstNameOrLastNameLike(searchForm.getSearchValue());
+        
         System.out.println("AFTER CALL");
-//        contactRepository.findAll();
-//        List<Contact> listSearchContacts = contactsFactory.searchForContacts(value.getSearchValue());
-//        List<Contact> listSearchContacts = contactRepository.findAll();
-        
-//        AggregateIdentifier identifier = new StringAggregateIdentifier(contact.getIdentifier());
-//        AbstractContactCrudCommand command = new UpdateContactCommand(identifier, contact);
-//        List<Contact> contacts = contactRepository.findByLastName(value.getSearchValue());
-        
-//        System.out.println("VALUE" + searchForm.getSearchValue());
-//        contactRepository.
-//        logger.debug("Dispatching command with name : {}", command.toString());
-//        model.addAttribute("contacts", contacts);
+        List<ContactEntry> contacts = contactRepository.searchForNames(searchForm.getSearchValue());
+        model.addAttribute("contacts", contacts);
         return "contacts/list";
     }    
 }

@@ -1,68 +1,38 @@
 package nl.enovation.addressbook.cqrs.query.repositories;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.support.MongoRepositoryFactory;
-
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-
-import nl.enovation.addressbook.cqrs.domain.Contact;
-import nl.enovation.addressbook.cqrs.infra.mongo.CFMongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 
-public abstract class ContactQueryRepositoryImpl extends org.springframework.data.mongodb.core.MongoTemplate implements ContactQueryRepositoryCustom {
-
-      
+public class ContactQueryRepositoryImpl extends MongoTemplate implements ContactQueryRepositoryCustom {
     
+    @Autowired
+    private static MongoDbFactory factory;
+
+    @Autowired
     public ContactQueryRepositoryImpl(MongoDbFactory mongoDbFactory) {
         super(mongoDbFactory);
-        // TODO Auto-generated constructor stub
+    }
+    
+    public ContactQueryRepositoryImpl() {
+        super(factory);
     }
 
-    public List<ContactEntry> findByFirstNameOrLastNameRegex(String regexFirstName, String regexlastName)
-    {
-//       super.find(query, ContactEntry.class) 
+    public  List<ContactEntry> searchForNames(String searchValue)
+    {        
+        searchValue = ".*"+ searchValue + ".*";
         
-        System.out.println("CONTACTS SEARCH DESTINATION");
-//        
-////        private ContactQueryRepository contactQueryRepository;
-////        
-////        Iterable<ContactEntry> all = contactQueryRepository.findAll();
-////        ContactEntry contactEntry = all.iterator().next();
-////        contactEntry.getFirstName().contains(s)
+        Criteria firstNameCriterion = new Criteria("firstName").regex(searchValue, "i");
+        Criteria lastNameCriterion = new Criteria("lastName").regex(searchValue, "i");
+        Criteria criteria = new Criteria().orOperator(firstNameCriterion, lastNameCriterion);
         
-////        DBCollection db = super.getDb().getCollection(super.getCollectionName(ContactEntry.class));
-////        db.f
-////        
-////        db.users.find({name:/Joe/})
+        Query query = Query.query(criteria);
         
-// Set<String> colls = super.getCollectionNames();
-//// super.find(query, entityClass)
-// 
-// for(String s : colls){
-//     System.out.println(s);
-// }
-        
-        
-////        MongoTemplate mongo = super.getCollection(super.getCollectionName(ContactEntry.class));
-////        mongo.
-        
-        ContactEntry contactTest = new ContactEntry();
-        contactTest.setFirstName("Test");
-        contactTest.setLastName("Test");
-        contactTest.setPhoneNumber("123456");
-        
-        List<ContactEntry> contacts = new ArrayList<ContactEntry>();
-        contacts.add(contactTest);      
-        
-        return contacts;   
-        
+        return super.find(query, ContactEntry.class);
     }
 }
 

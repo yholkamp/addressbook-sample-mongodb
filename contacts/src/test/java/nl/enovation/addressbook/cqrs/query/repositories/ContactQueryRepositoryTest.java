@@ -27,8 +27,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/META-INF/spring/persistence-infrastructure-context.xml",
-  "classpath:/META-INF/spring/cqrs-infrastructure-context.xml", "classpath:/META-INF/spring/configuration-context.xml",
-  "classpath:/META-INF/spring/contacts-context.xml", "classpath:/META-INF/spring/contacts-query-context.xml" })
+                                    "classpath:/META-INF/spring/cqrs-infrastructure-context.xml", "classpath:/META-INF/spring/contacts-context.xml" })
 
 public class ContactQueryRepositoryTest {
 
@@ -42,23 +41,24 @@ public class ContactQueryRepositoryTest {
         contactQueryRepository.deleteAll();
             
         ContactEntry contactTest = new ContactEntry();
-        contactTest.setFirstName("Tast");
-        contactTest.setLastName("Achter");
-        contactTest.setPhoneNumber("123456");
-        contactTest.setDepartment("dept");
+        contactTest.setFirstName("first");
+        contactTest.setLastName("last");
+        String randomString = "&*(@$&(⁹823jsf";
         
         contactQueryRepository.save(contactTest);
                
         searchValue = contactTest.getFirstName();
-                
-//        String regex = "^.*" + "T" + ".*$";
-        String regex = ".*" + "Tast" + ".*";
-        String regex2 = "^.*" + "c" + ".*$";
-//        String regex3 = "^/" + "c" + "/$";
-
-        List<ContactEntry> contacts = contactQueryRepository.findByFirstNameOrLastNameRegex(regex, regex);
-        System.out.println(contacts);
-//        System.out.println(contacts.get(1).getFirstName());
+        List<ContactEntry> contacts = contactQueryRepository.searchForNames(searchValue);
         assertTrue(contacts.contains(contactTest));
+        
+        searchValue = contactTest.getLastName();
+        contacts.clear();
+        contacts = contactQueryRepository.searchForNames(searchValue);
+        assertTrue(contacts.contains(contactTest));
+        
+        searchValue = randomString;
+        contacts.clear();
+        contacts = contactQueryRepository.searchForNames(searchValue);
+        assertFalse(contacts.contains(contactTest));        
     }
 }
