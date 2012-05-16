@@ -25,41 +25,44 @@ public abstract class ContactQueryRepositoryImpl extends org.springframework.dat
         // TODO Auto-generated constructor stub
     }
 
-    public abstract List<ContactEntry> findByFirstNameOrLastNameLike(String regexFirstName, String regexlastName);
-//    {
-//        System.out.println("CONTACTS SEARCH DESTINATION");
+    public List<ContactEntry> findByFirstNameOrLastNameRegex(String regexFirstName, String regexlastName)
+    {
+//       super.find(query, ContactEntry.class) 
+        
+        System.out.println("CONTACTS SEARCH DESTINATION");
 //        
 ////        private ContactQueryRepository contactQueryRepository;
 ////        
 ////        Iterable<ContactEntry> all = contactQueryRepository.findAll();
 ////        ContactEntry contactEntry = all.iterator().next();
 ////        contactEntry.getFirstName().contains(s)
-//        
+        
 ////        DBCollection db = super.getDb().getCollection(super.getCollectionName(ContactEntry.class));
 ////        db.f
 ////        
 ////        db.users.find({name:/Joe/})
-//        
-//// Set<String> colls = super.getCollectionNames();
-//// 
-//// for(String s : colls){
-////     System.out.println(s);
-//// }
-////        
-//        
+        
+// Set<String> colls = super.getCollectionNames();
+//// super.find(query, entityClass)
+// 
+// for(String s : colls){
+//     System.out.println(s);
+// }
+        
+        
 ////        MongoTemplate mongo = super.getCollection(super.getCollectionName(ContactEntry.class));
 ////        mongo.
-//        
-//        ContactEntry contactTest = new ContactEntry();
-//        contactTest.setFirstName("Test");
-//        contactTest.setLastName("Test");
-//        contactTest.setPhoneNumber("123456");
-//        
-//        List<ContactEntry> contacts = new ArrayList<ContactEntry>();
-//        contacts.add(contactTest);      
-//        
-//        return contacts;   
-//        
-//    }
+        
+        ContactEntry contactTest = new ContactEntry();
+        contactTest.setFirstName("Test");
+        contactTest.setLastName("Test");
+        contactTest.setPhoneNumber("123456");
+        
+        List<ContactEntry> contacts = new ArrayList<ContactEntry>();
+        contacts.add(contactTest);      
+        
+        return contacts;   
+        
+    }
 }
 

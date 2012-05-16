@@ -19,10 +19,12 @@ package nl.enovation.addressbook.cqrs.query;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author Allard Buijze, Yorick Holkamp
  */
+@Document
 public class ContactEntry {
 
     @Id

@@ -27,6 +27,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  */
 public interface ContactQueryRepository extends PagingAndSortingRepository<ContactEntry, String>, ContactQueryRepositoryCustom{
 //    , MongoRepository<ContactEntry, String>
-    List<ContactEntry> findByFirstNameLikeAndLastNameLike(String regexFirstName, String regexlastName);
+//    List<ContactEntry> findByFirstNameLikeOrLastNameLike(String regexFirstName, String regexlastName);
 
 }

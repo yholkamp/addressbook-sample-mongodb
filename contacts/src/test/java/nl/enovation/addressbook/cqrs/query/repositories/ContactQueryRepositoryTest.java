@@ -52,10 +52,11 @@ public class ContactQueryRepositoryTest {
         searchValue = contactTest.getFirstName();
                 
 //        String regex = "^.*" + "T" + ".*$";
-        String regex = "^.*" + "c" + ".*$";
+        String regex = ".*" + "Tast" + ".*";
         String regex2 = "^.*" + "c" + ".*$";
+//        String regex3 = "^/" + "c" + "/$";
 
-        List<ContactEntry> contacts = contactQueryRepository.findByFirstNameLikeAndLastNameLike(regex, regex2);
+        List<ContactEntry> contacts = contactQueryRepository.findByFirstNameOrLastNameRegex(regex, regex);
         System.out.println(contacts);
 //        System.out.println(contacts.get(1).getFirstName());
         assertTrue(contacts.contains(contactTest));
