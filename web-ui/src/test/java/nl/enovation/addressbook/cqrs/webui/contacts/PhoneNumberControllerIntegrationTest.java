@@ -65,7 +65,7 @@ public class PhoneNumberControllerIntegrationTest {
     }
 
     @Before
-    public void setUp() throws ServletException {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         Mockito.when(mockBindingResult.hasErrors()).thenReturn(false);
 

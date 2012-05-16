@@ -48,7 +48,7 @@ public class ContactsControllerIntegrationTest {
     private ContactEntry contactEntry;
 
     @Before
-    public void setUp() throws ServletException {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         Mockito.when(mockBindingResult.hasErrors()).thenReturn(false);
 
