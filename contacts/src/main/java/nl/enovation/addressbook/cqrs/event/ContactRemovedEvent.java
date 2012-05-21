@@ -18,15 +18,13 @@ package nl.enovation.addressbook.cqrs.event;
 
 import org.axonframework.domain.AggregateIdentifier;
 
-import nl.enovation.addressbook.cqrs.query.ContactEntry;
-
 /**
  * @author Allard Buijze
  */
-public class ContactUpdatedEvent extends AbstractContactCrudEvent {
+public class ContactRemovedEvent extends AbstractContactEvent {
 
-    public ContactUpdatedEvent(AggregateIdentifier contactId, ContactEntry contact) {
-        super(contactId, contact);
+    public ContactRemovedEvent(AggregateIdentifier contactId) {
+        super(contactId);
     }
 
 }

@@ -1,8 +1,16 @@
 package nl.enovation.addressbook.cqrs.command;
 
 import org.axonframework.domain.AggregateIdentifier;
+
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 
+/**
+ * <p>
+ * Parent class for all contact related commands that require a ContactEntry for their completion. 
+ * </p>
+ * 
+ * @author Yorick Holkamp
+ */
 public abstract class AbstractContactCrudCommand extends AbstractContactCommand {
 
     private ContactEntry contactEntry;

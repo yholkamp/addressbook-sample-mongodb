@@ -33,9 +33,14 @@ import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
 import nl.enovation.addressbook.cqrs.domain.Contact;
 import nl.enovation.addressbook.cqrs.webui.contacts.SearchForm;
 
+import org.axonframework.commandhandling.CommandBus;
+import org.axonframework.domain.AggregateIdentifier;
+import org.axonframework.domain.StringAggregateIdentifier;
+import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -51,7 +56,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/contacts")
 public class ContactsController {
     private final static Logger logger = LoggerFactory.getLogger(ContactsController.class);
-
+    
     private ContactQueryRepository contactRepository;
 
     private CommandBus commandBus;

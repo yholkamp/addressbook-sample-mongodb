@@ -18,15 +18,26 @@ package nl.enovation.addressbook.cqrs.event;
 
 import org.axonframework.domain.AggregateIdentifier;
 
+import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 
 /**
- * @author Allard Buijze
+ * @author Yorick Holkamp
  */
-public class ContactUpdatedEvent extends AbstractContactCrudEvent {
+public class PhoneNumberAddedEvent extends AbstractContactEvent {
+    private PhoneNumberEntry phoneNumber;
 
-    public ContactUpdatedEvent(AggregateIdentifier contactId, ContactEntry contact) {
-        super(contactId, contact);
+    public PhoneNumberAddedEvent(AggregateIdentifier contactId, PhoneNumberEntry phoneNumber) {
+        super(contactId);
+        this.phoneNumber = phoneNumber;
+    }
+
+    public PhoneNumberEntry getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(PhoneNumberEntry phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
 }

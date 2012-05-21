@@ -3,12 +3,12 @@ package nl.enovation.addressbook.cqrs.query.repositories;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.mongodb.core.MongoTemplate;
+//import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 
-public class ContactQueryRepositoryImpl extends MongoTemplate implements ContactQueryRepositoryCustom {
+public class ContactQueryRepositoryImpl extends org.springframework.data.mongodb.core.MongoTemplate implements ContactQueryRepositoryCustom {
     
     @Autowired
     private static MongoDbFactory factory;

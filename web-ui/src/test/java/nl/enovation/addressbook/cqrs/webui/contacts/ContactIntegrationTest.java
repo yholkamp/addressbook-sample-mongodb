@@ -1,10 +1,9 @@
-package nl.enovation.addressbook.cqrs.integration;
+package nl.enovation.addressbook.cqrs.webui.contacts;
 
 import static org.junit.Assert.assertNotNull;
-
-import nl.enovation.addressbook.cqrs.commandhandler.ContactCommandHandler;
-import org.axonframework.eventstore.EventStore;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
+
+import org.axonframework.eventstore.EventStore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/META-INF/spring/persistence-infrastructure-context.xml",
-                                   "classpath:/META-INF/spring/cqrs-infrastructure-context.xml", "classpath:/META-INF/spring/configuration-context.xml",
-                                   "classpath:/META-INF/spring/contacts-context.xml", "classpath:/META-INF/spring/contacts-query-context.xml", })
+                                   "classpath:/META-INF/spring/cqrs-infrastructure-context.xml", "classpath:/META-INF/spring/contacts-context.xml" })
 public class ContactIntegrationTest {
 
     @Autowired
@@ -35,7 +33,6 @@ public class ContactIntegrationTest {
         assertNotNull(eventStore);
         assertNotNull(taskExecutor);
         assertNotNull(contactQueryRepository);
-        // assertNotNull(commandRepository);
     }
 
 }
