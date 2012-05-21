@@ -45,7 +45,7 @@ public class PhoneNumberControllerIntegrationTest {
     private PhoneNumberController controller;
 
     @Autowired
-    @Qualifier("mongoTemplate")
+    @Qualifier("contactQueryRepository")
     private ContactQueryRepository contactQueryRepository;
     
     @Mock

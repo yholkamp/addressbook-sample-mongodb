@@ -16,12 +16,9 @@
 
 package nl.enovation.addressbook.cqrs.query.repositories;
 
-//import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
-import nl.enovation.addressbook.cqrs.query.ContactEntry;
-
 import java.util.List;
 
-import org.axonframework.domain.AggregateIdentifier;
+import nl.enovation.addressbook.cqrs.query.ContactEntry;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -29,7 +26,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  * @author Jettro Coenradie, Yorick Holkamp
  */
 public interface ContactQueryRepository extends PagingAndSortingRepository<ContactEntry, String>, ContactQueryRepositoryCustom{
-//    , MongoRepository<ContactEntry, String>
-//    List<ContactEntry> findByFirstNameLikeAndLastNameLike(String regexFirstName, String regexlastName);
-
+   List<ContactEntry> searchForNames(String searchValue);
 }

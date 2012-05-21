@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -32,6 +33,7 @@ import static org.mockito.Mockito.when;
 public class ContactQueryRepositoryTest {
 
     @Autowired
+    @Qualifier("contactQueryRepository")
     private ContactQueryRepository contactQueryRepository;
     
     private String searchValue;

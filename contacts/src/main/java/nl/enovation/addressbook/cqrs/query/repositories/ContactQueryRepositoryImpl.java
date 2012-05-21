@@ -2,24 +2,20 @@ package nl.enovation.addressbook.cqrs.query.repositories;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.MongoDbFactory;
-//import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+
+import nl.enovation.addressbook.cqrs.infra.mongo.CFMongoTemplate;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 
-public class ContactQueryRepositoryImpl extends org.springframework.data.mongodb.core.MongoTemplate implements ContactQueryRepositoryCustom {
-    
-    @Autowired
-    private static MongoDbFactory factory;
+public class ContactQueryRepositoryImpl extends CFMongoTemplate implements ContactQueryRepositoryCustom {
 
     @Autowired
     public ContactQueryRepositoryImpl(MongoDbFactory mongoDbFactory) {
         super(mongoDbFactory);
-    }
-    
-    public ContactQueryRepositoryImpl() {
-        super(factory);
     }
 
     public  List<ContactEntry> searchForNames(String searchValue)

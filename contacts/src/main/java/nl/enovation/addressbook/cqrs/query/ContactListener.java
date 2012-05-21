@@ -26,6 +26,7 @@ import nl.enovation.addressbook.cqrs.event.PhoneNumberAddedEvent;
 import nl.enovation.addressbook.cqrs.event.PhoneNumberRemovedEvent;
 import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
+import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryCustom;
 
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.slf4j.Logger;

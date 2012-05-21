@@ -20,6 +20,7 @@ import nl.enovation.addressbook.cqrs.query.ContactEntry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -39,11 +40,11 @@ import org.springframework.stereotype.Component;
 public class RunDBInitializerWhenNeeded implements ApplicationListener<ContextRefreshedEvent> {
 
     private static final Logger logger = LoggerFactory.getLogger(RunDBInitializerWhenNeeded.class);
-
+    
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         DBInit init = event.getApplicationContext().getBean(DBInit.class);
-        MongoTemplate mongoTemplate = event.getApplicationContext().getBean(MongoTemplate.class);
+       MongoTemplate mongoTemplate = event.getApplicationContext().getBean("mongoTemplate", MongoTemplate.class);
 
         if ("Root WebApplicationContext".equals(event.getApplicationContext().getDisplayName())) {
             if (!mongoTemplate.collectionExists(ContactEntry.class)) {

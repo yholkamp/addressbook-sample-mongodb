@@ -23,7 +23,7 @@
     <bean class="nl.enovation.addressbook.cqrs.commandhandler.ContactCommandHandler">
         <property name="contactRepository" ref="contactRepository"/>
     </bean>
-
+    
     <axon:event-sourcing-repository id="contactRepository"
                                     aggregate-type="nl.enovation.addressbook.cqrs.domain.Contact"
                                     cache-ref="ehcache"

@@ -19,13 +19,17 @@ package nl.enovation.addressbook.cqrs.webui.init;
 import java.util.Set;
 
 import nl.enovation.addressbook.cqrs.command.CreateContactCommand;
+import nl.enovation.addressbook.cqrs.infra.mongo.CFMongoTemplate;
+import nl.enovation.addressbook.cqrs.infra.mongo.CFSagaMongoTemplate;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
+import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
 
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.axonframework.eventstore.mongo.MongoEventStore;
 import org.axonframework.saga.repository.mongo.MongoTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -40,14 +44,14 @@ import org.springframework.stereotype.Component;
 public class DBInit {
 
     private CommandBus commandBus;
-
-    private org.axonframework.eventstore.mongo.MongoTemplate systemAxonMongo;
-
+    
+    private CFMongoTemplate systemAxonMongo;
+ 
     private MongoEventStore eventStore;
 
-    private org.springframework.data.mongodb.core.MongoTemplate mongoTemplate;
+    private ContactQueryRepositoryImpl mongoTemplate;
 
-    private MongoTemplate systemAxonSagaMongo;
+    private CFSagaMongoTemplate systemAxonSagaMongo;
 
     private final String[] departmentNames = { "Corporate Development", "Human Resources", "Legal", "Environment", "Quality Assurance",
                                               "Research and Development", "Production", "Sales", "Marketing" };
@@ -73,8 +77,8 @@ public class DBInit {
                                       "561-9262 Iaculis Avenue" };
 
     @Autowired
-    public DBInit(CommandBus commandBus, org.axonframework.eventstore.mongo.MongoTemplate systemMongo, MongoEventStore eventStore,
-                  org.springframework.data.mongodb.core.MongoTemplate mongoTemplate, MongoTemplate systemAxonSagaMongo) {
+    public DBInit(CommandBus commandBus, @Qualifier("mongoTemplate") CFMongoTemplate systemMongo, MongoEventStore eventStore,
+                  @Qualifier("contactQueryRepositoryImpl") ContactQueryRepositoryImpl mongoTemplate, CFSagaMongoTemplate systemAxonSagaMongo) {
         this.commandBus = commandBus;
         systemAxonMongo = systemMongo;
         this.eventStore = eventStore;

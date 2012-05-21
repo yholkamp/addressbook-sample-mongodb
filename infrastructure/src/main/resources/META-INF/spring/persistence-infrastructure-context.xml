@@ -22,12 +22,13 @@
 	<context:property-placeholder location="classpath*:/*.properties" />
 
     <mongo:repositories base-package="**.query.repositories"
-		mongo-template-ref="mongoSpringTemplate" />
-
-	<bean id="mongoSpringTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		mongo-template-ref="mongoTemplate"  />
+		<!-- of mongoSpringTemplate -->
+		
+<!-- 	<bean id="mongoSpringTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg ref="mongoDbFactory" />
 	</bean>
-
+ -->
 	<bean id="mongoTemplate"
 		class="nl.enovation.addressbook.cqrs.infra.mongo.CFMongoTemplate">
 		<constructor-arg ref="mongoDbFactory" />
