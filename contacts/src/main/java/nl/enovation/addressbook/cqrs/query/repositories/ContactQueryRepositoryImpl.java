@@ -30,5 +30,23 @@ public class ContactQueryRepositoryImpl extends CFMongoTemplate implements Conta
         
         return super.find(query, ContactEntry.class);
     }
+    
+    public ContactEntry findOne(String contactIdentifier){
+        Criteria idCriterion = new Criteria("_id").is(contactIdentifier);
+        Query query = Query.query(idCriterion);
+        return super.findOne(query, ContactEntry.class);
+    }
+
+    public void delete(ContactEntry contactEntry) {
+        Criteria idCriterion = new Criteria("_id").is(contactEntry.getIdentifier());
+        Query query = Query.query(idCriterion);
+        super.remove(query, ContactEntry.class);
+    }
+
+    public void deleteAll() {
+        Criteria idCriterion = new Criteria();
+        Query query = Query.query(idCriterion);
+        super.remove(query, ContactEntry.class);        
+    }
 }
 

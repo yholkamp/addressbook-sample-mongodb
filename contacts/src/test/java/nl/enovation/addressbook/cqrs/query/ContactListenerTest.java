@@ -13,6 +13,7 @@ import java.util.List;
 import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
 import nl.enovation.addressbook.cqrs.query.ContactListener;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
+import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
 
 import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.domain.UUIDAggregateIdentifier;
@@ -38,7 +39,7 @@ public class ContactListenerTest {
     private ContactListener contactListener;
 
     @Mock
-    private ContactQueryRepository mockContactRepository;
+    private ContactQueryRepositoryImpl mockContactRepository;
 
     @Mock
     private ContactEntry mockContactEntry;
@@ -50,7 +51,7 @@ public class ContactListenerTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         contactListener = new ContactListener();
-        contactListener.setContactRepository(mockContactRepository);
+        contactListener.setContactQueryRepository(mockContactRepository);
     }
 
     @Test

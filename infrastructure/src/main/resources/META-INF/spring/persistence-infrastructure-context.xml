@@ -29,6 +29,10 @@
 		<constructor-arg ref="mongoDbFactory" />
 	</bean>
  -->
+	<bean id="contactQueryRepository"
+		class="nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl">
+	</bean> 
+ 
 	<bean id="mongoTemplate"
 		class="nl.enovation.addressbook.cqrs.infra.mongo.CFMongoTemplate">
 		<constructor-arg ref="mongoDbFactory" />

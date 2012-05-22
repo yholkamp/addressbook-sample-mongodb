@@ -20,10 +20,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.axonframework.org/schema/core http://www.axonframework.org/schema/axon-core-1.2.xsd">
 
-    <bean class="nl.enovation.addressbook.cqrs.commandhandler.ContactCommandHandler">
-        <property name="contactRepository" ref="contactRepository"/>
-    </bean>
-    
     <axon:event-sourcing-repository id="contactRepository"
                                     aggregate-type="nl.enovation.addressbook.cqrs.domain.Contact"
                                     cache-ref="ehcache"
@@ -31,5 +27,9 @@
                                     event-store="eventStore">
         <axon:snapshotter-trigger event-count-threshold="50" snapshotter-ref="snapshotter"/>
     </axon:event-sourcing-repository>
+
+    <bean class="nl.enovation.addressbook.cqrs.commandhandler.ContactCommandHandler">
+        <property name="contactRepository" ref="contactRepository"/>
+    </bean>
 
 </beans>

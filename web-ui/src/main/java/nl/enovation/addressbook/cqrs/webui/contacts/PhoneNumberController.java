@@ -22,7 +22,7 @@ import nl.enovation.addressbook.cqrs.command.CreatePhoneNumberCommand;
 import nl.enovation.addressbook.cqrs.command.RemovePhoneNumberCommand;
 import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
-import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
+import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
 
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.domain.StringAggregateIdentifier;
@@ -46,13 +46,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class PhoneNumberController {
     private final static Logger logger = LoggerFactory.getLogger(PhoneNumberController.class);
 
-    private ContactQueryRepository contactRepository;
+    private ContactQueryRepositoryImpl contactRepositoryImpl;
 
     private CommandBus commandBus;
 
     @Autowired
-    public PhoneNumberController(ContactQueryRepository contactRepository, CommandBus commandBus) {
-        this.contactRepository = contactRepository;
+    public PhoneNumberController(ContactQueryRepositoryImpl contactRepository, CommandBus commandBus) {
+        this.contactRepositoryImpl = contactRepository;
         this.commandBus = commandBus;
     }
 
@@ -72,7 +72,7 @@ public class PhoneNumberController {
 
     @RequestMapping(value = "{contactIdentifier}/phonenumbers/{identifier}/delete", method = RequestMethod.GET)
     public String formDelete(@PathVariable String contactIdentifier, @PathVariable String identifier, Model model) {
-        ContactEntry contactEntry = contactRepository.findOne(contactIdentifier);
+        ContactEntry contactEntry = contactRepositoryImpl.findOne(contactIdentifier);
         model.addAttribute("contact", contactEntry);
         model.addAttribute("phoneNumber", contactEntry.getPhoneNumberEntry(identifier));
 
@@ -81,7 +81,7 @@ public class PhoneNumberController {
 
     @RequestMapping(value = "{contactIdentifier}/phonenumbers/new", method = RequestMethod.GET)
     public String formNew(@PathVariable String contactIdentifier, Model model) {
-        ContactEntry contactEntry = contactRepository.findOne(contactIdentifier);
+        ContactEntry contactEntry = contactRepositoryImpl.findOne(contactIdentifier);
         model.addAttribute("contact", contactEntry);
         model.addAttribute("phoneNumberEntry", new PhoneNumberEntry());
         return "phonenumbers/new";

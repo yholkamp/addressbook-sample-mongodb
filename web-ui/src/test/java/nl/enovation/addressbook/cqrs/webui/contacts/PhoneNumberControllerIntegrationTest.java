@@ -14,6 +14,7 @@ import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
 import nl.enovation.addressbook.cqrs.pojo.PhoneNumberType;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
+import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
 
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.domain.StringAggregateIdentifier;
@@ -45,8 +46,7 @@ public class PhoneNumberControllerIntegrationTest {
     private PhoneNumberController controller;
 
     @Autowired
-    @Qualifier("contactQueryRepository")
-    private ContactQueryRepository contactQueryRepository;
+    private ContactQueryRepositoryImpl contactQueryRepositoryImpl;
     
     @Mock
     private Model model;
@@ -71,7 +71,7 @@ public class PhoneNumberControllerIntegrationTest {
         MockitoAnnotations.initMocks(this);
         Mockito.when(mockBindingResult.hasErrors()).thenReturn(false);
 
-        controller = new PhoneNumberController(contactQueryRepository, commandBus);
+        controller = new PhoneNumberController(contactQueryRepositoryImpl, commandBus);
     }
     
     @Test
@@ -80,14 +80,14 @@ public class PhoneNumberControllerIntegrationTest {
         ContactEntry contactEntry = createContactEntry();
         CreateContactCommand setupContactCommand = new CreateContactCommand(new StringAggregateIdentifier(contactEntry.getIdentifier()), contactEntry);
         commandBus.dispatch(setupContactCommand);
-        assertEquals("ContactEntry should be retrievable from repository", contactEntry, contactQueryRepository.findOne(contactEntry.getIdentifier()));
+        assertEquals("ContactEntry should be retrievable from repository", contactEntry, contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier()));
 
         // Set up a phone number for the contactEntry
         PhoneNumberEntry phoneNumber = createPhoneNumberEntry();
         CreatePhoneNumberCommand setupPhoneNumberCommand = new CreatePhoneNumberCommand(new StringAggregateIdentifier(contactEntry.getIdentifier()),
                                                                                         phoneNumber);
         commandBus.dispatch(setupPhoneNumberCommand);
-        assertEquals("ContactEntry should have the new phoneNumber set in the database", 1, contactQueryRepository.findOne(contactEntry.getIdentifier())
+        assertEquals("ContactEntry should have the new phoneNumber set in the database", 1, contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier())
                                                                                                                   .getPhoneNumbers().size());
 
         String view = controller.formDelete(contactEntry.getIdentifier(), phoneNumber.getPhoneNumber(), model);
@@ -102,14 +102,14 @@ public class PhoneNumberControllerIntegrationTest {
         ContactEntry contactEntry = createContactEntry();
         CreateContactCommand setupContactCommand = new CreateContactCommand(new StringAggregateIdentifier(contactEntry.getIdentifier()), contactEntry);
         commandBus.dispatch(setupContactCommand);
-        assertEquals("ContactEntry should be retrievable from repository", contactEntry, contactQueryRepository.findOne(contactEntry.getIdentifier()));
+        assertEquals("ContactEntry should be retrievable from repository", contactEntry, contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier()));
 
         // Set up a phone number for the contactEntry
         PhoneNumberEntry phoneNumber = createPhoneNumberEntry();
         CreatePhoneNumberCommand setupPhoneNumberCommand = new CreatePhoneNumberCommand(new StringAggregateIdentifier(contactEntry.getIdentifier()),
                                                                                         phoneNumber);
         commandBus.dispatch(setupPhoneNumberCommand);
-        assertEquals("ContactEntry should have the new phoneNumber set in the database", 1, contactQueryRepository.findOne(contactEntry.getIdentifier())
+        assertEquals("ContactEntry should have the new phoneNumber set in the database", 1, contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier())
                                                                                                                   .getPhoneNumbers().size());
 
         String view = controller.formDelete(contactEntry.getIdentifier(), phoneNumber, mockBindingResult);
@@ -117,7 +117,7 @@ public class PhoneNumberControllerIntegrationTest {
         // Check that we returned back to the contact list
         assertEquals("redirect:/contacts/" + contactEntry.getIdentifier(), view);
 
-        ContactEntry contactFromDb = contactQueryRepository.findOne(contactEntry.getIdentifier());
+        ContactEntry contactFromDb = contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier());
         assertEquals("PhoneNumber should have been removed", new ArrayList<PhoneNumberEntry>(), contactFromDb.getPhoneNumbers());
     }
     
@@ -145,7 +145,7 @@ public class PhoneNumberControllerIntegrationTest {
         ContactEntry contactEntry = createContactEntry();
         CreateContactCommand setupCommand = new CreateContactCommand(new StringAggregateIdentifier(contactEntry.getIdentifier()), contactEntry);
         commandBus.dispatch(setupCommand);
-        assertEquals("ContactEntry should be retrievable from repository", contactEntry, contactQueryRepository.findOne(contactEntry.getIdentifier()));
+        assertEquals("ContactEntry should be retrievable from repository", contactEntry, contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier()));
 
         PhoneNumberEntry phoneNumber = createPhoneNumberEntry();
         List<PhoneNumberEntry> phoneNumbers = contactEntry.getPhoneNumbers();
@@ -159,7 +159,7 @@ public class PhoneNumberControllerIntegrationTest {
         // Check that we're back to the overview
         assertEquals("redirect:/contacts/" + contactEntry.getIdentifier(), view);
 
-        ContactEntry contactFromDb = contactQueryRepository.findOne(contactEntry.getIdentifier());
+        ContactEntry contactFromDb = contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier());
         assertNotNull("Should be able to find our contact in the db", contactFromDb);
         assertEquals("PhoneNumber should have been added in the db", phoneNumbers, contactFromDb.getPhoneNumbers());
     }

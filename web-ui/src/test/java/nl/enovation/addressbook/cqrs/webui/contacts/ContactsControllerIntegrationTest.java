@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import nl.enovation.addressbook.cqrs.command.CreateContactCommand;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
+import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
 
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.domain.StringAggregateIdentifier;
@@ -41,7 +42,7 @@ public class ContactsControllerIntegrationTest {
     private ContactsController controller;
 
     @Autowired
-    private ContactQueryRepository contactQueryRepository;
+    private ContactQueryRepositoryImpl contactQueryRepositoryImpl;
 
     @Mock
     private Model model;
@@ -53,7 +54,7 @@ public class ContactsControllerIntegrationTest {
         MockitoAnnotations.initMocks(this);
         Mockito.when(mockBindingResult.hasErrors()).thenReturn(false);
 
-        controller = new ContactsController(contactQueryRepository, commandBus);
+        controller = new ContactsController(contactQueryRepositoryImpl, commandBus);
 
         contactEntry = new ContactEntry();
         contactEntry.setFirstName("Foo");
@@ -84,11 +85,11 @@ public class ContactsControllerIntegrationTest {
         CreateContactCommand setupCommand = new CreateContactCommand(new StringAggregateIdentifier(contactEntry.getIdentifier()), contactEntry);
         commandBus.dispatch(setupCommand);
 
-        // contactQueryRepository.save(contactEntry);
-        assertEquals("ContactEntry should be retrievable from repository", contactEntry, contactQueryRepository.findOne(contactEntry.getIdentifier()));
+        // contactQueryRepositoryImpl.save(contactEntry);
+        assertEquals("ContactEntry should be retrievable from repository", contactEntry, contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier()));
 
         String view = controller.formDelete(contactEntry, mockBindingResult);
-        assertEquals("ContactEntry should have been removed", null, contactQueryRepository.findOne(contactEntry.getIdentifier()));
+        assertEquals("ContactEntry should have been removed", null, contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier()));
 
         // Check that we returned back to the contact list
         assertEquals("redirect:/contacts", view);
@@ -96,7 +97,7 @@ public class ContactsControllerIntegrationTest {
 
     @Test
     public void testDetails() {
-        contactQueryRepository.save(contactEntry);
+        contactQueryRepositoryImpl.save(contactEntry);
         String view = controller.details(contactEntry.getIdentifier(), model);
 
         verify(model).addAttribute(eq("contact"), eq(contactEntry));
@@ -137,7 +138,7 @@ public class ContactsControllerIntegrationTest {
     public void testNewCommand_success() {
         String view = controller.formNewSubmit(contactEntry, mockBindingResult);
 
-        ContactEntry contactFromDb = contactQueryRepository.findOne(contactEntry.getIdentifier());
+        ContactEntry contactFromDb = contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier());
         assertEquals(contactEntry, contactFromDb);
 
         // Check that we're back to the overview
@@ -146,8 +147,8 @@ public class ContactsControllerIntegrationTest {
 
     @Test
     public void testUpdateForm() {
-        contactQueryRepository.save(contactEntry);
-        assertEquals("ContactEntry should be retrievable from repository", contactEntry, contactQueryRepository.findOne(contactEntry.getIdentifier()));
+        contactQueryRepositoryImpl.save(contactEntry);
+        assertEquals("ContactEntry should be retrievable from repository", contactEntry, contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier()));
 
         String view = controller.formEdit(contactEntry.getIdentifier(), model);
 
@@ -159,8 +160,8 @@ public class ContactsControllerIntegrationTest {
     public void testUpdateCommand_failure() {
         Mockito.when(mockBindingResult.hasErrors()).thenReturn(true);
 
-        contactQueryRepository.save(contactEntry);
-        assertEquals("ContactEntry should be retrievable from repository", contactEntry, contactQueryRepository.findOne(contactEntry.getIdentifier()));
+        contactQueryRepositoryImpl.save(contactEntry);
+        assertEquals("ContactEntry should be retrievable from repository", contactEntry, contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier()));
 
         String view = controller.formEditSubmit(contactEntry, mockBindingResult);
 
@@ -173,13 +174,13 @@ public class ContactsControllerIntegrationTest {
         CreateContactCommand setupCommand = new CreateContactCommand(new StringAggregateIdentifier(contactEntry.getIdentifier()), contactEntry);
         commandBus.dispatch(setupCommand);
 
-        // contactEntry = contactQueryRepository.save(contactEntry);
-        assertEquals("ContactEntry should be retrievable from repository", contactEntry, contactQueryRepository.findOne(contactEntry.getIdentifier()));
+        // contactEntry = contactQueryRepositoryImpl.save(contactEntry);
+        assertEquals("ContactEntry should be retrievable from repository", contactEntry, contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier()));
 
         contactEntry.setFirstName("changedFirstName");
         String view = controller.formEditSubmit(contactEntry, mockBindingResult);
 
-        ContactEntry contactFromDb = contactQueryRepository.findOne(contactEntry.getIdentifier());
+        ContactEntry contactFromDb = contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier());
         assertEquals("changedFirstName", contactFromDb.getFirstName());
 
         // Check that we're back to the overview

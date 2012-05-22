@@ -45,13 +45,13 @@ public class DBInit {
 
     private CommandBus commandBus;
     
-    private CFMongoTemplate systemAxonMongo;
+    private org.axonframework.eventstore.mongo.MongoTemplate systemAxonMongo;
  
     private MongoEventStore eventStore;
 
-    private ContactQueryRepositoryImpl mongoTemplate;
+    private org.springframework.data.mongodb.core.MongoTemplate mongoTemplate;
 
-    private CFSagaMongoTemplate systemAxonSagaMongo;
+    private MongoTemplate systemAxonSagaMongo;
 
     private final String[] departmentNames = { "Corporate Development", "Human Resources", "Legal", "Environment", "Quality Assurance",
                                               "Research and Development", "Production", "Sales", "Marketing" };
@@ -77,8 +77,8 @@ public class DBInit {
                                       "561-9262 Iaculis Avenue" };
 
     @Autowired
-    public DBInit(CommandBus commandBus, @Qualifier("mongoTemplate") CFMongoTemplate systemMongo, MongoEventStore eventStore,
-                  @Qualifier("contactQueryRepositoryImpl") ContactQueryRepositoryImpl mongoTemplate, CFSagaMongoTemplate systemAxonSagaMongo) {
+    public DBInit(CommandBus commandBus, @Qualifier("mongoTemplate") org.axonframework.eventstore.mongo.MongoTemplate systemMongo, MongoEventStore eventStore,
+                  org.springframework.data.mongodb.core.MongoTemplate mongoTemplate, MongoTemplate systemAxonSagaMongo) {
         this.commandBus = commandBus;
         systemAxonMongo = systemMongo;
         this.eventStore = eventStore;

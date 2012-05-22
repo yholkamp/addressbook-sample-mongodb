@@ -16,19 +16,20 @@
 
 package nl.enovation.addressbook.cqrs.commandhandler;
 
-import org.axonframework.commandhandling.annotation.CommandHandler;
-import org.axonframework.repository.Repository;
 import nl.enovation.addressbook.cqrs.command.CreateContactCommand;
 import nl.enovation.addressbook.cqrs.command.CreatePhoneNumberCommand;
 import nl.enovation.addressbook.cqrs.command.RemoveContactCommand;
 import nl.enovation.addressbook.cqrs.command.RemovePhoneNumberCommand;
 import nl.enovation.addressbook.cqrs.command.UpdateContactCommand;
 import nl.enovation.addressbook.cqrs.domain.Contact;
+
+import org.axonframework.commandhandling.annotation.CommandHandler;
+import org.axonframework.repository.Repository;
 import org.axonframework.unitofwork.UnitOfWork;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -43,11 +44,17 @@ import org.springframework.util.Assert;
  * @author Allard Buijze
  */
 @Component
-public class ContactCommandHandler {
+public class ContactCommandHandler implements InitializingBean {
 
     private static final Logger logger = LoggerFactory.getLogger(ContactCommandHandler.class);
-
+    @Autowired
     private Repository<Contact> contactRepository;
+    
+    public ContactCommandHandler() {
+        logger.debug("test");
+    }
+    
+    
 
     /**
      * Creates a new contact based on the provided data.
@@ -153,9 +160,19 @@ public class ContactCommandHandler {
      * @param repository
      *            the contact contactRepository
      */
-    @Autowired
-    @Qualifier("contactRepository")
+//    @Autowired
     public void setContactRepository(Repository<Contact> repository) {
         this.contactRepository = repository;
+        System.out.println("SET CONTACT REPOSITORY");
+    }
+    
+    public Repository<Contact> getContactRepository() {
+       return  this.contactRepository;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println("TESTTEST" + this.getContactRepository());
+//        setContactRepository(contactRepository);
     }
 }

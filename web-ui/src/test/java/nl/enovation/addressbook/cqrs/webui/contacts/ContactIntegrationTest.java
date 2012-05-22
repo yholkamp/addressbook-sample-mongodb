@@ -2,6 +2,7 @@ package nl.enovation.addressbook.cqrs.webui.contacts;
 
 import static org.junit.Assert.assertNotNull;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
+import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
 
 import org.axonframework.eventstore.EventStore;
 import org.junit.Test;
@@ -26,13 +27,13 @@ public class ContactIntegrationTest {
     private ThreadPoolTaskExecutor taskExecutor;
 
     @Autowired
-    private ContactQueryRepository contactQueryRepository;
+    private ContactQueryRepositoryImpl contactQueryRepositoryImpl;
 
     @Test(timeout = 10000)
     public void testApplicationContext() throws InterruptedException {
         assertNotNull(eventStore);
         assertNotNull(taskExecutor);
-        assertNotNull(contactQueryRepository);
+        assertNotNull(contactQueryRepositoryImpl);
     }
 
 }
