@@ -23,12 +23,7 @@
 
     <mongo:repositories base-package="**.query.repositories"
 		mongo-template-ref="mongoTemplate"  />
-		<!-- of mongoSpringTemplate -->
-		
-<!-- 	<bean id="mongoSpringTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-		<constructor-arg ref="mongoDbFactory" />
-	</bean>
- -->
+
 	<bean id="contactQueryRepository"
 		class="nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl">
 	</bean> 
@@ -46,6 +41,8 @@
 	<beans profile="default">
 		<mongo:db-factory id="mongoDbFactory" dbname="addressbook-sample-temp"
 			host="localhost" port="27017" />
+   <!-- <mongo:db-factory id="mongoDbFactory" dbname="$(mongodb.database)"
+			host="$(mongodb.host)" port="$(mongodb.port)" /> -->
 	</beans>
 
 </beans>

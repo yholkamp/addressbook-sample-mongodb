@@ -16,8 +16,6 @@
 
 package nl.enovation.addressbook.cqrs.commandhandler;
 
-import java.io.Serializable;
-
 import nl.enovation.addressbook.cqrs.command.CreateContactCommand;
 import nl.enovation.addressbook.cqrs.command.CreatePhoneNumberCommand;
 import nl.enovation.addressbook.cqrs.command.RemoveContactCommand;
@@ -30,14 +28,8 @@ import org.axonframework.repository.Repository;
 import org.axonframework.unitofwork.UnitOfWork;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.GenericXmlApplicationContext;
-import org.springframework.data.repository.core.EntityInformation;
-import org.springframework.data.repository.core.RepositoryMetadata;
-import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -52,20 +44,11 @@ import org.springframework.util.Assert;
  * @author Allard Buijze
  */
 @Component
-public class ContactCommandHandler implements InitializingBean {
+public class ContactCommandHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(ContactCommandHandler.class);
-//    @Autowired
+
     private Repository<Contact> contactRepository;
-    
-    public ContactCommandHandler() {
-        logger.debug("test");
-//        ApplicationContext ctx = new GenericXmlApplicationContext("contacts-context.xml");
-//        contactRepository = (Repository<Contact>) ctx.getBean(Repository.class);
-//        factory.getRepository(Repository.class);
-    }
-    
-    
 
     /**
      * Creates a new contact based on the provided data.
@@ -164,7 +147,6 @@ public class ContactCommandHandler implements InitializingBean {
         contact.removePhoneNumber(command.getPhoneNumberId());
     }
     
-    
     /**
      * Sets the contact domain event contactRepository.
      * 
@@ -179,11 +161,5 @@ public class ContactCommandHandler implements InitializingBean {
     
     public Repository<Contact> getContactRepository() {
        return  this.contactRepository;
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        System.out.println("ContactRepository: " + this.getContactRepository());
-//        setContactRepository(contactRepository);
     }
 }
