@@ -25,8 +25,6 @@ import nl.enovation.addressbook.cqrs.event.ContactUpdatedEvent;
 import nl.enovation.addressbook.cqrs.event.PhoneNumberAddedEvent;
 import nl.enovation.addressbook.cqrs.event.PhoneNumberRemovedEvent;
 import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
-import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
-import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryCustom;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
 
 import org.axonframework.eventhandling.annotation.EventHandler;
@@ -35,7 +33,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.Assert;
 
 /**

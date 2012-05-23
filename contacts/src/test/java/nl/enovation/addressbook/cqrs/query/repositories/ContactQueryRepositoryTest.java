@@ -21,7 +21,6 @@ import static org.junit.Assert.assertTrue;
 public class ContactQueryRepositoryTest {
 
     @Autowired
-    @Qualifier("contactQueryRepository")
     private ContactQueryRepositoryImpl contactQueryRepositoryImpl;
     
     private String searchValue;

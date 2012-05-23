@@ -26,7 +26,6 @@ import org.springframework.stereotype.Component;
 /**
  * @author Jettro Coenradie, Yorick Holkamp
  */
-@Component
 public interface ContactQueryRepository extends PagingAndSortingRepository<ContactEntry, String>, ContactQueryRepositoryCustom{
-   List<ContactEntry> searchForNames(String searchValue);
+
 }
