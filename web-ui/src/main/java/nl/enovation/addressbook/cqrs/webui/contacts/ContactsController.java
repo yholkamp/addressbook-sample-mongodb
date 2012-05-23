@@ -20,22 +20,20 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.axonframework.commandhandling.CommandBus;
-import org.axonframework.domain.AggregateIdentifier;
-import org.axonframework.domain.StringAggregateIdentifier;
-import org.axonframework.domain.UUIDAggregateIdentifier;
 import nl.enovation.addressbook.cqrs.command.AbstractContactCrudCommand;
 import nl.enovation.addressbook.cqrs.command.CreateContactCommand;
 import nl.enovation.addressbook.cqrs.command.RemoveContactCommand;
 import nl.enovation.addressbook.cqrs.command.UpdateContactCommand;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
-import nl.enovation.addressbook.cqrs.webui.contacts.SearchForm;
 
+import org.axonframework.commandhandling.CommandBus;
+import org.axonframework.domain.AggregateIdentifier;
+import org.axonframework.domain.StringAggregateIdentifier;
+import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -51,7 +49,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/contacts")
 public class ContactsController {
     private final static Logger logger = LoggerFactory.getLogger(ContactsController.class);
-    
+
     @Autowired
     private ContactQueryRepositoryImpl contactRepositoryImpl;
 
@@ -59,7 +57,7 @@ public class ContactsController {
 
     @Autowired
     public ContactsController(ContactQueryRepositoryImpl contactRepository, CommandBus commandBus) {
-        this.contactRepositoryImpl = contactRepository;
+        contactRepositoryImpl = contactRepository;
         this.commandBus = commandBus;
     }
 
@@ -145,17 +143,14 @@ public class ContactsController {
         model.addAttribute("searchForm", searchForm);
         return "contacts/list";
     }
-    
+
     @RequestMapping(value = "search", method = RequestMethod.POST)
     public String search(@ModelAttribute("searchForm") SearchForm searchForm, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "contacts/list";
         }
-        System.out.println("BEFORE CALL");
-        
-        System.out.println("AFTER CALL");
         List<ContactEntry> contacts = contactRepositoryImpl.searchForNames(searchForm.getSearchValue());
         model.addAttribute("contacts", contacts);
         return "contacts/list";
-    }    
+    }
 }

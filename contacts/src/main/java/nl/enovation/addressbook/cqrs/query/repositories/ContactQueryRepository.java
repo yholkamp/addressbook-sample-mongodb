@@ -16,16 +16,13 @@
 
 package nl.enovation.addressbook.cqrs.query.repositories;
 
-import java.util.List;
-
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Component;
 
 /**
  * @author Jettro Coenradie, Yorick Holkamp
  */
-public interface ContactQueryRepository extends PagingAndSortingRepository<ContactEntry, String>, ContactQueryRepositoryCustom{
+public interface ContactQueryRepository extends PagingAndSortingRepository<ContactEntry, String>, ContactQueryRepositoryCustom {
 
 }

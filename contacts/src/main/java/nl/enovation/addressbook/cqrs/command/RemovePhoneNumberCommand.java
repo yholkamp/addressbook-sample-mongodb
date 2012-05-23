@@ -1,7 +1,5 @@
 package nl.enovation.addressbook.cqrs.command;
 
-import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
-
 import org.axonframework.domain.AggregateIdentifier;
 
 public class RemovePhoneNumberCommand extends AbstractContactCommand {
@@ -14,7 +12,7 @@ public class RemovePhoneNumberCommand extends AbstractContactCommand {
 
     public RemovePhoneNumberCommand(AggregateIdentifier contactIdentifier, String identifier) {
         super(contactIdentifier);
-        this.phoneNumberId = identifier;
+        phoneNumberId = identifier;
     }
 
     public String getPhoneNumberId() {
@@ -22,7 +20,7 @@ public class RemovePhoneNumberCommand extends AbstractContactCommand {
     }
 
     public void setPhoneNumber(String identifier) {
-        this.phoneNumberId = identifier;
+        phoneNumberId = identifier;
     }
 
 }

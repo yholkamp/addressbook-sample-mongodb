@@ -16,9 +16,9 @@
 
 package nl.enovation.addressbook.cqrs.event;
 
-import org.axonframework.domain.AggregateIdentifier;
-
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
+
+import org.axonframework.domain.AggregateIdentifier;
 
 /**
  * @author Yorick Holkamp

@@ -26,22 +26,22 @@ import com.mongodb.DBCollection;
  * 
  * @author Jettro Coenradie
  */
-public class CFMongoTemplate extends org.springframework.data.mongodb.core.MongoTemplate  implements  org.axonframework.eventstore.mongo.MongoTemplate {
+public class CFMongoTemplate extends org.springframework.data.mongodb.core.MongoTemplate implements org.axonframework.eventstore.mongo.MongoTemplate {
 
     private static final String DEFAULT_DOMAINEVENTS_COLLECTION = "domainevents";
 
     private static final String DEFAULT_SNAPSHOTEVENTS_COLLECTION = "snapshotevents";
 
- //   private MongoDbFactory mongoDbFactory;
+    // private MongoDbFactory mongoDbFactory;
 
     public CFMongoTemplate(MongoDbFactory mongoDbFactory) {
         super(mongoDbFactory);
-     //   this.mongoDbFactory = mongoDbFactory;
+        // this.mongoDbFactory = mongoDbFactory;
     }
 
     @Override
     public DB database() {
-        return /*mongoDbFactory*/super.getDb();
+        return /* mongoDbFactory */super.getDb();
     }
 
     @Override

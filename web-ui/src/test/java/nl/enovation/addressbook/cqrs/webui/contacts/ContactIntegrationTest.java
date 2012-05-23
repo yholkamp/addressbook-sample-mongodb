@@ -1,7 +1,5 @@
 package nl.enovation.addressbook.cqrs.webui.contacts;
 
-import static org.junit.Assert.assertNotNull;
-import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
 
 import org.axonframework.eventstore.EventStore;
@@ -11,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author Allard Buijze Modified by Yorick

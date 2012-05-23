@@ -52,7 +52,7 @@ public class PhoneNumberController {
 
     @Autowired
     public PhoneNumberController(ContactQueryRepositoryImpl contactRepository, CommandBus commandBus) {
-        this.contactRepositoryImpl = contactRepository;
+        contactRepositoryImpl = contactRepository;
         this.commandBus = commandBus;
     }
 

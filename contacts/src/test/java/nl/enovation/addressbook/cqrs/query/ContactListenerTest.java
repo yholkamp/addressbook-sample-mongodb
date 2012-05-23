@@ -3,34 +3,27 @@
  */
 package nl.enovation.addressbook.cqrs.query;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
-import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
-import nl.enovation.addressbook.cqrs.query.ContactListener;
-import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
-import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
-
-import org.axonframework.domain.AggregateIdentifier;
-import org.axonframework.domain.UUIDAggregateIdentifier;
 import nl.enovation.addressbook.cqrs.event.ContactCreatedEvent;
 import nl.enovation.addressbook.cqrs.event.ContactRemovedEvent;
 import nl.enovation.addressbook.cqrs.event.ContactUpdatedEvent;
 import nl.enovation.addressbook.cqrs.event.PhoneNumberAddedEvent;
 import nl.enovation.addressbook.cqrs.event.PhoneNumberRemovedEvent;
+import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
+import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
+
+import org.axonframework.domain.AggregateIdentifier;
+import org.axonframework.domain.UUIDAggregateIdentifier;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Yorick Holkamp
@@ -43,10 +36,15 @@ public class ContactListenerTest {
 
     @Mock
     private ContactEntry mockContactEntry;
-    
+
     @Mock
     private PhoneNumberEntry mockPhoneNumber;
-    
+
+    @After
+    public void after() {
+        mockContactRepository.deleteAll();
+    }
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -84,7 +82,7 @@ public class ContactListenerTest {
 
         verify(mockContactRepository).save(mockContactEntry);
     }
-    
+
     @Test
     public final void testHandlePhoneNumberAddedEvent() {
         AggregateIdentifier id = new UUIDAggregateIdentifier();
@@ -107,12 +105,12 @@ public class ContactListenerTest {
         phoneNumberEntry.setPhoneNumber("123456");
         phoneNumbers.add(phoneNumberEntry);
         when(mockContactEntry.getPhoneNumbers()).thenReturn(phoneNumbers);
-        
+
         AggregateIdentifier id = new UUIDAggregateIdentifier();
         PhoneNumberRemovedEvent event = new PhoneNumberRemovedEvent(id, "123456");
 
         when(mockContactRepository.findOne(id.asString())).thenReturn(mockContactEntry);
-        
+
         contactListener.handle(event);
 
         phoneNumbers = new ArrayList<PhoneNumberEntry>();

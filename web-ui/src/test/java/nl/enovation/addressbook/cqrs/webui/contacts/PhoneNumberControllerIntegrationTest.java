@@ -1,24 +1,19 @@
 package nl.enovation.addressbook.cqrs.webui.contacts;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.ServletException;
 
 import nl.enovation.addressbook.cqrs.command.CreateContactCommand;
 import nl.enovation.addressbook.cqrs.command.CreatePhoneNumberCommand;
 import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
 import nl.enovation.addressbook.cqrs.pojo.PhoneNumberType;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
-import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
 
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.domain.StringAggregateIdentifier;
 import org.axonframework.domain.UUIDAggregateIdentifier;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,11 +21,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/META-INF/spring/persistence-infrastructure-context.xml",
@@ -47,9 +44,14 @@ public class PhoneNumberControllerIntegrationTest {
 
     @Autowired
     private ContactQueryRepositoryImpl contactQueryRepositoryImpl;
-    
+
     @Mock
     private Model model;
+
+    @After
+    public void after() {
+        contactQueryRepositoryImpl.deleteAll();
+    }
 
     private ContactEntry createContactEntry() {
         ContactEntry contactEntry = new ContactEntry();
@@ -73,7 +75,7 @@ public class PhoneNumberControllerIntegrationTest {
 
         controller = new PhoneNumberController(contactQueryRepositoryImpl, commandBus);
     }
-    
+
     @Test
     public void testDeleteForm() {
         // Set up a contactEntry
@@ -88,7 +90,7 @@ public class PhoneNumberControllerIntegrationTest {
                                                                                         phoneNumber);
         commandBus.dispatch(setupPhoneNumberCommand);
         assertEquals("ContactEntry should have the new phoneNumber set in the database", 1, contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier())
-                                                                                                                  .getPhoneNumbers().size());
+                                                                                                                      .getPhoneNumbers().size());
 
         String view = controller.formDelete(contactEntry.getIdentifier(), phoneNumber.getPhoneNumber(), model);
 
@@ -110,7 +112,7 @@ public class PhoneNumberControllerIntegrationTest {
                                                                                         phoneNumber);
         commandBus.dispatch(setupPhoneNumberCommand);
         assertEquals("ContactEntry should have the new phoneNumber set in the database", 1, contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier())
-                                                                                                                  .getPhoneNumbers().size());
+                                                                                                                      .getPhoneNumbers().size());
 
         String view = controller.formDelete(contactEntry.getIdentifier(), phoneNumber, mockBindingResult);
 
@@ -119,14 +121,6 @@ public class PhoneNumberControllerIntegrationTest {
 
         ContactEntry contactFromDb = contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier());
         assertEquals("PhoneNumber should have been removed", new ArrayList<PhoneNumberEntry>(), contactFromDb.getPhoneNumbers());
-    }
-    
-    @Test
-    public void testNewPhoneNumberForm() {
-        String view = controller.formNew("fake-identifier", model);
-
-        // Check that we'reback to the original form
-        assertEquals("phonenumbers/new", view);
     }
 
     @Test
@@ -162,6 +156,14 @@ public class PhoneNumberControllerIntegrationTest {
         ContactEntry contactFromDb = contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier());
         assertNotNull("Should be able to find our contact in the db", contactFromDb);
         assertEquals("PhoneNumber should have been added in the db", phoneNumbers, contactFromDb.getPhoneNumbers());
+    }
+
+    @Test
+    public void testNewPhoneNumberForm() {
+        String view = controller.formNew("fake-identifier", model);
+
+        // Check that we'reback to the original form
+        assertEquals("phonenumbers/new", view);
     }
 
 }

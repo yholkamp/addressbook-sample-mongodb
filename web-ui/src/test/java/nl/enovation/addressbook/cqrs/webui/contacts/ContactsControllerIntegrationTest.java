@@ -1,20 +1,13 @@
 package nl.enovation.addressbook.cqrs.webui.contacts;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyList;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
-
-import javax.servlet.ServletException;
-
 import nl.enovation.addressbook.cqrs.command.CreateContactCommand;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
-import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepository;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
 
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.domain.StringAggregateIdentifier;
 import org.axonframework.domain.UUIDAggregateIdentifier;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,11 +15,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyList;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/META-INF/spring/persistence-infrastructure-context.xml",
@@ -49,6 +46,11 @@ public class ContactsControllerIntegrationTest {
 
     private ContactEntry contactEntry;
 
+    @After
+    public void after() {
+        contactQueryRepositoryImpl.deleteAll();
+    }
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -60,14 +62,6 @@ public class ContactsControllerIntegrationTest {
         contactEntry.setFirstName("Foo");
         contactEntry.setLastName("Bar");
         contactEntry.setIdentifier(new UUIDAggregateIdentifier().asString());
-    }
-
-    @Test
-    public void testDeleteForm() {
-        String view = controller.formDelete(contactEntry.getIdentifier(), model);
-
-        // Check that we're shown the delete page again
-        assertEquals("contacts/delete", view);
     }
 
     @Test
@@ -96,6 +90,14 @@ public class ContactsControllerIntegrationTest {
     }
 
     @Test
+    public void testDeleteForm() {
+        String view = controller.formDelete(contactEntry.getIdentifier(), model);
+
+        // Check that we're shown the delete page again
+        assertEquals("contacts/delete", view);
+    }
+
+    @Test
     public void testDetails() {
         contactQueryRepositoryImpl.save(contactEntry);
         String view = controller.details(contactEntry.getIdentifier(), model);
@@ -107,14 +109,6 @@ public class ContactsControllerIntegrationTest {
     }
 
     @Test
-    public void testNew() {
-        String view = controller.formNew(model);
-
-        // Check that we're shown the contact list view
-        assertEquals("contacts/new", view);
-    }
-
-    @Test
     public void testListContacts() {
         String view = controller.list(model);
 
@@ -122,6 +116,14 @@ public class ContactsControllerIntegrationTest {
 
         // Check that we're shown the contact list view
         assertEquals("contacts/list", view);
+    }
+
+    @Test
+    public void testNew() {
+        String view = controller.formNew(model);
+
+        // Check that we're shown the contact list view
+        assertEquals("contacts/new", view);
     }
 
     @Test
@@ -143,17 +145,6 @@ public class ContactsControllerIntegrationTest {
 
         // Check that we're back to the overview
         assertEquals("redirect:/contacts", view);
-    }
-
-    @Test
-    public void testUpdateForm() {
-        contactQueryRepositoryImpl.save(contactEntry);
-        assertEquals("ContactEntry should be retrievable from repository", contactEntry, contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier()));
-
-        String view = controller.formEdit(contactEntry.getIdentifier(), model);
-
-        // Check that we'reback to the original form
-        assertEquals("contacts/edit", view);
     }
 
     @Test
@@ -185,5 +176,16 @@ public class ContactsControllerIntegrationTest {
 
         // Check that we're back to the overview
         assertEquals("redirect:/contacts", view);
+    }
+
+    @Test
+    public void testUpdateForm() {
+        contactQueryRepositoryImpl.save(contactEntry);
+        assertEquals("ContactEntry should be retrievable from repository", contactEntry, contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier()));
+
+        String view = controller.formEdit(contactEntry.getIdentifier(), model);
+
+        // Check that we'reback to the original form
+        assertEquals("contacts/edit", view);
     }
 }

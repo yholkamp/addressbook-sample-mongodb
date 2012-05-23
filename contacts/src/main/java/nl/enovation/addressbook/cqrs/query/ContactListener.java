@@ -82,13 +82,14 @@ public class ContactListener {
         List<PhoneNumberEntry> phoneNumbers = contact.getPhoneNumbers();
         logger.debug("Found contactEntry with id {} and phoneNumbers {}", contact.getIdentifier(), phoneNumbers);
 
-        if(phoneNumbers == null)
+        if (phoneNumbers == null) {
             phoneNumbers = new ArrayList<PhoneNumberEntry>();
-        
+        }
+
         phoneNumbers.add(event.getPhoneNumber());
         contact.setPhoneNumbers(phoneNumbers);
         logger.debug("Set new phone numbers {}", phoneNumbers);
-        
+
         contactRepository.save(contact);
         logger.debug("Saved contact {}", contact.getIdentifier());
     }
@@ -100,22 +101,24 @@ public class ContactListener {
         // TODO: Implement a MongoDB-friendly way to remove the phone number without having to load & save the entire model
         ContactEntry contact = contactRepository.findOne(event.getContactId().asString());
         List<PhoneNumberEntry> phoneNumbers = contact.getPhoneNumbers();
-        
-        if(phoneNumbers == null)
+
+        if (phoneNumbers == null) {
             phoneNumbers = new ArrayList<PhoneNumberEntry>();
-        
+        }
+
         int phoneNumberCount = phoneNumbers.size();
-        
+
         // TODO: Start using some other identifier or more elegant data structure
-        for(PhoneNumberEntry phoneNumberEntry : phoneNumbers) {
-            if(phoneNumberEntry.getPhoneNumber().equals(event.getPhoneNumber())) {
+        for (PhoneNumberEntry phoneNumberEntry : phoneNumbers) {
+            if (phoneNumberEntry.getPhoneNumber().equals(event.getPhoneNumber())) {
                 logger.debug("Found phoneNumber {}, removing it from Contact", phoneNumberEntry);
                 phoneNumbers.remove(phoneNumberEntry);
                 break;
             }
         }
-        
-        Assert.isTrue(phoneNumberCount -1 == phoneNumbers.size(), "PhoneNumber array length should have decreased by one, instead received " + phoneNumberCount);
+
+        Assert.isTrue(phoneNumberCount - 1 == phoneNumbers.size(), "PhoneNumber array length should have decreased by one, instead received "
+                                                                   + phoneNumberCount);
         contact.setPhoneNumbers(phoneNumbers);
         contactRepository.save(contact);
     }

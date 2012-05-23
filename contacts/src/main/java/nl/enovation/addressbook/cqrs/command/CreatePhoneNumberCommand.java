@@ -9,21 +9,21 @@ import org.axonframework.domain.AggregateIdentifier;
  * 
  * @author Yorick Holkamp
  */
-public class CreatePhoneNumberCommand extends AbstractContactCommand  {
+public class CreatePhoneNumberCommand extends AbstractContactCommand {
 
     private PhoneNumberEntry phoneNumber;
 
     public CreatePhoneNumberCommand(AggregateIdentifier contactIdentifier) {
         super(contactIdentifier);
     }
-    
+
     public CreatePhoneNumberCommand(AggregateIdentifier contactIdentifier, PhoneNumberEntry phoneNumber) {
         super(contactIdentifier);
         this.phoneNumber = phoneNumber;
     }
-    
+
     public PhoneNumberEntry getPhoneNumber() {
         return phoneNumber;
     }
-    
+
 }

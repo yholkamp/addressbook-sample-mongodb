@@ -20,9 +20,7 @@ import java.util.Set;
 
 import nl.enovation.addressbook.cqrs.command.CreateContactCommand;
 import nl.enovation.addressbook.cqrs.infra.mongo.CFMongoTemplate;
-import nl.enovation.addressbook.cqrs.infra.mongo.CFSagaMongoTemplate;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
-import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
 
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.domain.UUIDAggregateIdentifier;
@@ -44,9 +42,9 @@ import org.springframework.stereotype.Component;
 public class DBInit {
 
     private CommandBus commandBus;
-    
+
     private CFMongoTemplate systemAxonMongo;
- 
+
     private MongoEventStore eventStore;
 
     private CFMongoTemplate mongoTemplate;
@@ -77,8 +75,8 @@ public class DBInit {
                                       "561-9262 Iaculis Avenue" };
 
     @Autowired
-    public DBInit(CommandBus commandBus, @Qualifier("mongoTemplate") CFMongoTemplate systemMongo, MongoEventStore eventStore,
-                  CFMongoTemplate mongoTemplate, MongoTemplate systemAxonSagaMongo) {
+    public DBInit(CommandBus commandBus, @Qualifier("mongoTemplate") CFMongoTemplate systemMongo, MongoEventStore eventStore, CFMongoTemplate mongoTemplate,
+                  MongoTemplate systemAxonSagaMongo) {
         this.commandBus = commandBus;
         systemAxonMongo = systemMongo;
         this.eventStore = eventStore;

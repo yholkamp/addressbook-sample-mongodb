@@ -20,30 +20,30 @@ public class PhoneNumberEntry {
     private PhoneNumberType phoneNumberType;
 
     /**
-     * Eclipse-generated hashCode method.
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
-        result = prime * result + ((phoneNumberType == null) ? 0 : phoneNumberType.hashCode());
-        return result;
-    }
-
-    /**
      * Eclipse-generated equals method.
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
         PhoneNumberEntry other = (PhoneNumberEntry) obj;
         if (phoneNumber == null) {
-            if (other.phoneNumber != null) return false;
-        } else if (!phoneNumber.equals(other.phoneNumber)) return false;
-        if (phoneNumberType != other.phoneNumberType) return false;
+            if (other.phoneNumber != null) {
+                return false;
+            }
+        } else if (!phoneNumber.equals(other.phoneNumber)) {
+            return false;
+        }
+        if (phoneNumberType != other.phoneNumberType) {
+            return false;
+        }
         return true;
     }
 
@@ -55,6 +55,18 @@ public class PhoneNumberEntry {
         return phoneNumberType;
     }
 
+    /**
+     * Eclipse-generated hashCode method.
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
+        result = prime * result + ((phoneNumberType == null) ? 0 : phoneNumberType.hashCode());
+        return result;
+    }
+
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -62,5 +74,5 @@ public class PhoneNumberEntry {
     public void setPhoneNumberType(PhoneNumberType phoneNumberType) {
         this.phoneNumberType = phoneNumberType;
     }
-    
+
 }

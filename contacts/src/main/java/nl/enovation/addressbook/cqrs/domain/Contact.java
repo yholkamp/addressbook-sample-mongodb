@@ -18,9 +18,6 @@ package nl.enovation.addressbook.cqrs.domain;
 
 import javax.validation.constraints.NotNull;
 
-import org.axonframework.domain.AggregateIdentifier;
-import org.axonframework.eventhandling.annotation.EventHandler;
-import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import nl.enovation.addressbook.cqrs.event.ContactCreatedEvent;
 import nl.enovation.addressbook.cqrs.event.ContactRemovedEvent;
 import nl.enovation.addressbook.cqrs.event.ContactUpdatedEvent;
@@ -29,6 +26,9 @@ import nl.enovation.addressbook.cqrs.event.PhoneNumberRemovedEvent;
 import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 
+import org.axonframework.domain.AggregateIdentifier;
+import org.axonframework.eventhandling.annotation.EventHandler;
+import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
@@ -41,6 +41,11 @@ import org.springframework.util.Assert;
  * @author Allard Buijze, Yorick Holkamp
  */
 public class Contact extends AbstractAnnotatedAggregateRoot {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -382645902899459112L;
 
     private static final Logger logger = LoggerFactory.getLogger(Contact.class);
 
@@ -71,6 +76,17 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
     }
 
     /**
+     * Adds the provided phoneNumber
+     * 
+     * @param phoneNumber
+     */
+    public void addPhoneNumber(PhoneNumberEntry phoneNumber) {
+        Assert.notNull(getIdentifier(), "Identifier cannot be null");
+
+        apply(new PhoneNumberAddedEvent(getIdentifier(), phoneNumber));
+    }
+
+    /**
      * Changes the attributes to match the attributes of a given ContactEntry.
      * 
      * @param contact
@@ -80,31 +96,13 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
         Assert.notNull(getIdentifier(), "Identifier cannot be null");
         apply(new ContactUpdatedEvent(getIdentifier(), contact));
     }
-    
-    /**
-     * Adds the provided phoneNumber
-     * 
-     * @param phoneNumber
-     */
-    public void addPhoneNumber(PhoneNumberEntry phoneNumber) {
-        Assert.notNull(getIdentifier(), "Identifier cannot be null");
-        
-        apply(new PhoneNumberAddedEvent(getIdentifier(), phoneNumber));
-    }
-    
-    public void removePhoneNumber(String phoneNumberId) {
-        Assert.notNull(getIdentifier(), "Identifier cannot be null");
-        Assert.notNull(phoneNumberId, "phoneNumber cannot be null");
-        
-        apply(new PhoneNumberRemovedEvent(getIdentifier(), phoneNumberId));        
-    }
 
     /**
      * Deletes the contact from our domain
      */
     public void delete() {
         Assert.notNull(getIdentifier(), "Identifier cannot be null");
-        
+
         apply(new ContactRemovedEvent(getIdentifier()));
     }
 
@@ -119,16 +117,6 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
     }
 
     /**
-     * Logs the propagation of a ContactCreatedEvent.
-     * 
-     * @param event
-     */
-    @EventHandler
-    protected void handleContactCreatedEvent(ContactCreatedEvent event) {
-        logger.debug("Contact received a ContactCreatedEvent, identifier: {}", identifier);
-    }
-
-    /**
      * Logs the propagation of a ContactUpdatedEvent.
      * 
      * @param event
@@ -137,7 +125,16 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
     protected void handlContactUpdatedEvent(ContactUpdatedEvent event) {
         logger.debug("Contact received a ContactUpdatedEvent, identifier: {}", identifier);
     }
-    
+
+    /**
+     * Logs the propagation of a ContactCreatedEvent.
+     * 
+     * @param event
+     */
+    @EventHandler
+    protected void handleContactCreatedEvent(ContactCreatedEvent event) {
+        logger.debug("Contact received a ContactCreatedEvent, identifier: {}", identifier);
+    }
 
     /**
      * Logs the propagation of a PhoneNumberCreatedEvent.
@@ -157,5 +154,12 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
     @EventHandler
     protected void handlePhoneNumberRemovedEvent(PhoneNumberRemovedEvent event) {
         logger.debug("Contact received a PhoneNumberRemovedEvent, identifier: {}", identifier);
+    }
+
+    public void removePhoneNumber(String phoneNumberId) {
+        Assert.notNull(getIdentifier(), "Identifier cannot be null");
+        Assert.notNull(phoneNumberId, "phoneNumber cannot be null");
+
+        apply(new PhoneNumberRemovedEvent(getIdentifier(), phoneNumberId));
     }
 }

@@ -1,8 +1,8 @@
 package nl.enovation.addressbook.cqrs.event;
 
-import org.axonframework.domain.AggregateIdentifier;
-
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
+
+import org.axonframework.domain.AggregateIdentifier;
 
 /**
  * Abstract class containing all Contact model fields for CRUD related events.

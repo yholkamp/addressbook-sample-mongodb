@@ -50,6 +50,10 @@ public class ContactCommandHandler {
 
     private Repository<Contact> contactRepository;
 
+    public Repository<Contact> getContactRepository() {
+        return contactRepository;
+    }
+
     /**
      * Creates a new contact based on the provided data.
      * 
@@ -64,6 +68,27 @@ public class ContactCommandHandler {
 
         Contact contact = new Contact(command.getContactId(), command.getContactEntry());
         contactRepository.add(contact);
+    }
+
+    /**
+     * Adds a new phone number to the list of phone numbers of the provided contact.
+     * <p/>
+     * An {@code AggregateNotFoundException} is thrown if the identifier does not represent a valid contact.
+     * 
+     * @param command
+     *            UpdateContactCommand that contains the identifier and the data to be updated
+     * @param unitOfWork
+     *            Unit of work for the current running thread
+     */
+    @CommandHandler
+    public void handleCreatePhoneNumber(final CreatePhoneNumberCommand command, UnitOfWork unitOfWork) {
+        logger.debug("Received a updateContactCommand for id : {}", command.getContactId());
+        Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
+
+        Contact contact = contactRepository.load(command.getContactId());
+        Assert.notNull(contact.getIdentifier(), "Contact identifier cannot be null");
+
+        contact.addPhoneNumber(command.getPhoneNumber());
     }
 
     /**
@@ -82,6 +107,27 @@ public class ContactCommandHandler {
         Contact contact = contactRepository.load(command.getContactId());
         logger.debug("Contact identifier: " + contact.getIdentifier());
         contact.delete();
+    }
+
+    /**
+     * Removes a phone number from the list of phone numbers of the provided contact.
+     * <p/>
+     * An {@code AggregateNotFoundException} is thrown if the identifier does not represent a valid contact.
+     * 
+     * @param command
+     *            UpdateContactCommand that contains the identifier and the data to be updated
+     * @param unitOfWork
+     *            Unit of work for the current running thread
+     */
+    @CommandHandler
+    public void handleRemovePhoneNumber(final RemovePhoneNumberCommand command, UnitOfWork unitOfWork) {
+        logger.debug("Received a updateContactCommand for id : {}", command.getContactId());
+        Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
+
+        Contact contact = contactRepository.load(command.getContactId());
+        Assert.notNull(contact.getIdentifier(), "Contact identifier cannot be null");
+
+        contact.removePhoneNumber(command.getPhoneNumberId());
     }
 
     /**
@@ -104,49 +150,7 @@ public class ContactCommandHandler {
 
         contact.change(command.getContactEntry());
     }
-    
-    /**
-     * Adds a new phone number to the list of phone numbers of the provided contact.
-     * <p/>
-     * An {@code AggregateNotFoundException} is thrown if the identifier does not represent a valid contact.
-     * 
-     * @param command
-     *            UpdateContactCommand that contains the identifier and the data to be updated
-     * @param unitOfWork
-     *            Unit of work for the current running thread
-     */
-    @CommandHandler
-    public void handleCreatePhoneNumber(final CreatePhoneNumberCommand command, UnitOfWork unitOfWork) {
-        logger.debug("Received a updateContactCommand for id : {}", command.getContactId());
-        Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
 
-        Contact contact = contactRepository.load(command.getContactId());
-        Assert.notNull(contact.getIdentifier(), "Contact identifier cannot be null");
-
-        contact.addPhoneNumber(command.getPhoneNumber());
-    }
-    
-    /**
-     * Removes a phone number from the list of phone numbers of the provided contact.
-     * <p/>
-     * An {@code AggregateNotFoundException} is thrown if the identifier does not represent a valid contact.
-     * 
-     * @param command
-     *            UpdateContactCommand that contains the identifier and the data to be updated
-     * @param unitOfWork
-     *            Unit of work for the current running thread
-     */
-    @CommandHandler
-    public void handleRemovePhoneNumber(final RemovePhoneNumberCommand command, UnitOfWork unitOfWork) {
-        logger.debug("Received a updateContactCommand for id : {}", command.getContactId());
-        Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
-
-        Contact contact = contactRepository.load(command.getContactId());
-        Assert.notNull(contact.getIdentifier(), "Contact identifier cannot be null");
-
-        contact.removePhoneNumber(command.getPhoneNumberId());
-    }
-    
     /**
      * Sets the contact domain event contactRepository.
      * 
@@ -156,10 +160,6 @@ public class ContactCommandHandler {
     @Autowired
     @Qualifier("contactRepository")
     public void setContactRepository(Repository<Contact> repository) {
-        this.contactRepository = repository;
-    }
-    
-    public Repository<Contact> getContactRepository() {
-       return  this.contactRepository;
+        contactRepository = repository;
     }
 }

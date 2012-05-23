@@ -1,25 +1,24 @@
 package nl.enovation.addressbook.cqrs.commandhandler;
 
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import nl.enovation.addressbook.cqrs.commandhandler.ContactCommandHandler;
-import org.axonframework.domain.AggregateIdentifier;
-import org.axonframework.domain.UUIDAggregateIdentifier;
-import org.axonframework.repository.Repository;
 import nl.enovation.addressbook.cqrs.command.CreateContactCommand;
 import nl.enovation.addressbook.cqrs.command.RemoveContactCommand;
 import nl.enovation.addressbook.cqrs.command.UpdateContactCommand;
 import nl.enovation.addressbook.cqrs.domain.Contact;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 
+import org.axonframework.domain.AggregateIdentifier;
+import org.axonframework.domain.UUIDAggregateIdentifier;
+import org.axonframework.repository.Repository;
 import org.axonframework.unitofwork.UnitOfWork;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Jettro Coenradie
