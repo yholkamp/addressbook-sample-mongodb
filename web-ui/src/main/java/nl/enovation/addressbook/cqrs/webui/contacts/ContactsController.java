@@ -34,6 +34,7 @@ import org.axonframework.domain.UUIDAggregateIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -51,12 +52,13 @@ public class ContactsController {
     private final static Logger logger = LoggerFactory.getLogger(ContactsController.class);
 
     @Autowired
+    @Qualifier("contactQueryRepository")
     private ContactQueryRepositoryImpl contactRepositoryImpl;
 
     private CommandBus commandBus;
 
     @Autowired
-    public ContactsController(ContactQueryRepositoryImpl contactRepository, CommandBus commandBus) {
+    public ContactsController(@Qualifier("contactQueryRepository")ContactQueryRepositoryImpl contactRepository, CommandBus commandBus) {
         contactRepositoryImpl = contactRepository;
         this.commandBus = commandBus;
     }
