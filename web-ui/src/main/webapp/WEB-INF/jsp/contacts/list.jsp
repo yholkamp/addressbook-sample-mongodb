@@ -11,7 +11,7 @@
     </ul>
 </content>
 
-<p class="pull-left"><a href="${ctx}/contacts/new">Create a new contact</a></p>
+<p class="pull-left"><a href="${ctx}/contacts/new" class="btn">Create a new contact</a></p>
 
 <form:form action="${ctx}/contacts/search" commandName="searchForm" cssClass="form-horizontal form-search pull-right" method="POST">
     <form:input path="searchValue" cssClass="input-medium search-query"/>
