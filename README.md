@@ -1,7 +1,7 @@
 Addressbook Sample Applications
 ===========================
 
-The Addressbook Sample \[MongoDB/JPA\] projects are sample applications implementing the same set of features; basic CRUD actions for contacts, adding and removing phone numbers to a contact as well as searching the list of contacts. These projects are created to function as sandbox applications for changes, new technologies and/or comparisons in development effort.
+The Addressbook Sample MongoDB and JPA projects are sample applications implementing the same set of features; basic CRUD actions for contacts, adding and removing phone numbers to a contact as well as searching the list of contacts. These projects are created to function as sandbox applications for changes, new technologies and/or comparisons in development effort.
 
 
 Key Features
