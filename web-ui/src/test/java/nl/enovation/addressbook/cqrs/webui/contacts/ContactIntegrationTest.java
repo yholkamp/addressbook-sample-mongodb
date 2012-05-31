@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static org.junit.Assert.assertNotNull;
 
 /**
+ * Basic test to tell if the autowiring is working properly. 
  * @author Allard Buijze Modified by Yorick
  */
 @RunWith(SpringJUnit4ClassRunner.class)

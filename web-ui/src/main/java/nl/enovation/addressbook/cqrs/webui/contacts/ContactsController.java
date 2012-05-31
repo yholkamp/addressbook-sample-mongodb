@@ -114,7 +114,7 @@ public class ContactsController {
         logger.debug("Dispatching command with name : {}", command.toString());
         commandBus.dispatch(command);
 
-        return "redirect:/contacts";
+        return "redirect:/contacts/" + contact.getIdentifier();
     }
 
     @RequestMapping(value = "new", method = RequestMethod.GET)
@@ -125,7 +125,7 @@ public class ContactsController {
     }
 
     @RequestMapping(value = "new", method = RequestMethod.POST)
-    public String formNewSubmit(@Valid ContactEntry contact, BindingResult bindingResult) {
+    public String formNewSubmit(@ModelAttribute("contact") @Valid ContactEntry contact, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "contacts/new";
         }
@@ -135,7 +135,7 @@ public class ContactsController {
         logger.debug("Dispatching command with name : {}", command.toString());
         commandBus.dispatch(command);
 
-        return "redirect:/contacts";
+        return "redirect:/contacts/" + contact.getIdentifier();
     }
 
     @RequestMapping(method = RequestMethod.GET)

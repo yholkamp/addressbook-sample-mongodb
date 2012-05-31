@@ -144,7 +144,7 @@ public class ContactsControllerIntegrationTest {
         assertEquals(contactEntry, contactFromDb);
 
         // Check that we're back to the overview
-        assertEquals("redirect:/contacts", view);
+        assertEquals("redirect:/contacts/"+contactEntry.getIdentifier(), view);
     }
 
     @Test
@@ -175,7 +175,7 @@ public class ContactsControllerIntegrationTest {
         assertEquals("changedFirstName", contactFromDb.getFirstName());
 
         // Check that we're back to the overview
-        assertEquals("redirect:/contacts", view);
+        assertEquals("redirect:/contacts/"+contactEntry.getIdentifier(), view);
     }
 
     @Test

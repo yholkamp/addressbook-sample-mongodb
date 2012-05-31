@@ -11,6 +11,6 @@
     </ul>
 </content>
 
-<form:form commandName="contact" cssClass="form-horizontal">
+<form:form commandName="contact" modelAttribute="contact" cssClass="form-horizontal">
     <%@include file="form.jsp" %>
 </form:form>
