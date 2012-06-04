@@ -22,6 +22,8 @@ import javax.validation.constraints.Size;
 
 import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -50,78 +52,22 @@ public class ContactEntry {
 
     private List<PhoneNumberEntry> phoneNumbers;
 
-    /**
-     * Eclipse-generated equals method.
-     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(identifier).append(firstName).append(lastName).append(street).append(city).append(zipCode)
+                                    .append(phoneNumbers.hashCode()).append(department).toHashCode();
+    }
+
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
+        if (obj instanceof ContactEntry) {
+            final ContactEntry other = (ContactEntry) obj;
+            return new EqualsBuilder().append(identifier, other.getIdentifier()).append(firstName, other.getFirstName()).append(lastName, other.getLastName())
+                                      .append(street, other.getStreet()).append(city, other.getCity()).append(zipCode, other.getZipCode())
+                                      .append(phoneNumbers, other.getPhoneNumbers()).append(department, other.getDepartment()).isEquals();
+        } else {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        ContactEntry other = (ContactEntry) obj;
-        if (city == null) {
-            if (other.city != null) {
-                return false;
-            }
-        } else if (!city.equals(other.city)) {
-            return false;
-        }
-        if (department == null) {
-            if (other.department != null) {
-                return false;
-            }
-        } else if (!department.equals(other.department)) {
-            return false;
-        }
-        if (firstName == null) {
-            if (other.firstName != null) {
-                return false;
-            }
-        } else if (!firstName.equals(other.firstName)) {
-            return false;
-        }
-        if (identifier == null) {
-            if (other.identifier != null) {
-                return false;
-            }
-        } else if (!identifier.equals(other.identifier)) {
-            return false;
-        }
-        if (lastName == null) {
-            if (other.lastName != null) {
-                return false;
-            }
-        } else if (!lastName.equals(other.lastName)) {
-            return false;
-        }
-        if (phoneNumbers == null) {
-            if (other.phoneNumbers != null) {
-                return false;
-            }
-        } else if (!phoneNumbers.equals(other.phoneNumbers)) {
-            return false;
-        }
-        if (street == null) {
-            if (other.street != null) {
-                return false;
-            }
-        } else if (!street.equals(other.street)) {
-            return false;
-        }
-        if (zipCode == null) {
-            if (other.zipCode != null) {
-                return false;
-            }
-        } else if (!zipCode.equals(other.zipCode)) {
-            return false;
-        }
-        return true;
     }
 
     public String getCity() {
@@ -167,24 +113,6 @@ public class ContactEntry {
 
     public String getZipCode() {
         return zipCode;
-    }
-
-    /**
-     * Eclipse-generated hashCode method.
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((city == null) ? 0 : city.hashCode());
-        result = prime * result + ((department == null) ? 0 : department.hashCode());
-        result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-        result = prime * result + ((identifier == null) ? 0 : identifier.hashCode());
-        result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-        result = prime * result + ((phoneNumbers == null) ? 0 : phoneNumbers.hashCode());
-        result = prime * result + ((street == null) ? 0 : street.hashCode());
-        result = prime * result + ((zipCode == null) ? 0 : zipCode.hashCode());
-        return result;
     }
 
     public void setCity(String city) {
