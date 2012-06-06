@@ -10,7 +10,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * Plain Old Java Object representing a phone number in our system.
+ * Plain Old Java Object representing a phone number in our system, currently for both the main view and the domain.
  * 
  * @author Yorick Holkamp
  */

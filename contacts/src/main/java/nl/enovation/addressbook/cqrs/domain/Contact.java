@@ -42,9 +42,6 @@ import org.springframework.util.Assert;
  */
 public class Contact extends AbstractAnnotatedAggregateRoot {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -382645902899459112L;
 
     private static final Logger logger = LoggerFactory.getLogger(Contact.class);

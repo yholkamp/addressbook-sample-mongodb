@@ -21,6 +21,8 @@ import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
 import org.axonframework.domain.AggregateIdentifier;
 
 /**
+ * Event fired when a PhoneNumber is added to a contact.
+ *
  * @author Yorick Holkamp
  */
 public class PhoneNumberAddedEvent extends AbstractContactEvent {

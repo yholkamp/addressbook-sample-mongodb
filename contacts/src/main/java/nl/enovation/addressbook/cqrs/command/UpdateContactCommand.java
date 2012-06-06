@@ -22,7 +22,7 @@ import org.axonframework.domain.AggregateIdentifier;
 
 /**
  * <p>
- * Command that wants to change the name of the contact and requires the new contact name to do that
+ * Updates the given contact using the properties of the given ContactEntry.
  * </p>
  * 
  * @author Jettro Coenradie

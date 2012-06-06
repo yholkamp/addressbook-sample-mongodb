@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package nl.enovation.addressbook.cqrs.webui.contacts;
+package nl.enovation.addressbook.cqrs.webui.controllers;
 
 import javax.validation.Valid;
 
@@ -40,6 +40,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * Controller handling the creation and deletion of PhoneNumbers for our application.
+ *
  * @author Yorick Holkamp
  */
 @Controller
@@ -65,7 +67,7 @@ public class PhoneNumberController {
             logger.debug("Dispatching command with name : {}", command.toString());
             commandBus.dispatch(command);
 
-            return "redirect:/contacts/" + contactIdentifier;
+            return "redirect:/controllers/" + contactIdentifier;
         }
 
         return "phonenumbers/delete";
@@ -100,6 +102,6 @@ public class PhoneNumberController {
         logger.debug("Dispatching command with name : {}", command.toString());
         commandBus.dispatch(command);
 
-        return "redirect:/contacts/" + contactIdentifier;
+        return "redirect:/controllers/" + contactIdentifier;
     }
 }

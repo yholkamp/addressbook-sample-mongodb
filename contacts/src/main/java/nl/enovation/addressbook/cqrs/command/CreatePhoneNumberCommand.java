@@ -5,8 +5,10 @@ import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
 import org.axonframework.domain.AggregateIdentifier;
 
 /**
- * Command that will add a phone number to an existing contact
- * 
+ * <p>
+ * Create a new PhoneNumber and add it to the given existing contact.
+ * </p>
+ *
  * @author Yorick Holkamp
  */
 public class CreatePhoneNumberCommand extends AbstractContactCommand {

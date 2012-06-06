@@ -41,7 +41,7 @@ import org.springframework.util.Assert;
  * The provided contactRepository is used to store the changes.
  * </p>
  * 
- * @author Allard Buijze
+ * @author Allard Buijze, Yorick Holkamp
  */
 @Component
 public class ContactCommandHandler {

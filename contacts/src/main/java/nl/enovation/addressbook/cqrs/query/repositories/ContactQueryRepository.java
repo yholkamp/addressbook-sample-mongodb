@@ -21,7 +21,9 @@ import nl.enovation.addressbook.cqrs.query.ContactEntry;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
- * @author Jettro Coenradie, Yorick Holkamp
+ * Basic repository used for queries in the sample application.
+ *
+ * @author Jettro Coenradie, Maarten van Meijeren
  */
 public interface ContactQueryRepository extends PagingAndSortingRepository<ContactEntry, String>, ContactQueryRepositoryCustom {
 

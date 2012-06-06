@@ -1,4 +1,4 @@
-package nl.enovation.addressbook.cqrs.webui.contacts;
+package nl.enovation.addressbook.cqrs.webui.controllers;
 
 import nl.enovation.addressbook.cqrs.command.CreateContactCommand;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
@@ -71,7 +71,7 @@ public class ContactsControllerIntegrationTest {
         String view = controller.formDelete(contactEntry, mockBindingResult);
 
         // Check that we're shown the delete page again
-        assertEquals("contacts/delete", view);
+        assertEquals("controllers/delete", view);
     }
 
     @Test
@@ -86,7 +86,7 @@ public class ContactsControllerIntegrationTest {
         assertEquals("ContactEntry should have been removed", null, contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier()));
 
         // Check that we returned back to the contact list
-        assertEquals("redirect:/contacts", view);
+        assertEquals("redirect:/controllers", view);
     }
 
     @Test
@@ -94,7 +94,7 @@ public class ContactsControllerIntegrationTest {
         String view = controller.formDelete(contactEntry.getIdentifier(), model);
 
         // Check that we're shown the delete page again
-        assertEquals("contacts/delete", view);
+        assertEquals("controllers/delete", view);
     }
 
     @Test
@@ -105,17 +105,17 @@ public class ContactsControllerIntegrationTest {
         verify(model).addAttribute(eq("contact"), eq(contactEntry));
 
         // Check that we're shown the contact list view
-        assertEquals("contacts/details", view);
+        assertEquals("controllers/details", view);
     }
 
     @Test
     public void testListContacts() {
         String view = controller.list(model);
 
-        verify(model).addAttribute(eq("contacts"), anyList());
+        verify(model).addAttribute(eq("controllers"), anyList());
 
         // Check that we're shown the contact list view
-        assertEquals("contacts/list", view);
+        assertEquals("controllers/list", view);
     }
 
     @Test
@@ -123,7 +123,7 @@ public class ContactsControllerIntegrationTest {
         String view = controller.formNew(model);
 
         // Check that we're shown the contact list view
-        assertEquals("contacts/new", view);
+        assertEquals("controllers/new", view);
     }
 
     @Test
@@ -133,7 +133,7 @@ public class ContactsControllerIntegrationTest {
         String view = controller.formNewSubmit(contactEntry, mockBindingResult);
 
         // Check that we'reback to the original form
-        assertEquals("contacts/new", view);
+        assertEquals("controllers/new", view);
     }
 
     @Test
@@ -144,7 +144,7 @@ public class ContactsControllerIntegrationTest {
         assertEquals(contactEntry, contactFromDb);
 
         // Check that we're back to the overview
-        assertEquals("redirect:/contacts/"+contactEntry.getIdentifier(), view);
+        assertEquals("redirect:/controllers/"+contactEntry.getIdentifier(), view);
     }
 
     @Test
@@ -157,7 +157,7 @@ public class ContactsControllerIntegrationTest {
         String view = controller.formEditSubmit(contactEntry, mockBindingResult);
 
         // Check that we'reback to the original form
-        assertEquals("contacts/edit", view);
+        assertEquals("controllers/edit", view);
     }
 
     @Test
@@ -175,7 +175,7 @@ public class ContactsControllerIntegrationTest {
         assertEquals("changedFirstName", contactFromDb.getFirstName());
 
         // Check that we're back to the overview
-        assertEquals("redirect:/contacts/"+contactEntry.getIdentifier(), view);
+        assertEquals("redirect:/controllers/"+contactEntry.getIdentifier(), view);
     }
 
     @Test
@@ -186,6 +186,6 @@ public class ContactsControllerIntegrationTest {
         String view = controller.formEdit(contactEntry.getIdentifier(), model);
 
         // Check that we'reback to the original form
-        assertEquals("contacts/edit", view);
+        assertEquals("controllers/edit", view);
     }
 }

@@ -1,4 +1,4 @@
-package nl.enovation.addressbook.cqrs.webui.contacts;
+package nl.enovation.addressbook.cqrs.webui.controllers;
 
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
 

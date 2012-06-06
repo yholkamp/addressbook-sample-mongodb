@@ -1,4 +1,4 @@
-package nl.enovation.addressbook.cqrs.webui.contacts;
+package nl.enovation.addressbook.cqrs.webui.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +117,7 @@ public class PhoneNumberControllerIntegrationTest {
         String view = controller.formDelete(contactEntry.getIdentifier(), phoneNumber, mockBindingResult);
 
         // Check that we returned back to the contact list
-        assertEquals("redirect:/contacts/" + contactEntry.getIdentifier(), view);
+        assertEquals("redirect:/controllers/" + contactEntry.getIdentifier(), view);
 
         ContactEntry contactFromDb = contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier());
         assertEquals("PhoneNumber should have been removed", new ArrayList<PhoneNumberEntry>(), contactFromDb.getPhoneNumbers());
@@ -151,7 +151,7 @@ public class PhoneNumberControllerIntegrationTest {
         String view = controller.formNewSubmit(contactEntry.getIdentifier(), phoneNumber, mockBindingResult);
 
         // Check that we're back to the overview
-        assertEquals("redirect:/contacts/" + contactEntry.getIdentifier(), view);
+        assertEquals("redirect:/controllers/" + contactEntry.getIdentifier(), view);
 
         ContactEntry contactFromDb = contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier());
         assertNotNull("Should be able to find our contact in the db", contactFromDb);

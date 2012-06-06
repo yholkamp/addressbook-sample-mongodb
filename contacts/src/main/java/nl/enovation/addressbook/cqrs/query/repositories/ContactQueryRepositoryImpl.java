@@ -10,6 +10,12 @@ import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
+/**
+ * Implementation of the ContactQueryRepository and ContactQueryRepositoryCustom interfaces. Provides access to our
+ * query models in the database using the MongoDB CloudFoundry driver.
+ *
+ * @author Maarten van Meijeren
+ */
 public class ContactQueryRepositoryImpl extends CFMongoTemplate implements ContactQueryRepositoryCustom {
 
     @Autowired
@@ -19,8 +25,8 @@ public class ContactQueryRepositoryImpl extends CFMongoTemplate implements Conta
 
     /**
      * Delete contactEntry equal to parameter
-     * 
-     * @param contactEntry contactEntry that has to be deleted 
+     *
+     * @param contactEntry contactEntry that has to be deleted
      */
     public void delete(ContactEntry contactEntry) {
         Criteria idCriterion = new Criteria("_id").is(contactEntry.getIdentifier());
@@ -39,9 +45,8 @@ public class ContactQueryRepositoryImpl extends CFMongoTemplate implements Conta
 
     /**
      * find the contactEntry that has the identifier that is given by parameter
-     * 
+     *
      * @param contactIdentifier identifier for contactEntry that has to be found
-     * 
      * @return contactEntry with identifier equals to parameter
      */
     public ContactEntry findOne(String contactIdentifier) {
@@ -51,11 +56,10 @@ public class ContactQueryRepositoryImpl extends CFMongoTemplate implements Conta
     }
 
     /**
-     * find List of contactEntries that contains (sub)string searchValue 
-     * 
+     * find List of contactEntries that contains (sub)string searchValue
+     *
      * @param searchValue contains (sub)string that has to be found
-     * 
-     * @return List<ContactEntry> list of contactEntries that contain searchValue in first or lastName 
+     * @return List<ContactEntry> list of contactEntries that contain searchValue in first or lastName
      */
     @Override
     public List<ContactEntry> searchForNames(String searchValue) {

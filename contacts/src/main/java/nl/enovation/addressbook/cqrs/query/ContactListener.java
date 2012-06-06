@@ -36,7 +36,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 /**
- * @author Jettro Coenradie
+ * Main Event Listener in the sample application, handles all events that involve the contact class in our domain. This
+ * includes actions regarding PhoneNumbers as these are stored within a Contact.
+ *
+ * @author Jettro Coenradie, Yorick Holkamp
  */
 @Component
 public class ContactListener {
@@ -118,7 +121,7 @@ public class ContactListener {
         }
 
         Assert.isTrue(phoneNumberCount - 1 == phoneNumbers.size(), "PhoneNumber array length should have decreased by one, instead received "
-                                                                   + phoneNumberCount);
+                + phoneNumberCount);
         contact.setPhoneNumbers(phoneNumbers);
         contactRepository.save(contact);
     }

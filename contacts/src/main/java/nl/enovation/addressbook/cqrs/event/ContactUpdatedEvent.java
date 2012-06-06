@@ -21,6 +21,8 @@ import nl.enovation.addressbook.cqrs.query.ContactEntry;
 import org.axonframework.domain.AggregateIdentifier;
 
 /**
+ * Event for a contact updated event.
+ *
  * @author Allard Buijze
  */
 public class ContactUpdatedEvent extends AbstractContactCrudEvent {

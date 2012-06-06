@@ -1,5 +1,11 @@
-package nl.enovation.addressbook.cqrs.webui.contacts;
+package nl.enovation.addressbook.cqrs.webui.pojo;
 
+/**
+ * Plain Old Java Object providing a simple way to pass around information regarding a generic search query in the
+ * application.
+ *
+ * @author Maarten van Meijeren
+ */
 public class SearchForm {
 
     private String searchValue;

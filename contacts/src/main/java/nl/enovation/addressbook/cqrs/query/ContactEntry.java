@@ -28,6 +28,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
+ * Class representing a ContactEntry in our main view. Used for both generic listing and detailed viewing of a contact.
+ *
  * @author Allard Buijze, Yorick Holkamp
  */
 @Document
@@ -88,10 +90,6 @@ public class ContactEntry {
 
     public String getLastName() {
         return lastName;
-    }
-
-    public String getName() {
-        return firstName;
     }
 
     public PhoneNumberEntry getPhoneNumberEntry(String number) {

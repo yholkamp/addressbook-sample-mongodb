@@ -19,6 +19,8 @@ package nl.enovation.addressbook.cqrs.event;
 import org.axonframework.domain.AggregateIdentifier;
 
 /**
+ * Event for a contact removed event.
+ *
  * @author Allard Buijze
  */
 public class ContactRemovedEvent extends AbstractContactEvent {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package nl.enovation.addressbook.cqrs.webui.contacts;
+package nl.enovation.addressbook.cqrs.webui.controllers;
 
 import java.util.List;
 
@@ -26,6 +26,7 @@ import nl.enovation.addressbook.cqrs.command.RemoveContactCommand;
 import nl.enovation.addressbook.cqrs.command.UpdateContactCommand;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
+import nl.enovation.addressbook.cqrs.webui.pojo.SearchForm;
 
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.domain.AggregateIdentifier;
@@ -44,6 +45,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+ * Controller handling all actions regarding controllers.
+ *
  * @author Jettro Coenradie, Yorick Holkamp
  */
 @Controller
@@ -68,7 +71,7 @@ public class ContactsController {
         ContactEntry contactEntry = contactRepositoryImpl.findOne(identifier);
         model.addAttribute("identifier", identifier);
         model.addAttribute("contact", contactEntry);
-        return "contacts/details";
+        return "controllers/details";
     }
 
     @RequestMapping(value = "{identifier}/delete", method = RequestMethod.POST)
@@ -80,16 +83,16 @@ public class ContactsController {
             logger.debug("Dispatching command with name : {}", command.toString());
             commandBus.dispatch(command);
 
-            return "redirect:/contacts";
+            return "redirect:/controllers";
         }
-        return "contacts/delete";
+        return "controllers/delete";
     }
 
     @RequestMapping(value = "{identifier}/delete", method = RequestMethod.GET)
     public String formDelete(@PathVariable String identifier, Model model) {
         ContactEntry contactEntry = contactRepositoryImpl.findOne(identifier);
         model.addAttribute("contact", contactEntry);
-        return "contacts/delete";
+        return "controllers/delete";
     }
 
     @RequestMapping(value = "{identifier}/edit", method = RequestMethod.GET)
@@ -99,13 +102,13 @@ public class ContactsController {
             throw new RuntimeException("contactRepositoryImpl with ID " + identifier + " could not be found.");
         }
         model.addAttribute("contact", contact);
-        return "contacts/edit";
+        return "controllers/edit";
     }
 
     @RequestMapping(value = "{identifier}/edit", method = RequestMethod.POST)
     public String formEditSubmit(@ModelAttribute("contact") @Valid ContactEntry contact, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "contacts/edit";
+            return "controllers/edit";
         }
 
         AggregateIdentifier identifier = new StringAggregateIdentifier(contact.getIdentifier());
@@ -114,20 +117,20 @@ public class ContactsController {
         logger.debug("Dispatching command with name : {}", command.toString());
         commandBus.dispatch(command);
 
-        return "redirect:/contacts/" + contact.getIdentifier();
+        return "redirect:/controllers/" + contact.getIdentifier();
     }
 
     @RequestMapping(value = "new", method = RequestMethod.GET)
     public String formNew(Model model) {
         ContactEntry attributeValue = new ContactEntry();
         model.addAttribute("contact", attributeValue);
-        return "contacts/new";
+        return "controllers/new";
     }
 
     @RequestMapping(value = "new", method = RequestMethod.POST)
     public String formNewSubmit(@ModelAttribute("contact") @Valid ContactEntry contact, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "contacts/new";
+            return "controllers/new";
         }
 
         AbstractContactCrudCommand command = new CreateContactCommand(new UUIDAggregateIdentifier(), contact);
@@ -135,24 +138,24 @@ public class ContactsController {
         logger.debug("Dispatching command with name : {}", command.toString());
         commandBus.dispatch(command);
 
-        return "redirect:/contacts/" + contact.getIdentifier();
+        return "redirect:/controllers/" + contact.getIdentifier();
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
         SearchForm searchForm = new SearchForm();
-        model.addAttribute("contacts", contactRepositoryImpl.findAll(ContactEntry.class));
+        model.addAttribute("controllers", contactRepositoryImpl.findAll(ContactEntry.class));
         model.addAttribute("searchForm", searchForm);
-        return "contacts/list";
+        return "controllers/list";
     }
 
     @RequestMapping(value = "search", method = RequestMethod.POST)
     public String search(@ModelAttribute("searchForm") SearchForm searchForm, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "contacts/list";
+            return "controllers/list";
         }
         List<ContactEntry> contacts = contactRepositoryImpl.searchForNames(searchForm.getSearchValue());
-        model.addAttribute("contacts", contacts);
-        return "contacts/list";
+        model.addAttribute("controllers", contacts);
+        return "controllers/list";
     }
 }

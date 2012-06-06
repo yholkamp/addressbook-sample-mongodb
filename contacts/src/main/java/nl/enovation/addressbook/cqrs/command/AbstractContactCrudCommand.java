@@ -6,7 +6,7 @@ import org.axonframework.domain.AggregateIdentifier;
 
 /**
  * <p>
- * Parent class for all contact related commands that require a ContactEntry for their completion.
+ * Parent class for all contact related commands that require a full ContactEntry for their completion.
  * </p>
  * 
  * @author Yorick Holkamp
