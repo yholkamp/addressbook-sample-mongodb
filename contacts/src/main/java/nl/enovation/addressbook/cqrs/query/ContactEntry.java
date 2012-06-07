@@ -92,6 +92,11 @@ public class ContactEntry {
         return lastName;
     }
 
+    /**
+     * Retrieves a specific PhoneNumber entry using a phone number string if it can be found.
+     * @param number String containing the phone number
+     * @return the PhoneNumberEntry containing the provided phone number string
+     */
     public PhoneNumberEntry getPhoneNumberEntry(String number) {
         for (PhoneNumberEntry phoneNumber : phoneNumbers) {
             if (number.equals(phoneNumber.getPhoneNumber())) {

@@ -43,13 +43,13 @@ import org.springframework.util.Assert;
  */
 @Component
 public class ContactListener {
-    private static final Logger logger = LoggerFactory.getLogger(ContactListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContactListener.class);
 
     private ContactQueryRepositoryImpl contactRepository;
 
     @EventHandler
     public void handle(ContactCreatedEvent event) {
-        logger.debug("Received a contactCreatedEvent for a contact with id : {}", event.getContactId());
+        LOGGER.debug("Received a contactCreatedEvent for a contact with id : {}", event.getContactId());
 
         ContactEntry contactEntry = event.getContactEntry();
         contactEntry.setIdentifier(event.getContactId().asString());
@@ -59,7 +59,7 @@ public class ContactListener {
 
     @EventHandler
     public void handle(ContactRemovedEvent event) {
-        logger.debug("Received a ContactRemovedEvent for a contact with id : {}", event.getContactId());
+        LOGGER.debug("Received a ContactRemovedEvent for a contact with id : {}", event.getContactId());
 
         ContactEntry contactEntry = contactRepository.findOne(event.getContactId().asString());
 
@@ -68,7 +68,7 @@ public class ContactListener {
 
     @EventHandler
     public void handle(ContactUpdatedEvent event) {
-        logger.debug("Received a ContactUpdatedEvent for a contact id : {}", event.getContactId());
+        LOGGER.debug("Received a ContactUpdatedEvent for a contact id : {}", event.getContactId());
 
         ContactEntry contactEntry = event.getContactEntry();
         contactEntry.setIdentifier(event.getContactId().asString());
@@ -78,12 +78,11 @@ public class ContactListener {
 
     @EventHandler
     public void handle(PhoneNumberAddedEvent event) {
-        logger.debug("Received a PhoneNumberAddedEvent for a contact id : {}", event.getContactId());
+        LOGGER.debug("Received a PhoneNumberAddedEvent for a contact id : {}", event.getContactId());
 
-        // TODO: Implement a MongoDB-friendly way to add the phone number without having to load & save the entire model
         ContactEntry contact = contactRepository.findOne(event.getContactId().asString());
         List<PhoneNumberEntry> phoneNumbers = contact.getPhoneNumbers();
-        logger.debug("Found contactEntry with id {} and phoneNumbers {}", contact.getIdentifier(), phoneNumbers);
+        LOGGER.debug("Found contactEntry with id {} and phoneNumbers {}", contact.getIdentifier(), phoneNumbers);
 
         if (phoneNumbers == null) {
             phoneNumbers = new ArrayList<PhoneNumberEntry>();
@@ -91,17 +90,16 @@ public class ContactListener {
 
         phoneNumbers.add(event.getPhoneNumber());
         contact.setPhoneNumbers(phoneNumbers);
-        logger.debug("Set new phone numbers {}", phoneNumbers);
+        LOGGER.debug("Set new phone numbers {}", phoneNumbers);
 
         contactRepository.save(contact);
-        logger.debug("Saved contact {}", contact.getIdentifier());
+        LOGGER.debug("Saved contact {}", contact.getIdentifier());
     }
 
     @EventHandler
     public void handle(PhoneNumberRemovedEvent event) {
-        logger.debug("Received a PhoneNumberRemovedEvent for a contact id : {} with phone number", event.getContactId(), event.getPhoneNumber());
+        LOGGER.debug("Received a PhoneNumberRemovedEvent for a contact id : {} with phone number", event.getContactId(), event.getPhoneNumber());
 
-        // TODO: Implement a MongoDB-friendly way to remove the phone number without having to load & save the entire model
         ContactEntry contact = contactRepository.findOne(event.getContactId().asString());
         List<PhoneNumberEntry> phoneNumbers = contact.getPhoneNumbers();
 
@@ -109,19 +107,14 @@ public class ContactListener {
             phoneNumbers = new ArrayList<PhoneNumberEntry>();
         }
 
-        int phoneNumberCount = phoneNumbers.size();
-
-        // TODO: Start using some other identifier or more elegant data structure
         for (PhoneNumberEntry phoneNumberEntry : phoneNumbers) {
             if (phoneNumberEntry.getPhoneNumber().equals(event.getPhoneNumber())) {
-                logger.debug("Found phoneNumber {}, removing it from Contact", phoneNumberEntry);
+                LOGGER.debug("Found phoneNumber {}, removing it from Contact", phoneNumberEntry);
                 phoneNumbers.remove(phoneNumberEntry);
                 break;
             }
         }
 
-        Assert.isTrue(phoneNumberCount - 1 == phoneNumbers.size(), "PhoneNumber array length should have decreased by one, instead received "
-                + phoneNumberCount);
         contact.setPhoneNumbers(phoneNumbers);
         contactRepository.save(contact);
     }

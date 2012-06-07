@@ -46,7 +46,7 @@ import org.springframework.util.Assert;
 @Component
 public class ContactCommandHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(ContactCommandHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContactCommandHandler.class);
 
     private Repository<Contact> contactRepository;
 
@@ -64,7 +64,7 @@ public class ContactCommandHandler {
      */
     @CommandHandler
     public void handleCreateContact(final CreateContactCommand command, UnitOfWork unitOfWork) {
-        logger.debug("Received a command for a new contact with id : {}", command.getContactId());
+        LOGGER.debug("Received a command for a new contact with id : {}", command.getContactId());
 
         Contact contact = new Contact(command.getContactId(), command.getContactEntry());
         contactRepository.add(contact);
@@ -82,7 +82,7 @@ public class ContactCommandHandler {
      */
     @CommandHandler
     public void handleCreatePhoneNumber(final CreatePhoneNumberCommand command, UnitOfWork unitOfWork) {
-        logger.debug("Received a updateContactCommand for id : {}", command.getContactId());
+        LOGGER.debug("Received a updateContactCommand for id : {}", command.getContactId());
         Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
 
         Contact contact = contactRepository.load(command.getContactId());
@@ -101,11 +101,11 @@ public class ContactCommandHandler {
      */
     @CommandHandler
     public void handleRemoveContact(RemoveContactCommand command, UnitOfWork unitOfWork) {
-        logger.debug("Received a remove command for contact with id : {}", command.getContactId());
+        LOGGER.debug("Received a remove command for contact with id : {}", command.getContactId());
         Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
 
         Contact contact = contactRepository.load(command.getContactId());
-        logger.debug("Contact identifier: " + contact.getIdentifier());
+        LOGGER.debug("Contact identifier: " + contact.getIdentifier());
         contact.delete();
     }
 
@@ -121,7 +121,7 @@ public class ContactCommandHandler {
      */
     @CommandHandler
     public void handleRemovePhoneNumber(final RemovePhoneNumberCommand command, UnitOfWork unitOfWork) {
-        logger.debug("Received a updateContactCommand for id : {}", command.getContactId());
+        LOGGER.debug("Received a updateContactCommand for id : {}", command.getContactId());
         Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
 
         Contact contact = contactRepository.load(command.getContactId());
@@ -142,7 +142,7 @@ public class ContactCommandHandler {
      */
     @CommandHandler
     public void handleUpdateContact(final UpdateContactCommand command, UnitOfWork unitOfWork) {
-        logger.debug("Received a updateContactCommand for id : {}", command.getContactId());
+        LOGGER.debug("Received a updateContactCommand for id : {}", command.getContactId());
         Assert.notNull(command.getContactId(), "ContactIdentifier may not be null");
 
         Contact contact = contactRepository.load(command.getContactId());

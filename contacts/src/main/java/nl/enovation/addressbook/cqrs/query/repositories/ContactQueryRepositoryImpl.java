@@ -35,7 +35,7 @@ public class ContactQueryRepositoryImpl extends CFMongoTemplate implements Conta
     }
 
     /**
-     * delete alle contactEntries from the database
+     * Delete all contactEntries from the database
      */
     public void deleteAll() {
         Criteria idCriterion = new Criteria();
@@ -44,7 +44,7 @@ public class ContactQueryRepositoryImpl extends CFMongoTemplate implements Conta
     }
 
     /**
-     * find the contactEntry that has the identifier that is given by parameter
+     * Find the contactEntry that has the identifier that is given by parameter
      *
      * @param contactIdentifier identifier for contactEntry that has to be found
      * @return contactEntry with identifier equals to parameter
@@ -56,7 +56,7 @@ public class ContactQueryRepositoryImpl extends CFMongoTemplate implements Conta
     }
 
     /**
-     * find List of contactEntries that contains (sub)string searchValue
+     * Find List of contactEntries that contains (sub)string searchValue
      *
      * @param searchValue contains (sub)string that has to be found
      * @return List<ContactEntry> list of contactEntries that contain searchValue in first or lastName

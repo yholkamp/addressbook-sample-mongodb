@@ -44,7 +44,7 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
 
     private static final long serialVersionUID = -382645902899459112L;
 
-    private static final Logger logger = LoggerFactory.getLogger(Contact.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Contact.class);
 
     @NotNull
     private AggregateIdentifier identifier;
@@ -120,7 +120,7 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
      */
     @EventHandler
     protected void handlContactUpdatedEvent(ContactUpdatedEvent event) {
-        logger.debug("Contact received a ContactUpdatedEvent, identifier: {}", identifier);
+        LOGGER.debug("Contact received a ContactUpdatedEvent, identifier: {}", identifier);
     }
 
     /**
@@ -130,7 +130,7 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
      */
     @EventHandler
     protected void handleContactCreatedEvent(ContactCreatedEvent event) {
-        logger.debug("Contact received a ContactCreatedEvent, identifier: {}", identifier);
+        LOGGER.debug("Contact received a ContactCreatedEvent, identifier: {}", identifier);
     }
 
     /**
@@ -140,7 +140,7 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
      */
     @EventHandler
     protected void handlePhoneNumberAddedEvent(PhoneNumberAddedEvent event) {
-        logger.debug("Contact received a PhoneNumberCreatedEvent, identifier: {}", identifier);
+        LOGGER.debug("Contact received a PhoneNumberCreatedEvent, identifier: {}", identifier);
     }
 
     /**
@@ -150,7 +150,7 @@ public class Contact extends AbstractAnnotatedAggregateRoot {
      */
     @EventHandler
     protected void handlePhoneNumberRemovedEvent(PhoneNumberRemovedEvent event) {
-        logger.debug("Contact received a PhoneNumberRemovedEvent, identifier: {}", identifier);
+        LOGGER.debug("Contact received a PhoneNumberRemovedEvent, identifier: {}", identifier);
     }
 
     public void removePhoneNumber(String phoneNumberId) {

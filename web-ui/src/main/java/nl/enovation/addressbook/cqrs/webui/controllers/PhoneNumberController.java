@@ -47,7 +47,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/contacts")
 public class PhoneNumberController {
-    private final static Logger logger = LoggerFactory.getLogger(PhoneNumberController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PhoneNumberController.class);
 
     private ContactQueryRepositoryImpl contactRepositoryImpl;
 
@@ -64,7 +64,7 @@ public class PhoneNumberController {
                              BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             RemovePhoneNumberCommand command = new RemovePhoneNumberCommand(new StringAggregateIdentifier(contactIdentifier), phoneNumber.getPhoneNumber());
-            logger.debug("Dispatching command with name : {}", command.toString());
+            LOGGER.debug("Dispatching command with name : {}", command.toString());
             commandBus.dispatch(command);
 
             return "redirect:/controllers/" + contactIdentifier;
@@ -99,7 +99,7 @@ public class PhoneNumberController {
         Assert.notNull(contactIdentifier);
 
         CreatePhoneNumberCommand command = new CreatePhoneNumberCommand(new StringAggregateIdentifier(contactIdentifier), phoneNumber);
-        logger.debug("Dispatching command with name : {}", command.toString());
+        LOGGER.debug("Dispatching command with name : {}", command.toString());
         commandBus.dispatch(command);
 
         return "redirect:/controllers/" + contactIdentifier;

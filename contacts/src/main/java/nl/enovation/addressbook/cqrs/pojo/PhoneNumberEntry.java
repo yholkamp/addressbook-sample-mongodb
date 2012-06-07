@@ -2,8 +2,6 @@ package nl.enovation.addressbook.cqrs.pojo;
 
 import javax.validation.constraints.Size;
 
-import nl.enovation.addressbook.cqrs.query.ContactEntry;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.springframework.data.annotation.Id;

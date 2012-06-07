@@ -52,7 +52,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/contacts")
 public class ContactsController {
-    private final static Logger logger = LoggerFactory.getLogger(ContactsController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContactsController.class);
 
     @Autowired
     @Qualifier("contactQueryRepository")
@@ -80,7 +80,7 @@ public class ContactsController {
             AggregateIdentifier identifier = new StringAggregateIdentifier(contact.getIdentifier());
             RemoveContactCommand command = new RemoveContactCommand(identifier);
 
-            logger.debug("Dispatching command with name : {}", command.toString());
+            LOGGER.debug("Dispatching command with name : {}", command.toString());
             commandBus.dispatch(command);
 
             return "redirect:/controllers";
@@ -98,9 +98,6 @@ public class ContactsController {
     @RequestMapping(value = "{identifier}/edit", method = RequestMethod.GET)
     public String formEdit(@PathVariable String identifier, Model model) {
         ContactEntry contact = contactRepositoryImpl.findOne(identifier);
-        if (contact == null) {
-            throw new RuntimeException("contactRepositoryImpl with ID " + identifier + " could not be found.");
-        }
         model.addAttribute("contact", contact);
         return "controllers/edit";
     }
@@ -114,7 +111,7 @@ public class ContactsController {
         AggregateIdentifier identifier = new StringAggregateIdentifier(contact.getIdentifier());
         AbstractContactCrudCommand command = new UpdateContactCommand(identifier, contact);
 
-        logger.debug("Dispatching command with name : {}", command.toString());
+        LOGGER.debug("Dispatching command with name : {}", command.toString());
         commandBus.dispatch(command);
 
         return "redirect:/controllers/" + contact.getIdentifier();
@@ -135,7 +132,7 @@ public class ContactsController {
 
         AbstractContactCrudCommand command = new CreateContactCommand(new UUIDAggregateIdentifier(), contact);
 
-        logger.debug("Dispatching command with name : {}", command.toString());
+        LOGGER.debug("Dispatching command with name : {}", command.toString());
         commandBus.dispatch(command);
 
         return "redirect:/controllers/" + contact.getIdentifier();

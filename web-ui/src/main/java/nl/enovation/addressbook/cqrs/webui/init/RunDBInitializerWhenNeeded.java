@@ -35,7 +35,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RunDBInitializerWhenNeeded implements ApplicationListener<ContextRefreshedEvent> {
 
-    private static final Logger logger = LoggerFactory.getLogger(RunDBInitializerWhenNeeded.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RunDBInitializerWhenNeeded.class);
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -43,7 +43,7 @@ public class RunDBInitializerWhenNeeded implements ApplicationListener<ContextRe
 
         if ("Root WebApplicationContext".equals(event.getApplicationContext().getDisplayName())) {
             init.createItems();
-            logger.info("The database has been created and refreshed with some data.");
+            LOGGER.info("The database has been created and refreshed with some data.");
         }
     }
 }
