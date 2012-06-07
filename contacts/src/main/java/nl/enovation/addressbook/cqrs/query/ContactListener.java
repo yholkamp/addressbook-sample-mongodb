@@ -25,7 +25,7 @@ import nl.enovation.addressbook.cqrs.event.ContactUpdatedEvent;
 import nl.enovation.addressbook.cqrs.event.PhoneNumberAddedEvent;
 import nl.enovation.addressbook.cqrs.event.PhoneNumberRemovedEvent;
 import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
-import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
+import nl.enovation.addressbook.cqrs.query.repository.ContactQueryRepositoryImpl;
 
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.slf4j.Logger;
@@ -33,12 +33,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
 /**
  * Main Event Listener in the sample application, handles all events that involve the contact class in our domain. This
  * includes actions regarding PhoneNumbers as these are stored within a Contact.
- *
+ * 
  * @author Jettro Coenradie, Yorick Holkamp
  */
 @Component

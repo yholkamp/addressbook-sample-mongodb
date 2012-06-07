@@ -12,7 +12,7 @@ import nl.enovation.addressbook.cqrs.event.ContactUpdatedEvent;
 import nl.enovation.addressbook.cqrs.event.PhoneNumberAddedEvent;
 import nl.enovation.addressbook.cqrs.event.PhoneNumberRemovedEvent;
 import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
-import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
+import nl.enovation.addressbook.cqrs.query.repository.ContactQueryRepositoryImpl;
 
 import org.axonframework.domain.AggregateIdentifier;
 import org.axonframework.domain.UUIDAggregateIdentifier;

@@ -20,7 +20,7 @@ import org.axonframework.domain.AggregateIdentifier;
 
 /**
  * Event fired when a PhoneNumber is removed from a contact.
- *
+ * 
  * @author Yorick Holkamp
  */
 public class PhoneNumberRemovedEvent extends AbstractContactEvent {

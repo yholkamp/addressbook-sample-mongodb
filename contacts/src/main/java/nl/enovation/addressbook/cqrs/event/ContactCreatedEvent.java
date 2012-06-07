@@ -22,7 +22,7 @@ import org.axonframework.domain.AggregateIdentifier;
 
 /**
  * Event for a contact created action.
- *
+ * 
  * @author Yorick Holkamp
  */
 public class ContactCreatedEvent extends AbstractContactCrudEvent {

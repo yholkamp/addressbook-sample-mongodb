@@ -5,7 +5,7 @@ import org.axonframework.domain.DomainEvent;
 
 /**
  * Abstract class for events requiring a Contact AggregateIdentifier.
- *
+ * 
  * @author Yorick Holkamp
  */
 public abstract class AbstractContactEvent extends DomainEvent {

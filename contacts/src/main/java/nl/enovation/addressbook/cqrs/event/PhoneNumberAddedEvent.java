@@ -22,7 +22,7 @@ import org.axonframework.domain.AggregateIdentifier;
 
 /**
  * Event fired when a PhoneNumber is added to a contact.
- *
+ * 
  * @author Yorick Holkamp
  */
 public class PhoneNumberAddedEvent extends AbstractContactEvent {

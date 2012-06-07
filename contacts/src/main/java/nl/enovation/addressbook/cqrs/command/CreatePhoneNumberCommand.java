@@ -8,7 +8,7 @@ import org.axonframework.domain.AggregateIdentifier;
  * <p>
  * Create a new PhoneNumber and add it to the given existing contact.
  * </p>
- *
+ * 
  * @author Yorick Holkamp
  */
 public class CreatePhoneNumberCommand extends AbstractContactCommand {

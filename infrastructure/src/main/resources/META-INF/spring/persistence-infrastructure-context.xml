@@ -21,11 +21,11 @@
 
 	<context:property-placeholder location="classpath*:/*.properties" />
 
-    <mongo:repositories base-package="**.query.repositories"
+    <mongo:repositories base-package="**.query.repository"
 		mongo-template-ref="mongoTemplate"  />
 
 	<bean id="contactQueryRepository"
-		class="nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl">
+		class="nl.enovation.addressbook.cqrs.query.repository.ContactQueryRepositoryImpl">
 	</bean> 
  
 	<bean id="mongoTemplate"

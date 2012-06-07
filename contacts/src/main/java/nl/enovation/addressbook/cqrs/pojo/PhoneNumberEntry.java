@@ -21,12 +21,6 @@ public class PhoneNumberEntry {
 
     private PhoneNumberType phoneNumberType;
 
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(phoneNumber).append(phoneNumberType).toHashCode();
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof PhoneNumberEntry) {
@@ -36,13 +30,18 @@ public class PhoneNumberEntry {
             return false;
         }
     }
-    
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     public PhoneNumberType getPhoneNumberType() {
         return phoneNumberType;
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(phoneNumber).append(phoneNumberType).toHashCode();
     }
 
     public void setPhoneNumber(String phoneNumber) {

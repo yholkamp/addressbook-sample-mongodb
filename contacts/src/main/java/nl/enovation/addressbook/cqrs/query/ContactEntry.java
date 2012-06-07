@@ -29,7 +29,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Class representing a ContactEntry in our main view. Used for both generic listing and detailed viewing of a contact.
- *
+ * 
  * @author Allard Buijze, Yorick Holkamp
  */
 @Document
@@ -53,12 +53,6 @@ public class ContactEntry {
     private String department;
 
     private List<PhoneNumberEntry> phoneNumbers;
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(identifier).append(firstName).append(lastName).append(street).append(city).append(zipCode)
-                                    .append(phoneNumbers.hashCode()).append(department).toHashCode();
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -94,7 +88,9 @@ public class ContactEntry {
 
     /**
      * Retrieves a specific PhoneNumber entry using a phone number string if it can be found.
-     * @param number String containing the phone number
+     * 
+     * @param number
+     *            String containing the phone number
      * @return the PhoneNumberEntry containing the provided phone number string
      */
     public PhoneNumberEntry getPhoneNumberEntry(String number) {
@@ -116,6 +112,12 @@ public class ContactEntry {
 
     public String getZipCode() {
         return zipCode;
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(identifier).append(firstName).append(lastName).append(street).append(city).append(zipCode)
+                                    .append(phoneNumbers.hashCode()).append(department).toHashCode();
     }
 
     public void setCity(String city) {
