@@ -86,7 +86,7 @@ public class ContactsControllerIntegrationTest {
         assertEquals("ContactEntry should have been removed", null, contactQueryRepositoryImpl.findOne(contactEntry.getIdentifier()));
 
         // Check that we returned back to the contact list
-        assertEquals("redirect:/controllers", view);
+        assertEquals("redirect:/contacts", view);
     }
 
     @Test
@@ -112,7 +112,7 @@ public class ContactsControllerIntegrationTest {
     public void testListContacts() {
         String view = controller.list(model);
 
-        verify(model).addAttribute(eq("controllers"), anyList());
+        verify(model).addAttribute(eq("contacts"), anyList());
 
         // Check that we're shown the contact list view
         assertEquals("contacts/list", view);

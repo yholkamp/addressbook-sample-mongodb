@@ -83,7 +83,7 @@ public class ContactsController {
             LOGGER.debug("Dispatching command with name : {}", command.toString());
             commandBus.dispatch(command);
 
-            return "redirect:/controllers";
+            return "redirect:/contacts";
         }
         return "contacts/delete";
     }
@@ -141,7 +141,7 @@ public class ContactsController {
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
         SearchForm searchForm = new SearchForm();
-        model.addAttribute("controllers", contactRepositoryImpl.findAll(ContactEntry.class));
+        model.addAttribute("contacts", contactRepositoryImpl.findAll(ContactEntry.class));
         model.addAttribute("searchForm", searchForm);
         return "contacts/list";
     }
@@ -152,7 +152,7 @@ public class ContactsController {
             return "contacts/list";
         }
         List<ContactEntry> contacts = contactRepositoryImpl.searchForNames(searchForm.getSearchValue());
-        model.addAttribute("controllers", contacts);
+        model.addAttribute("contacts", contacts);
         return "contacts/list";
     }
 }
