@@ -71,7 +71,7 @@ public class ContactsController {
         ContactEntry contactEntry = contactRepositoryImpl.findOne(identifier);
         model.addAttribute("identifier", identifier);
         model.addAttribute("contact", contactEntry);
-        return "controllers/details";
+        return "contacts/details";
     }
 
     @RequestMapping(value = "{identifier}/delete", method = RequestMethod.POST)
@@ -85,27 +85,27 @@ public class ContactsController {
 
             return "redirect:/controllers";
         }
-        return "controllers/delete";
+        return "contacts/delete";
     }
 
     @RequestMapping(value = "{identifier}/delete", method = RequestMethod.GET)
     public String formDelete(@PathVariable String identifier, Model model) {
         ContactEntry contactEntry = contactRepositoryImpl.findOne(identifier);
         model.addAttribute("contact", contactEntry);
-        return "controllers/delete";
+        return "contacts/delete";
     }
 
     @RequestMapping(value = "{identifier}/edit", method = RequestMethod.GET)
     public String formEdit(@PathVariable String identifier, Model model) {
         ContactEntry contact = contactRepositoryImpl.findOne(identifier);
         model.addAttribute("contact", contact);
-        return "controllers/edit";
+        return "contacts/edit";
     }
 
     @RequestMapping(value = "{identifier}/edit", method = RequestMethod.POST)
     public String formEditSubmit(@ModelAttribute("contact") @Valid ContactEntry contact, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "controllers/edit";
+            return "contacts/edit";
         }
 
         AggregateIdentifier identifier = new StringAggregateIdentifier(contact.getIdentifier());
@@ -114,20 +114,20 @@ public class ContactsController {
         LOGGER.debug("Dispatching command with name : {}", command.toString());
         commandBus.dispatch(command);
 
-        return "redirect:/controllers/" + contact.getIdentifier();
+        return "redirect:/contacts/" + contact.getIdentifier();
     }
 
     @RequestMapping(value = "new", method = RequestMethod.GET)
     public String formNew(Model model) {
         ContactEntry attributeValue = new ContactEntry();
         model.addAttribute("contact", attributeValue);
-        return "controllers/new";
+        return "contacts/new";
     }
 
     @RequestMapping(value = "new", method = RequestMethod.POST)
     public String formNewSubmit(@ModelAttribute("contact") @Valid ContactEntry contact, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "controllers/new";
+            return "contacts/new";
         }
 
         AbstractContactCrudCommand command = new CreateContactCommand(new UUIDAggregateIdentifier(), contact);
@@ -135,7 +135,7 @@ public class ContactsController {
         LOGGER.debug("Dispatching command with name : {}", command.toString());
         commandBus.dispatch(command);
 
-        return "redirect:/controllers/" + contact.getIdentifier();
+        return "redirect:/contacts/" + contact.getIdentifier();
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -143,16 +143,16 @@ public class ContactsController {
         SearchForm searchForm = new SearchForm();
         model.addAttribute("controllers", contactRepositoryImpl.findAll(ContactEntry.class));
         model.addAttribute("searchForm", searchForm);
-        return "controllers/list";
+        return "contacts/list";
     }
 
     @RequestMapping(value = "search", method = RequestMethod.POST)
     public String search(@ModelAttribute("searchForm") SearchForm searchForm, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "controllers/list";
+            return "contacts/list";
         }
         List<ContactEntry> contacts = contactRepositoryImpl.searchForNames(searchForm.getSearchValue());
         model.addAttribute("controllers", contacts);
-        return "controllers/list";
+        return "contacts/list";
     }
 }

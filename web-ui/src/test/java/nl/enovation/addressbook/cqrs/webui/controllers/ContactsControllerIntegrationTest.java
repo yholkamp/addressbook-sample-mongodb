@@ -71,7 +71,7 @@ public class ContactsControllerIntegrationTest {
         String view = controller.formDelete(contactEntry, mockBindingResult);
 
         // Check that we're shown the delete page again
-        assertEquals("controllers/delete", view);
+        assertEquals("contacts/delete", view);
     }
 
     @Test
@@ -94,7 +94,7 @@ public class ContactsControllerIntegrationTest {
         String view = controller.formDelete(contactEntry.getIdentifier(), model);
 
         // Check that we're shown the delete page again
-        assertEquals("controllers/delete", view);
+        assertEquals("contacts/delete", view);
     }
 
     @Test
@@ -105,7 +105,7 @@ public class ContactsControllerIntegrationTest {
         verify(model).addAttribute(eq("contact"), eq(contactEntry));
 
         // Check that we're shown the contact list view
-        assertEquals("controllers/details", view);
+        assertEquals("contacts/details", view);
     }
 
     @Test
@@ -115,7 +115,7 @@ public class ContactsControllerIntegrationTest {
         verify(model).addAttribute(eq("controllers"), anyList());
 
         // Check that we're shown the contact list view
-        assertEquals("controllers/list", view);
+        assertEquals("contacts/list", view);
     }
 
     @Test
@@ -123,7 +123,7 @@ public class ContactsControllerIntegrationTest {
         String view = controller.formNew(model);
 
         // Check that we're shown the contact list view
-        assertEquals("controllers/new", view);
+        assertEquals("contacts/new", view);
     }
 
     @Test
@@ -133,7 +133,7 @@ public class ContactsControllerIntegrationTest {
         String view = controller.formNewSubmit(contactEntry, mockBindingResult);
 
         // Check that we'reback to the original form
-        assertEquals("controllers/new", view);
+        assertEquals("contacts/new", view);
     }
 
     @Test
@@ -144,7 +144,7 @@ public class ContactsControllerIntegrationTest {
         assertEquals(contactEntry, contactFromDb);
 
         // Check that we're back to the overview
-        assertEquals("redirect:/controllers/"+contactEntry.getIdentifier(), view);
+        assertEquals("redirect:/contacts/"+contactEntry.getIdentifier(), view);
     }
 
     @Test
@@ -157,7 +157,7 @@ public class ContactsControllerIntegrationTest {
         String view = controller.formEditSubmit(contactEntry, mockBindingResult);
 
         // Check that we'reback to the original form
-        assertEquals("controllers/edit", view);
+        assertEquals("contacts/edit", view);
     }
 
     @Test
@@ -175,7 +175,7 @@ public class ContactsControllerIntegrationTest {
         assertEquals("changedFirstName", contactFromDb.getFirstName());
 
         // Check that we're back to the overview
-        assertEquals("redirect:/controllers/"+contactEntry.getIdentifier(), view);
+        assertEquals("redirect:/contacts/"+contactEntry.getIdentifier(), view);
     }
 
     @Test
@@ -186,6 +186,6 @@ public class ContactsControllerIntegrationTest {
         String view = controller.formEdit(contactEntry.getIdentifier(), model);
 
         // Check that we'reback to the original form
-        assertEquals("controllers/edit", view);
+        assertEquals("contacts/edit", view);
     }
 }

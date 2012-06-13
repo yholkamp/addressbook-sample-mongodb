@@ -67,7 +67,7 @@ public class PhoneNumberController {
             LOGGER.debug("Dispatching command with name : {}", command.toString());
             commandBus.dispatch(command);
 
-            return "redirect:/controllers/" + contactIdentifier;
+            return "redirect:/contacts/" + contactIdentifier;
         }
 
         return "phonenumbers/delete";
@@ -102,6 +102,6 @@ public class PhoneNumberController {
         LOGGER.debug("Dispatching command with name : {}", command.toString());
         commandBus.dispatch(command);
 
-        return "redirect:/controllers/" + contactIdentifier;
+        return "redirect:/contacts/" + contactIdentifier;
     }
 }
