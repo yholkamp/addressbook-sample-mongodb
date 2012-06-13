@@ -25,9 +25,4 @@ public class RemovePhoneNumberCommand extends AbstractContactCommand {
     public String getPhoneNumberId() {
         return phoneNumberId;
     }
-
-    public void setPhoneNumber(String identifier) {
-        phoneNumberId = identifier;
-    }
-
 }

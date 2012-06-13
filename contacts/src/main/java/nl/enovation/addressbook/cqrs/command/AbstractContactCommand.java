@@ -25,7 +25,7 @@ import org.springframework.util.Assert;
  * <p>
  * Parent class for all contact related commands
  * </p>
- * 
+ *
  * @author Jettro Coenradie
  */
 public abstract class AbstractContactCommand {
@@ -42,13 +42,4 @@ public abstract class AbstractContactCommand {
     public AggregateIdentifier getContactId() {
         return contactId;
     }
-
-    /**
-     * Provide the identifier for the existing contact. An error is thrown if the provided identifier is empty.
-     */
-    public void setContactId(AggregateIdentifier contactId) {
-        Assert.notNull(contactId, "Cannot take actions on a contact with an empty id");
-        this.contactId = contactId;
-    }
-
 }

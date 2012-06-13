@@ -37,8 +37,4 @@ public class PhoneNumberAddedEvent extends AbstractContactEvent {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(PhoneNumberEntry phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
 }

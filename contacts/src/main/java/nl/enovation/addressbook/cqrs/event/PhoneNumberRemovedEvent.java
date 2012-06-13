@@ -35,8 +35,4 @@ public class PhoneNumberRemovedEvent extends AbstractContactEvent {
         return phoneNumberId;
     }
 
-    public void setPhoneNumber(String phoneNumberId) {
-        this.phoneNumberId = phoneNumberId;
-    }
-
 }

@@ -27,8 +27,4 @@ public abstract class AbstractContactCrudCommand extends AbstractContactCommand 
     public ContactEntry getContactEntry() {
         return contactEntry;
     }
-
-    public void setContactEntry(ContactEntry contact) {
-        contactEntry = contact;
-    }
 }
