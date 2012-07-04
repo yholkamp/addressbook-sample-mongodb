@@ -15,5 +15,6 @@
 <form:form commandName="phoneNumber">
     <form:errors path="*" cssClass="errorBox"/>
     <form:hidden path="phoneNumber"/>
-    <input type="submit" name="submit" value="Delete"/>
+    <p>Are you sure?</p>
+    <input type="submit" name="submit" value="Delete" class="btn btn-danger"/> <a href="/contacts" class="btn">Cancel</a>
 </form:form>

@@ -28,9 +28,9 @@
 			<form:label path="phoneNumberType" cssClass="control-label">Phone number type</form:label>
 			<div class="controls">
 				<form:select path="phoneNumberType">
-					<form:option value="-" label="-- Please Select" />
 					<form:options items="${enumValues}" />
 				</form:select>
+                <form:errors path="phoneNumberType" cssClass="error-inline" />
 			</div>
 		</div>
 
