@@ -40,10 +40,10 @@
                 therefore available under a license compatible with the Apache License v2.0.</p>
 
             <p>
-                <a class="btn" href="https://github.com/nextpulse/addressbook-sample-mongodb">View
+                <a class="btn" href="https://github.com/yholkamp/addressbook-sample-mongodb">View
                     MongoDB-version &raquo;</a>
                 &nbsp;
-                <a class="btn" href="https://github.com/nextpulse/addressbook-sample-jpa">View JPA-version &raquo;</a>
+                <a class="btn" href="https://github.com/yholkamp/addressbook-sample-jpa">View JPA-version &raquo;</a>
             </p>
         </div>
         <div class="span6">
