@@ -50,6 +50,11 @@
 			<artifactId>addressbook-cqrs-infrastructure</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>nl.enovation</groupId>
+            <artifactId>addressbook-cqrs-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
 		<!-- spring dependencies -->
 		<dependency>

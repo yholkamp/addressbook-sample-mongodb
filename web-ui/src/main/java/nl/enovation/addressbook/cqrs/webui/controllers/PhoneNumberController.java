@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import nl.enovation.addressbook.cqrs.command.CreatePhoneNumberCommand;
 import nl.enovation.addressbook.cqrs.command.RemovePhoneNumberCommand;
 import nl.enovation.addressbook.cqrs.pojo.PhoneNumberEntry;
+import nl.enovation.addressbook.cqrs.pojo.PhoneNumberType;
 import nl.enovation.addressbook.cqrs.query.ContactEntry;
 import nl.enovation.addressbook.cqrs.query.repositories.ContactQueryRepositoryImpl;
 
@@ -87,6 +88,7 @@ public class PhoneNumberController {
         ContactEntry contactEntry = contactRepositoryImpl.findOne(contactIdentifier);
         model.addAttribute("contact", contactEntry);
         model.addAttribute("phoneNumberEntry", new PhoneNumberEntry());
+        model.addAttribute(PhoneNumberType.values());
         return "phonenumbers/new";
     }
 
